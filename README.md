@@ -1,5 +1,7 @@
 # UserInterfacesUMA
 Grupo F de Interfaces de Usuario UMA 24/25
+# Titulo del Proyecto
+UmaRoyalFlush
 # Tematica Principal
 Juego de poker Y/O blackjack online para plataformas web
 # Equipo Tecnico
