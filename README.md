@@ -5,7 +5,11 @@ Juego de poker Y/O blackjack online para plataformas web
 # Equipo Tecnico
   # CIO
     Angel Nicolas Escaño Lopez: angelesc04@uma.es
+  # CTO
+    Diego Sicre Cortizo: 0611146788@uma.es
   # CEO
-    Diego Sicre Cortizo
+    
   # COO
+    Sergio Bueno Gomez: Seyrohn@uma.es
+  
     
