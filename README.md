@@ -8,9 +8,9 @@ Juego de poker Y/O blackjack online para plataformas web
   # CTO
     Diego Sicre Cortizo: 0611146788@uma.es
   # CEO
-    Miguel Carmona
+    Miguel Carmona Cabello
   # COO
-    Sergio Bueno Gomez: Seyrohn@uma.es
+    Sergio Bueno Gómez: Seyrohn@uma.es
   # CXO
     Garv Mahendralal Vanza: garvmahvanza@uma.es
     
