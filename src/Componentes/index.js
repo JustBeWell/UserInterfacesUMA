@@ -1,2 +1,3 @@
 import Carta from "./Carta";
-export { Carta };
+import Mano from "./Mano";
+export { Carta, Mano };

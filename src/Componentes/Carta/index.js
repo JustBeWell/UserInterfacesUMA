@@ -1,6 +1,6 @@
 import "./carta.css";
 
-import CartaPorDetras from "../../imagenes/CartaPorDetras.png";
+import { obtenerImagenCarta } from "../../imagenes";
 
 function Carta({ rotada, naipe, valor, inclinacion }) {
 	return (
@@ -8,7 +8,9 @@ function Carta({ rotada, naipe, valor, inclinacion }) {
 			className={`carta`}
 			style={{
 				transform: `rotate(${inclinacion}deg)`,
-				backgroundImage: rotada ? `url(${CartaPorDetras})` : "none",
+				backgroundImage: rotada
+					? `url(${obtenerImagenCarta("", "")})`
+					: `url(${obtenerImagenCarta(naipe, valor)})`,
 			}}
 		></div>
 	);
