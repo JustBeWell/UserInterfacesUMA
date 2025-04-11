@@ -1,0 +1,27 @@
+.home-container {
+    padding: 40px;
+  }
+  
+  .home-header {
+    margin-bottom: 40px;
+  }
+  
+  .btn-top-left {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #333;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .games-section {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  

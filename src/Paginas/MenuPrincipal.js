@@ -5,7 +5,7 @@ function MenuPrincipal() {
 			<p id="message-el">Want to play a round?</p>
 			<div id="controls">
 				<Link to="/blackjack">
-					<button className="btn" id="start-game-btn" onClick="startGame()">
+					<button className="btn" id="start-game-btn">
 						START GAME
 					</button>
 				</Link>
