@@ -5,12 +5,11 @@
 	"dependencies": {
 		"react": "^19.1.0",
 		"react-dom": "^19.1.0",
-		"react-router-dom": "^7.4.1",
-		"react-scripts": "5.0.1"
+		"react-router-dom": "^7.4.1"
 	},
 	"scripts": {
-		"start": "react-scripts start",
-		"build": "react-scripts build"
+		"start": "vite",
+		"build": "tsc && vite build"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -29,5 +28,9 @@
 			"last 1 firefox version",
 			"last 1 safari version"
 		]
+	},
+	"devDependencies": {
+		"@vitejs/plugin-react": "^4.3.4",
+		"vite": "^6.2.6"
 	}
 }
