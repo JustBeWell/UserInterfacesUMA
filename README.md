@@ -15,4 +15,3 @@ Juego de poker Y/O blackjack online para plataformas web
     Sergio Bueno Gómez: Seyrohn@uma.es
   # CXO
     Garv Mahendralal Vanza: garvmahvanza@uma.es
-    
