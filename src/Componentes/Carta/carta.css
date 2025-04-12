@@ -1,8 +1,53 @@
 .carta {
-	width: 12%;
-	height: 85%;
-	background-size: 100% 100%;
 	background-repeat: no-repeat;
-	min-width: 120px;
-	min-height: 180px;
-}
+	background-size: cover;
+	background-position: center;
+	transition: transform 0.8s ease, box-shadow 0.3s ease;
+  }
+  
+  .carta-nueva {
+	animation: deslizarYGirar 1s ease forwards;
+  }
+  
+  @keyframes deslizarYGirar {
+	0% {
+	  transform: translateY(-300px) rotateY(180deg);
+	  opacity: 0;
+	}
+	60% {
+	  transform: translateY(0) rotateY(180deg);
+	  opacity: 1;
+	}
+	100% {
+	  transform: translateY(0) rotateY(0);
+	  opacity: 1;
+	}
+  }
+  
+  /* Animación para SOLO girar */
+  .carta-giro {
+	animation: girarSolo 0.5s ease forwards;
+  }
+  
+  @keyframes girarSolo {
+	0% {
+	  transform: rotateY(180deg);
+	}
+	100% {
+	  transform: rotateY(0);
+	}
+  }
+  
+  .carta.flip {
+	animation: flip-card 0.6s ease forwards;
+  }
+  
+  @keyframes flip-card {
+	0% {
+	  transform: rotateY(0deg) rotate(0deg);
+	}
+	100% {
+	  transform: rotateY(180deg) rotate(0deg);
+	}
+  }
+  

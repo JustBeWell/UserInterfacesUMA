@@ -1,205 +1,198 @@
 import { useState } from "react";
-import { Mano } from "../Componentes";
-
-function getRandomCard() {
-	let randomNumber = Math.floor(Math.random() * 13) + 1;
-	if (randomNumber > 10) {
-		return 10;
-	} else if (randomNumber === 1) {
-		return 11;
-	} else {
-		return randomNumber;
-	}
-}
-
-function getRandomNaipe() {
-	// Por ahora solo tenemos diamantes, pero esto se puede expandir después
-	return "diamante";
-}
-
-function getValorCarta(numero) {
-	// Convertir el número a la notación de carta correspondiente
-	if (numero === 11) return "A";
-	if (numero === 10) {
-		// Elegir aleatoriamente entre 10, J, Q o K
-		const opciones = ["10", "J", "Q", "K"];
-		return opciones[Math.floor(Math.random() * opciones.length)];
-	}
-	return numero.toString();
-}
+import HeaderBlackjack from "../Componentes/HeaderBlackJack";
+import GameTable from "../Componentes/GameTable";
+const palos = ["corazones", "diamantes", "tréboles", "picas"];
+const valores = [
+  { valor: "A", valorNumerico: 11 }, { valor: "2", valorNumerico: 2 }, { valor: "3", valorNumerico: 3 },
+  { valor: "4", valorNumerico: 4 }, { valor: "5", valorNumerico: 5 }, { valor: "6", valorNumerico: 6 },
+  { valor: "7", valorNumerico: 7 }, { valor: "8", valorNumerico: 8 }, { valor: "9", valorNumerico: 9 },
+  { valor: "10", valorNumerico: 10 }, { valor: "J", valorNumerico: 10 }, { valor: "Q", valorNumerico: 10 },
+  { valor: "K", valorNumerico: 10 },
+];
 
 function BlackJack() {
-	let [isAlive, setIsAlive] = useState(true);
-	let [hasBlackJack, setHasBlackJack] = useState(false);
-	let [cards, setCards] = useState([]);
-	let [mensaje, setMensaje] = useState("¿Quieres jugar una partida?");
-	let [cartasCrupier, setCartasCrupier] = useState([]);
-	let [puntuacionJugador, setPuntuacionJugador] = useState(0);
-	let [puntuacionCrupier, setPuntuacionCrupier] = useState(0);
+  const [baraja, setBaraja] = useState([]);
+  const [cards, setCards] = useState([]);
+  const [cartasCrupier, setCartasCrupier] = useState([]);
+  const [puntuacionJugador, setPuntuacionJugador] = useState(0);
+  const [puntuacionCrupier, setPuntuacionCrupier] = useState(0);
+  const [isAlive, setIsAlive] = useState(false);
+  const [hasBlackJack, setHasBlackJack] = useState(false);
+  const [mensaje, setMensaje] = useState("Welcome to Blackjack!");
+  const [chips, setChips] = useState(1000);
+  const [betAmount, setBetAmount] = useState(0);
+  const [apuestaActual, setApuestaActual] = useState(0);
 
-	function iniciarJuego() {
-		setIsAlive(true);
-		setHasBlackJack(false);
-		setMensaje("¡Nueva partida! Pide una carta");
+  function volverAlMenu() {
+    window.location.href = "/";
+  }
 
-		// Dar dos cartas al jugador
-		const carta1 = getRandomCard();
-		const carta2 = getRandomCard();
-		const nuevasCartas = [
-			{
-				naipe: getRandomNaipe(),
-				valor: getValorCarta(carta1),
-				valorNumerico: carta1,
-			},
-			{
-				naipe: getRandomNaipe(),
-				valor: getValorCarta(carta2),
-				valorNumerico: carta2,
-			},
-		];
+  function crearBaraja() {
+    const mazo = [];
+    for (const palo of palos) {
+      for (const valor of valores) {
+        mazo.push({ naipe: palo, valor: valor.valor, valorNumerico: valor.valorNumerico });
+      }
+    }
+    return mazo;
+  }
 
-		setCards(nuevasCartas);
-		const nuevaPuntuacion = carta1 + carta2;
-		setPuntuacionJugador(nuevaPuntuacion);
+  function barajarMazo(mazo) {
+    const nuevoMazo = [...mazo];
+    for (let i = nuevoMazo.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [nuevoMazo[i], nuevoMazo[j]] = [nuevoMazo[j], nuevoMazo[i]];
+    }
+    return nuevoMazo;
+  }
 
-		// Dar una carta visible y una oculta al crupier
-		const cartaCrupier = getRandomCard();
-		setCartasCrupier([
-			{
-				naipe: getRandomNaipe(),
-				valor: getValorCarta(cartaCrupier),
-				valorNumerico: cartaCrupier,
-			},
-			{
-				rotada: true, // Carta boca abajo
-				valorNumerico: 0,
-			},
-		]);
-		setPuntuacionCrupier(cartaCrupier);
+  function repartirCarta(mazoActual) {
+    const carta = mazoActual.pop();
+    setBaraja([...mazoActual]);
+    return { ...carta, nueva: true };
+  }
 
-		if (nuevaPuntuacion === 21) {
-			setHasBlackJack(true);
-			setMensaje("¡Blackjack! ¡Has ganado!");
-			finalizarJuego();
-		}
-	}
+  function calcularPuntuacion(cartas) {
+    let suma = cartas.reduce((acc, carta) => acc + carta.valorNumerico, 0);
+    let ases = cartas.filter(carta => carta.valor === "A").length;
+    while (suma > 21 && ases > 0) {
+      suma -= 10;
+      ases--;
+    }
+    return suma;
+  }
 
-	function newCard() {
-		if (isAlive && !hasBlackJack) {
-			const valorNumerico = getRandomCard();
-			const nuevaCarta = {
-				naipe: getRandomNaipe(),
-				valor: getValorCarta(valorNumerico),
-				valorNumerico: valorNumerico,
-			};
+  function calcularPuntuacionVisible(cartas) {
+    return cartas.filter(c => !c.rotada).reduce((acc, carta) => acc + carta.valorNumerico, 0);
+  }
 
-			const nuevasCartas = [...cards, nuevaCarta];
-			setCards(nuevasCartas);
+  function iniciarJuego() {
+    if (betAmount === 0 || betAmount > chips) {
+      setMensaje("You must place a valid bet.");
+      return;
+    }
 
-			const nuevaPuntuacion = nuevasCartas.reduce(
-				(sum, card) => sum + card.valorNumerico,
-				0
-			);
-			setPuntuacionJugador(nuevaPuntuacion);
+    const nuevoMazo = barajarMazo(crearBaraja());
+    const carta1 = repartirCarta(nuevoMazo);
+    const carta2 = repartirCarta(nuevoMazo);
+    const cartaCrupier1 = repartirCarta(nuevoMazo);
+    const cartaCrupier2 = repartirCarta(nuevoMazo);
+    const cartaCrupierTapada = { ...cartaCrupier2, rotada: true };
 
-			if (nuevaPuntuacion > 21) {
-				setIsAlive(false);
-				setMensaje("¡Te has pasado! Has perdido.");
-				finalizarJuego();
-			} else if (nuevaPuntuacion === 21) {
-				setHasBlackJack(true);
-				setMensaje("¡21! ¡Muy bien!");
-				finalizarJuego();
-			}
-		}
-	}
+    const nuevasCartasJugador = [carta1, carta2];
+    const nuevaPuntuacionJugador = calcularPuntuacion(nuevasCartasJugador);
 
-	function plantarse() {
-		if (isAlive && !hasBlackJack) {
-			// Revelar la carta oculta del crupier
-			const valorCartaOculta = getRandomCard();
-			const cartaOculta = {
-				naipe: getRandomNaipe(),
-				valor: getValorCarta(valorCartaOculta),
-				valorNumerico: valorCartaOculta,
-			};
+    setCards(nuevasCartasJugador);
+    setCartasCrupier([cartaCrupier1, cartaCrupierTapada]);
+    setPuntuacionJugador(nuevaPuntuacionJugador);
+    setPuntuacionCrupier(cartaCrupier1.valorNumerico);
+    setBaraja(nuevoMazo);
+    setIsAlive(true);
+    setHasBlackJack(false);
+    setMensaje("Good luck!");
+    setChips(prev => prev - betAmount);
+    setApuestaActual(betAmount);
+    setBetAmount(0);
 
-			let nuevasCartasCrupier = [cartasCrupier[0], cartaOculta];
-			let nuevaPuntuacionCrupier =
-				cartasCrupier[0].valorNumerico + valorCartaOculta;
+    if (nuevaPuntuacionJugador === 21 && nuevasCartasJugador.length === 2) {
+      setHasBlackJack(true);
+      finalizarJuego("BLACKJACK");
+    }
+  }
 
-			// El crupier debe pedir cartas hasta tener 17 o más
-			while (nuevaPuntuacionCrupier < 17) {
-				const valorNuevaCarta = getRandomCard();
-				const nuevaCarta = {
-					naipe: getRandomNaipe(),
-					valor: getValorCarta(valorNuevaCarta),
-					valorNumerico: valorNuevaCarta,
-				};
+  function newCard() {
+    if (!isAlive || hasBlackJack) return;
 
-				nuevasCartasCrupier = [...nuevasCartasCrupier, nuevaCarta];
-				nuevaPuntuacionCrupier += valorNuevaCarta;
-			}
+    const carta = repartirCarta(baraja);
+    const nuevasCartas = [...cards, carta];
+    const nuevaPuntuacion = calcularPuntuacion(nuevasCartas);
 
-			setCartasCrupier(nuevasCartasCrupier);
-			setPuntuacionCrupier(nuevaPuntuacionCrupier);
+    setCards(nuevasCartas);
+    setPuntuacionJugador(nuevaPuntuacion);
 
-			// Determinar el ganador
-			if (nuevaPuntuacionCrupier > 21) {
-				setMensaje("¡El crupier se ha pasado! ¡Has ganado!");
-			} else if (nuevaPuntuacionCrupier > puntuacionJugador) {
-				setMensaje("¡El crupier gana!");
-			} else if (nuevaPuntuacionCrupier < puntuacionJugador) {
-				setMensaje("¡Has ganado!");
-			} else {
-				setMensaje("¡Empate!");
-			}
+    if (nuevaPuntuacion > 21) finalizarJuego("PERDER");
+    else if (nuevaPuntuacion === 21) finalizarJuego("GANAR");
+  }
 
-			setIsAlive(false);
-		}
-	}
+  function plantarse() {
+    if (!isAlive || hasBlackJack) return;
 
-	function finalizarJuego() {
-		// Esta función puede ampliarse con más lógica si es necesario
-	}
+    let nuevasCartasCrupier = [...cartasCrupier];
+    nuevasCartasCrupier[1] = { ...nuevasCartasCrupier[1], rotada: false, girarSolo: true };
+    setCartasCrupier(nuevasCartasCrupier);
+    const nuevaPuntuacionCrupier = calcularPuntuacion(nuevasCartasCrupier);
+    setPuntuacionCrupier(nuevaPuntuacionCrupier);
 
-	return (
-		<div className="container">
-			<h1>Blackjack</h1>
-			<p id="message-el">{mensaje}</p>
+    async function repartirCartasCrupier() {
+      let puntuacionActual = nuevaPuntuacionCrupier;
+      while (puntuacionActual < 17) {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        const carta = repartirCarta(baraja);
+        nuevasCartasCrupier.push(carta);
+        setCartasCrupier([...nuevasCartasCrupier]);
+        puntuacionActual = calcularPuntuacion(nuevasCartasCrupier);
+        setPuntuacionCrupier(puntuacionActual);
+      }
 
-			<div className="mesa-juego">
-				<h2>
-					Crupier {!isAlive && <span>- Puntuación: {puntuacionCrupier}</span>}
-				</h2>
-				<Mano cartas={cartasCrupier} tipo="crupier" />
+      if (puntuacionActual > 21 || puntuacionJugador > puntuacionActual) finalizarJuego("GANAR");
+      else if (puntuacionActual === puntuacionJugador) finalizarJuego("EMPATAR");
+      else finalizarJuego("PERDER");
+    }
 
-				<h2>Tu mano - Puntuación: {puntuacionJugador}</h2>
-				<Mano cartas={cards} tipo="jugador" />
-			</div>
+    repartirCartasCrupier();
+  }
 
-			<div id="controls">
-				{!isAlive || hasBlackJack ? (
-					<button className="btn" onClick={iniciarJuego}>
-						NUEVA PARTIDA
-					</button>
-				) : cards.length > 0 ? (
-					<>
-						<button className="btn" onClick={newCard}>
-							PEDIR CARTA
-						</button>
-						<button className="btn" onClick={plantarse}>
-							PLANTARSE
-						</button>
-					</>
-				) : (
-					<button className="btn" onClick={iniciarJuego}>
-						COMENZAR
-					</button>
-				)}
-			</div>
-		</div>
-	);
+  function finalizarJuego(resultado) {
+    let ganancia = 0;
+    if (resultado === "BLACKJACK" && cards.length === 2) {
+      setMensaje("Blackjack! 3:2 payout!");
+      ganancia = apuestaActual * 2.5;
+    } else if (resultado === "BLACKJACK" && cards.length > 2) {
+      setMensaje("21 with more than two cards! 2:1 payout!");
+      ganancia = apuestaActual * 2;
+    } else if (resultado === "GANAR") {
+      setMensaje("You win! Double your bet.");
+      ganancia = apuestaActual * 2;
+    } else if (resultado === "EMPATAR") {
+      setMensaje("Push! You get your bet back.");
+      ganancia = apuestaActual;
+    } else if (resultado === "PERDER") {
+      setMensaje("You lost!");
+      ganancia = 0;
+    }
+    setChips(prev => prev + ganancia);
+    setIsAlive(false);
+  }
+
+  function ajustarApuesta(cantidad) {
+    if (!isAlive) {
+      setBetAmount(prev => Math.max(0, prev + cantidad));
+    }
+  }
+
+  return (
+    <div className="container">
+      <HeaderBlackjack
+        chips={chips}
+        betAmount={betAmount}
+        mensaje={mensaje}
+        onReturnToMenu={volverAlMenu}
+      />
+      <GameTable
+        dealerCards={cartasCrupier}
+        playerCards={cards}
+        dealerScore={puntuacionCrupier}
+        playerScore={puntuacionJugador}
+        isAlive={isAlive}
+        newCard={newCard}
+        plantarse={plantarse}
+        iniciarJuego={iniciarJuego}
+        betAmount={betAmount}
+        adjustBet={ajustarApuesta}
+        calcularPuntuacionVisible={calcularPuntuacionVisible}
+      />
+    </div>
+  );
 }
 
 export default BlackJack;
