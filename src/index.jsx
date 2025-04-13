@@ -1,20 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { MenuPrincipal, BlackJack } from "./Paginas";
+import { MenuPrincipal, BlackJack, Ajustes } from "./Paginas";
 import Home from "./Paginas/Home"; // importa Home
+
+
+function App() {
+  const [volumen, setVolumen] = useState(0.5);
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home volumen={volumen} />} />
+        <Route path="/menu" element={<MenuPrincipal volumen={volumen} />} />
+        <Route path="/blackjack" element={<BlackJack volumen={volumen} />} />
+        <Route path="/ajustes" element={<Ajustes volumen={volumen} setVolumen = {setVolumen}/>} />
+        {/* más rutas aquí */}
+      </Routes>
+    </BrowserRouter>
+  );
+}
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />         {/* 👈 ruta inicial */}
-        <Route path="/menu" element={<MenuPrincipal />} />
-        <Route path="/blackjack" element={<BlackJack />} />
-        {/* más rutas aquí */}
-      </Routes>
-    </BrowserRouter>
+    <App />
   </React.StrictMode>
 );

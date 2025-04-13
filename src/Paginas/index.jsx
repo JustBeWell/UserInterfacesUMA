@@ -1,3 +1,4 @@
 import MenuPrincipal from "./MenuPrincipal";
 import BlackJack from "./BlackJack";
-export { MenuPrincipal, BlackJack };
+import Ajustes from "./Ajustes";
+export { MenuPrincipal, BlackJack, Ajustes };

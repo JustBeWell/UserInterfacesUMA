@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom";
 
-function HeaderBlackjack({ chips, betAmount, mensaje, onReturnToMenu }) {
+function HeaderBlackjack({ chips, betAmount, mensaje}) {
   return (
     <header className="header-blackjack">
-      <button className="btn-top-left" onClick={onReturnToMenu}>
+      <Link to="/"><button className="btn-top-left" >
         Return to Menu
-      </button>
+      </button></Link>
       <h1 className="bjh1">Blackjack</h1>
       <p className="bjp1">Balance: {chips} chips</p>
       <p className="bjp1">Current Bet: {betAmount} chips</p>

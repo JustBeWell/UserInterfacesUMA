@@ -1,3 +1,5 @@
+import botonAjustes from "./botonAjustes.png";
+
 // Importación de imágenes de cartas de diamantes
 import DiamAce from "./Diamante/As.png";
 import Diam2 from "./Diamante/2.png";
@@ -162,7 +164,7 @@ export const obtenerImagenCarta = (naipe, valor) => {
 };
 
 // Exportamos la imagen del reverso para uso general
-export { CartaPorDetras };
+export { CartaPorDetras, botonAjustes };
 
 // Exportamos los objetos de imágenes para posibles usos específicos
 export {

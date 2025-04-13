@@ -2,6 +2,7 @@ import GameCard from "../Componentes/GameCard/GameCard";
 import "./Home.css";
 import imagenBlackjack from "../imagenes/MenuPrincipal/ImagenBlackjack.png";
 import imagenPoker from "../imagenes/MenuPrincipal/ImagenPoker.png";
+import { Link } from "react-router-dom";
 
 
 
@@ -12,6 +13,7 @@ function Home() {
     <div className="home-container">
       <header className="home-header">
         <button className="btn-top-left">Tragamonedas</button>
+        <Link to="/ajustes"><button className="btn-top-right"></button></Link>
         <h1>Welcome to <strong>RoyalFlush</strong></h1>
         <p>Where your dreams come true</p>
       </header>

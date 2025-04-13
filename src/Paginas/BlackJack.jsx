@@ -2,6 +2,8 @@ import { useState } from "react";
 import HeaderBlackjack from "../Componentes/HeaderBlackJack";
 import GameTable from "../Componentes/GameTable";
 import "../Paginas/BlackJack.css";
+import AudioPlayer from "../Componentes/AudioPlayer";
+
 
 
 const palos = ["corazones", "diamantes", "tréboles", "picas"];
@@ -13,7 +15,7 @@ const valores = [
   { valor: "K", valorNumerico: 10 },
 ];
 
-function BlackJack() {
+function BlackJack({volumen}) {
   const [baraja, setBaraja] = useState([]);
   const [cards, setCards] = useState([]);
   const [cartasCrupier, setCartasCrupier] = useState([]);
@@ -25,10 +27,9 @@ function BlackJack() {
   const [chips, setChips] = useState(1000);
   const [betAmount, setBetAmount] = useState(0);
   const [apuestaActual, setApuestaActual] = useState(0);
+  const {reproducirCarta1} = AudioPlayer(volumen);
 
-  function volverAlMenu() {
-    window.location.href = "/";
-  }
+
 
   function crearBaraja() {
     const mazo = [];
@@ -50,6 +51,7 @@ function BlackJack() {
   }
 
   function repartirCarta(mazoActual) {
+    reproducirCarta1();
     const carta = mazoActual.pop();
     setBaraja([...mazoActual]);
     return { ...carta, nueva: true };
@@ -193,7 +195,7 @@ function BlackJack() {
         chips={chips}
         betAmount={betAmount}
         mensaje={mensaje}
-        onReturnToMenu={volverAlMenu}
+        
       />
       <GameTable
         dealerCards={cartasCrupier}
