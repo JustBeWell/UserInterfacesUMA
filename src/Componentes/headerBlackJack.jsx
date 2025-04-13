@@ -5,10 +5,10 @@ function HeaderBlackjack({ chips, betAmount, mensaje, onReturnToMenu }) {
       <button className="btn-top-left" onClick={onReturnToMenu}>
         Return to Menu
       </button>
-      <h1>Blackjack</h1>
-      <p>Balance: {chips} chips</p>
-      <p>Current Bet: {betAmount} chips</p>
-      <p>{mensaje}</p>
+      <h1 className="bjh1">Blackjack</h1>
+      <p className="bjp1">Balance: {chips} chips</p>
+      <p className="bjp1">Current Bet: {betAmount} chips</p>
+      <p className="bjp1">{mensaje}</p>
     </header>
   );
 }

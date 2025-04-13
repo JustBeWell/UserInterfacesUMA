@@ -1,6 +1,9 @@
 import { useState } from "react";
 import HeaderBlackjack from "../Componentes/HeaderBlackJack";
 import GameTable from "../Componentes/GameTable";
+import "../Paginas/BlackJack.css";
+
+
 const palos = ["corazones", "diamantes", "tréboles", "picas"];
 const valores = [
   { valor: "A", valorNumerico: 11 }, { valor: "2", valorNumerico: 2 }, { valor: "3", valorNumerico: 3 },
@@ -170,8 +173,22 @@ function BlackJack() {
     }
   }
 
+  function resetGame() {
+    setCards([]);
+    setCartasCrupier([]);
+    setPuntuacionJugador(0);
+    setPuntuacionCrupier(0);
+    setIsAlive(false);
+    setHasBlackJack(false);
+    setMensaje("Welcome to Blackjack!");
+    setBetAmount(0);
+    setApuestaActual(0);
+    setBaraja([]);
+  }
+  
+
   return (
-    <div className="container">
+    <div className="blackjack-container">
       <HeaderBlackjack
         chips={chips}
         betAmount={betAmount}
@@ -190,6 +207,7 @@ function BlackJack() {
         betAmount={betAmount}
         adjustBet={ajustarApuesta}
         calcularPuntuacionVisible={calcularPuntuacionVisible}
+        resetGame={resetGame}
       />
     </div>
   );
