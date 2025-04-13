@@ -1,10 +1,20 @@
 .carta {
+	width: 100px;
+	height: 140px;
 	background-repeat: no-repeat;
 	background-size: cover;
 	background-position: center;
+	border-radius: 8px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 	transition: transform 0.8s ease, box-shadow 0.3s ease;
   }
   
+  .carta:hover {
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.7);
+	transform: scale(1.05); /* pequeño agrandado elegante */
+  }
+  
+  /* Animaciones */
   .carta-nueva {
 	animation: deslizarYGirar 1s ease forwards;
   }
@@ -24,7 +34,6 @@
 	}
   }
   
-  /* Animación para SOLO girar */
   .carta-giro {
 	animation: girarSolo 0.5s ease forwards;
   }

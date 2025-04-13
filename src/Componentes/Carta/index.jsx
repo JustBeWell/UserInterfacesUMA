@@ -63,13 +63,7 @@ function Carta({ rotada, naipe, valor, inclinacion, nueva, girarSolo }) {
       className={`carta ${nueva ? "carta-nueva" : ""} ${girarSolo ? "carta-giro" : ""}`}
       style={{
         transform: `rotate(${inclinacion}deg)`,
-        backgroundImage: `url(${imagen})`,
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        width: "100px",
-        height: "140px",
-        borderRadius: "8px",
-        boxShadow: "0 4px 8px rgba(0,0,0,0.3)",
+        backgroundImage: `url(${imagen})`
       }}
     ></div>
   );
