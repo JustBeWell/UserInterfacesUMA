@@ -1,6 +1,8 @@
 .home-container {
     padding: 40px;
   }
+
+
   
   .home-header {
     margin-bottom: 40px;
@@ -16,6 +18,21 @@
     border: none;
     border-radius: 6px;
     cursor: pointer;
+  }
+
+  .btn-top-right {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background-image: url("../imagenes/botonAjustes.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40px 40px;
+    width: 40px;
+    height: 40px;
   }
   
   .games-section {

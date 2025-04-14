@@ -4,6 +4,7 @@
 	"private": true,
 	"dependencies": {
 		"react": "^19.1.0",
+		"react-audio-player": "^0.17.0",
 		"react-dom": "^19.1.0",
 		"react-router-dom": "^7.4.1"
 	},
@@ -31,6 +32,7 @@
 	},
 	"devDependencies": {
 		"@vitejs/plugin-react": "^4.3.4",
+		"@vitejs/plugin-react-swc": "^3.8.1",
 		"vite": "^6.2.6"
 	}
 }
