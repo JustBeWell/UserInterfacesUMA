@@ -1,0 +1,26 @@
+/* src/Componentes/MesaPoker/MesaPoker.css */
+/* src/Componentes/MesaPoker/MesaPoker.css */
+.mesa{
+  position:relative;
+  aspect-ratio:1.7/1;
+  width:min(98vw,1200px);     /* antes 92 vw / 980 px */
+  margin-inline:auto;       /* centrada horizontalmente */
+  background:url("../../imagenes/mesa.png") center/contain no-repeat;
+  display:grid;             /* seguimos con las 3 filas que ya tienes */
+  grid-template-rows:auto 1fr auto;
+  place-items:center;
+}
+
+
+/* sin posición absoluta aquí */
+.jugador-top   { grid-row:1; }
+.cartas-comunitarias{ grid-row:2; }
+.jugador-bottom{ grid-row:3; }
+
+/* el Pot sigue absolutamente centrado como antes */
+
+/* Posiciones relativas dentro de .mesa */
+
+.carta        { z-index:5; }
+.jugador      { z-index:4; }
+.pot          { z-index:6; }

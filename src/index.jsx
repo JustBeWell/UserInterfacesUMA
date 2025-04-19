@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { MenuPrincipal, BlackJack, Ajustes } from "./Paginas";
 import Home from "./Paginas/Home"; // importa Home
 import Slots from "./Paginas/Slots"; // importa Slots
+import Poker from "./Paginas/Poker";
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/blackjack" element={<BlackJack volumen={volumen} />} />
         <Route path="/slots" element={<Slots volumen={volumen} />} />
         <Route path="/ajustes" element={<Ajustes volumen={volumen} setVolumen = {setVolumen}/>} />
+        <Route path="/poker" element={<Poker volumen={volumen} />} />
         {/* más rutas aquí */}
       </Routes>
     </BrowserRouter>

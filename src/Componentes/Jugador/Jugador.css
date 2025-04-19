@@ -1,0 +1,19 @@
+.jugador {
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    pointer-events:none;
+  }
+  
+  .jugador-cartas { display:flex; gap:8px; pointer-events:auto; }
+  
+  .jugador-top   .jugador-cartas { flex-direction:row-reverse; } /* rival de dcha a izq */
+  .jugador-nombre,
+  .jugador-fichas {
+    margin-top:2px;
+    font-weight:600;
+    color:#fff;
+    text-shadow:0 0 4px #000;
+  }
+  
+  

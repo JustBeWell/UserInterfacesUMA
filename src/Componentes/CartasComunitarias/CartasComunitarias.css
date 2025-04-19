@@ -1,0 +1,13 @@
+/* Posicionamiento y distribución dentro de la mesa */
+.cartas-comunitarias {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  
+  /* Opcional — cuando todavía no hay cartas, reserva espacio */
+  .cartas-comunitarias:empty {
+    min-width: 540px;             /* 5 cartas de 100 px + gaps ≈ 12px */
+  }
+  

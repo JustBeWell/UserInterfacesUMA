@@ -1,0 +1,19 @@
+/* src/Componentes/Pot/Pot.css */
+/* src/Componentes/Pot/Pot.css */
+.pot{
+  position:absolute;
+  top:calc(50% + 4.5vw);   /* 4.5 vw ≈ 40 px en desktop, proporcional en móvil */
+  left:50%;
+  transform:translate(-50%,-50%);  /* -50% sólo en Y para anclar centro‑vertical */
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-weight:700;
+  color:#fff;
+  text-shadow:0 0 4px #000;
+  z-index:6;
+  pointer-events:none;
+}
+
+/* la ficha conserva su tamaño relativo */
+.pot-ficha{ width:32px; height:auto; }

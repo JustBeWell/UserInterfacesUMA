@@ -1,0 +1,28 @@
+/* src/Paginas/Poker.css  (crea el archivo si no existe) */
+.poker-pagina{
+  min-height:100vh;         /* toma todo el alto disponible */
+  display:flex;
+  align-items:center;       /* centra verticalmente */
+  justify-content:center;   /* y horizontalmente */
+  padding-block:2rem;       /* un respiro en pantallas muy bajas */
+}
+
+
+.poker-container {
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .poker-title {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .poker-cartas {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding: 1rem 0;
+  }
