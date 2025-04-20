@@ -91,14 +91,12 @@ function BlackJack({ volumen }) {
 		const carta1 = repartirCarta(nuevoMazo);
 		const carta2 = repartirCarta(nuevoMazo);
 		const cartaCrupier1 = repartirCarta(nuevoMazo);
-		const cartaCrupier2 = repartirCarta(nuevoMazo);
-		const cartaCrupierTapada = { ...cartaCrupier2, rotada: true };
 
 		const nuevasCartasJugador = [carta1, carta2];
 		const nuevaPuntuacionJugador = calcularPuntuacion(nuevasCartasJugador);
 
 		setCards(nuevasCartasJugador);
-		setCartasCrupier([cartaCrupier1, cartaCrupierTapada]);
+		setCartasCrupier([cartaCrupier1]);
 		setPuntuacionJugador(nuevaPuntuacionJugador);
 		setPuntuacionCrupier(cartaCrupier1.valorNumerico);
 		setBaraja(nuevoMazo);
@@ -133,19 +131,13 @@ function BlackJack({ volumen }) {
 		if (!isAlive || hasBlackJack) return;
 
 		let nuevasCartasCrupier = [...cartasCrupier];
-		nuevasCartasCrupier[1] = {
-			...nuevasCartasCrupier[1],
-			rotada: false,
-			girarSolo: true,
-		};
-		setCartasCrupier(nuevasCartasCrupier);
 		const nuevaPuntuacionCrupier = calcularPuntuacion(nuevasCartasCrupier);
 		setPuntuacionCrupier(nuevaPuntuacionCrupier);
 
 		async function repartirCartasCrupier() {
 			let puntuacionActual = nuevaPuntuacionCrupier;
 			while (puntuacionActual < 17) {
-				await new Promise((resolve) => setTimeout(resolve, 2000));
+				await new Promise((resolve) => setTimeout(resolve, 1000));
 				const carta = repartirCarta(baraja);
 				nuevasCartasCrupier.push(carta);
 				setCartasCrupier([...nuevasCartasCrupier]);
