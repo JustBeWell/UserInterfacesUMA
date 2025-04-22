@@ -15,6 +15,7 @@ function Home() {
         <Link to="/slots">
           <button className="btn-top-left">Play Slots</button>
         </Link>
+        <Link to="/ajustes"><button className="btn-top-right"></button></Link>
         <h1>Welcome to <strong>RoyalFlush</strong></h1>
         <p>Where your dreams come true</p>
       </header>
