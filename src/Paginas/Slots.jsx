@@ -107,7 +107,7 @@ function Slots() {
     <div className="background-image"></div>
       <header>
         <Link to="/">
-          <button className="boton-inicio">
+          <button className="btn-top-left">
             Volver al menú principal
           </button>
         </Link>
