@@ -8,8 +8,14 @@ function Home() {
 	return (
 		<div className="home-container">
 			<header className="home-header">
+				<Link to="/slots">
+					<button className="btn-top-left">Play Slots</button>
+				</Link>
 				<Link to="/ajustes">
 					<button className="btn-top-right"></button>
+				</Link>
+				<Link to="/tienda">
+					<button className="btn-top-right-store"></button>
 				</Link>
 				<h1>
 					Welcome to <strong>RoyalFlush</strong>
