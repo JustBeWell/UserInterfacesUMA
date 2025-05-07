@@ -23,30 +23,8 @@ function Slots() {
 		"⭐",
 		"💎",
 	]);
-	const generatedSlots2 = Array.from([
-		"🍒",
-		"🍋",
-		"🍊",
-		"7️⃣",
-		"BAR",
-		"🍉",
-		"🍇",
-		"🔔",
-		"⭐",
-		"💎",
-	]);
-	const generatedSlots3 = Array.from([
-		"🍒",
-		"🍋",
-		"🍊",
-		"7️⃣",
-		"BAR",
-		"🍉",
-		"🍇",
-		"🔔",
-		"⭐",
-		"💎",
-	]);
+	const generatedSlots2 = [...generatedSlots1];
+	const generatedSlots3 = [...generatedSlots1];
 
 	let currentIndex1 = useRef(0);
 	let currentIndex2 = useRef(0);
@@ -69,11 +47,11 @@ function Slots() {
 	};
 
 	const spinParada = async (generatedSlots, setColumn, currentIndex) => {
-		const velocidadInicial = Math.floor(Math.random() * (100 - 50 + 1)) + 50;
-		const velocidadMedia = Math.floor(Math.random() * (200 - 150 + 1)) + 150;
-		const velocidadFinal = Math.floor(Math.random() * (400 - 300 + 1)) + 300;
+		const velocidadInicial = Math.floor(Math.random() * (50 - 20 + 1)) + 20;
+		const velocidadMedia = Math.floor(Math.random() * (100 - 50 + 1)) + 50;
+		const velocidadFinal = Math.floor(Math.random() * (300 - 150 + 1)) + 150;
 
-		for (let i = 0; i < 40; i++) {
+		for (let i = 0; i < 30; i++) {
 			const currentSlots = [
 				generatedSlots[currentIndex.current % generatedSlots.length],
 				generatedSlots[(currentIndex.current + 1) % generatedSlots.length],
