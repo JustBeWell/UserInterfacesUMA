@@ -35,6 +35,21 @@
     height: 40px;
   }
   
+  .btn-top-right-store{
+    position: absolute;
+    top: 20px;
+    right: 80px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    background-image: url("../imagenes/botonTienda.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 40px 40px;
+    width: 40px;
+    height: 40px;
+  }
+  
   .games-section {
     display: flex;
     justify-content: center;
