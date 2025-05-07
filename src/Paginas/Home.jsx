@@ -4,38 +4,41 @@ import imagenBlackjack from "../imagenes/MenuPrincipal/ImagenBlackjack.png";
 import imagenPoker from "../imagenes/MenuPrincipal/ImagenPoker.png";
 import { Link } from "react-router-dom";
 
-
-
-
 function Home() {
-    
-  return (
-    <div className="home-container">
-      <header className="home-header">
-        <Link to="/slots">
-          <button className="btn-top-left">Play Slots</button>
-        </Link>
-        <Link to="/ajustes"><button className="btn-top-right"></button></Link>
-        <h1>Welcome to <strong>RoyalFlush</strong></h1>
-        <p>Where your dreams come true</p>
-      </header>
+	return (
+		<div className="home-container">
+			<header className="home-header">
+				<Link to="/ajustes">
+					<button className="btn-top-right"></button>
+				</Link>
+				<h1>
+					Welcome to <strong>RoyalFlush</strong>
+				</h1>
+				<p>Where your dreams come true</p>
+			</header>
 
-      <div className="games-section">
-      <GameCard
-    image={imagenBlackjack}
-    alt="Blackjack"
-    to="/blackjack"
-    label="Play Blackjack"
-    />
-    <GameCard
-    image={imagenPoker}
-    alt="Poker"
-    to="/poker"
-    label="Play Poker"
-    />
-      </div>
-    </div>
-  );
+			<div className="games-section">
+				<GameCard
+					image={imagenBlackjack}
+					alt="Blackjack"
+					to="/blackjack"
+					label="Play Blackjack"
+				/>
+				<GameCard
+					image={imagenPoker}
+					alt="Poker"
+					to="/poker"
+					label="Play Poker"
+				/>
+				<GameCard
+					image={imagenPoker}
+					alt="Slots"
+					to="/slots"
+					label="Play Slots"
+				/>
+			</div>
+		</div>
+	);
 }
 
 export default Home;
