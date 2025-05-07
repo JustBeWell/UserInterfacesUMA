@@ -87,7 +87,7 @@
 	display: flex;
 	justify-content: center;
 	margin-top: 32vh;
-	gap: 6%;
+	gap: 6vw;
 }
 
 .slot-column {
