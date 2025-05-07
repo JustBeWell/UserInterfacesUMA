@@ -1,125 +1,117 @@
-
 .background-image {
-  position: fixed; /* Fija el contenedor en la ventana */
-  top: 50%; /* Centra verticalmente */
-  left: 50%; /* Centra horizontalmente */
-  transform: translate(-50%, -50%); /* Ajusta el centro exacto */
-  width: 100vw; /* Escala al ancho de la ventana */
-  height: 100vh; /* Escala a la altura de la ventana */
-  background-color: #245b34;
-  background-image: url('../imagenes/Slots/FondoSlots.png');
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden; /* Evita que el contenido desborde */
-  z-index: -1; /* Envía el fondo detrás de otros elementos */
+	position: fixed; /* Fija el contenedor en la ventana */
+	top: 50%; /* Centra verticalmente */
+	left: 50%; /* Centra horizontalmente */
+	transform: translate(-50%, -50%); /* Ajusta el centro exacto */
+	width: 100vw; /* Escala al ancho de la ventana */
+	height: 100vh; /* Escala a la altura de la ventana */
+	background-color: #245b34;
+	background-image: url("../imagenes/Slots/FondoSlots.png");
+	background-size: contain;
+	background-position: center;
+	background-repeat: no-repeat;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden; /* Evita que el contenido desborde */
+	z-index: -1; /* Envía el fondo detrás de otros elementos */
 }
-
 
 .background-image img {
-  width: 100%; /* Escala la imagen al ancho del contenedor */
-  height: 100%; /* Escala la imagen a la altura del contenedor */
-  object-fit: contain; /* Mantiene las proporciones de la imagen sin recortarla */
+	width: 100%; /* Escala la imagen al ancho del contenedor */
+	height: 100%; /* Escala la imagen a la altura del contenedor */
+	object-fit: contain; /* Mantiene las proporciones de la imagen sin recortarla */
 }
 
-.boton-inicio{
-  position: absolute; /* Posiciona el botón de forma absoluta */
-  top: 10px; /* Distancia desde la parte superior */
-  left: 10px; /* Distancia desde la parte izquierda */
-  padding: 10px 20px; /* Espaciado interno */
-  background-color: black; /* Fondo negro */
-  color: white; /* Texto blanco */
-  border: 2px solid white; /* Borde blanco */
-  border-radius: 10px; /* Bordes redondeados */
-  font-size: 1rem; /* Tamaño de fuente */
-  font-weight: bold; /* Texto en negrita */
-  text-align: center; /* Centra el texto */
-  cursor: pointer; /* Cambia el cursor al pasar por encima */
-  transition: all 0.3s ease; /* Transición suave para hover */
-  cursor: pointer;
+.boton-inicio {
+	position: absolute; /* Posiciona el botón de forma absoluta */
+	top: 10px; /* Distancia desde la parte superior */
+	left: 10px; /* Distancia desde la parte izquierda */
+	padding: 10px 20px; /* Espaciado interno */
+	background-color: black; /* Fondo negro */
+	color: white; /* Texto blanco */
+	border: 2px solid white; /* Borde blanco */
+	border-radius: 10px; /* Bordes redondeados */
+	font-size: 1rem; /* Tamaño de fuente */
+	font-weight: bold; /* Texto en negrita */
+	text-align: center; /* Centra el texto */
+	cursor: pointer; /* Cambia el cursor al pasar por encima */
+	transition: all 0.3s ease; /* Transición suave para hover */
+	cursor: pointer;
 }
 
 .boton-play {
-  cursor: pointer;
-  margin-top: 125px;
-  margin-right: 100px;
-  padding: 10px 20px;
-  font-size: 1.5rem;
-  font-weight: bold; /* Texto en negrita */
-  color: white; /* Color del texto */
-  background-color: #f4c542; /* Color dorado cálido */
-  border: 2px solid #e69500; /* Bordes anaranjados */
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle profundidad */
-  transition: all 0.3s ease; /* Transición suave para hover */
+	cursor: pointer;
+	margin-top: 125px;
+	margin-right: 100px;
+	padding: 10px 20px;
+	font-size: 1.5rem;
+	font-weight: bold; /* Texto en negrita */
+	color: white; /* Color del texto */
+	background-color: #f4c542; /* Color dorado cálido */
+	border: 2px solid #e69500; /* Bordes anaranjados */
+	border-radius: 10px; /* Bordes redondeados */
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra para darle profundidad */
+	transition: all 0.3s ease; /* Transición suave para hover */
 }
 
 .boton-play:hover {
-  background-color: #e6b800; /* Color dorado más oscuro al pasar el cursor */
-  border-color: #cc8400; /* Bordes más oscuros al pasar el cursor */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
-  transform: scale(1.05); /* Efecto de agrandamiento */
+	background-color: #e6b800; /* Color dorado más oscuro al pasar el cursor */
+	border-color: #cc8400; /* Bordes más oscuros al pasar el cursor */
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+	transform: scale(1.05); /* Efecto de agrandamiento */
 }
 
 .boton-stop {
-  cursor: pointer;
-  margin-top: 20px;
-  padding: 10px 20px; 
-  font-size: 1.5rem; 
-  font-weight: bold; 
-  color: white; /* Color del texto */
-  background-color: #28a745; /* Color verde cálido */
-  border: 3px solid #1e7e34; /* Bordes verdes oscuros */
-  border-radius: 15px; /* Bordes redondeados */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
-  transition: all 0.3s ease; /* Transición suave para hover */
+	cursor: pointer;
+	margin-top: 20px;
+	padding: 10px 20px;
+	font-size: 1.5rem;
+	font-weight: bold;
+	color: white; /* Color del texto */
+	background-color: #28a745; /* Color verde cálido */
+	border: 3px solid #1e7e34; /* Bordes verdes oscuros */
+	border-radius: 15px; /* Bordes redondeados */
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Sombra más pronunciada */
+	transition: all 0.3s ease; /* Transición suave para hover */
 }
 
 .boton-stop:hover {
-  background-color: #218838; /* Color verde más oscuro al pasar el cursor */
-  border-color: #155724; /* Bordes más oscuros al pasar el cursor */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Sombra más pronunciada */
-  transform: scale(1.05); /* Efecto de agrandamiento */
+	background-color: #218838; /* Color verde más oscuro al pasar el cursor */
+	border-color: #155724; /* Bordes más oscuros al pasar el cursor */
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Sombra más pronunciada */
+	transform: scale(1.05); /* Efecto de agrandamiento */
 }
 
-
 .slots-container {
-  display: flex;
-  justify-content: center;
-  gap: 100px;
-  margin-top: 365px;
-  gap: 130px;
+	display: flex;
+	justify-content: center;
+	margin-top: 32vh;
+	gap: 6vw;
 }
 
 .slot-column {
-  width: 50px;
-  height: 150px; 
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+	width: 50px;
+	height: 150px;
+	overflow: hidden;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
 
 .slot-number {
-  width: 20px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 4rem;
-  position: relative;
-  margin: 50px 0;
+	width: 1vw;
+	height: 4vh;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 4vw;
+	position: relative;
+	margin: 6vh 0vw;
 }
 
-.resultado{
-  color: white;
-  margin-top: 22px;
+.resultado {
+	color: white;
+	margin-top: 22px;
 }
-
-
-
-
