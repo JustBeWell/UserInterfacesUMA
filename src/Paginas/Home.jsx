@@ -1,7 +1,6 @@
-import GameCard from "../Componentes/GameCard/GameCard";
+import { GameCard } from "../Componentes";
 import "./Home.css";
-import imagenBlackjack from "../imagenes/MenuPrincipal/ImagenBlackjack.png";
-import imagenPoker from "../imagenes/MenuPrincipal/ImagenPoker.png";
+import { ImagenBlackjack, ImagenPoker } from "../imagenes";
 import { Link } from "react-router-dom";
 
 function Home() {
@@ -22,19 +21,19 @@ function Home() {
 
 			<div className="games-section">
 				<GameCard
-					image={imagenBlackjack}
+					image={ImagenBlackjack}
 					alt="Blackjack"
 					to="/blackjack"
 					label="Play Blackjack"
 				/>
 				<GameCard
-					image={imagenPoker}
+					image={ImagenPoker}
 					alt="Poker"
 					to="/poker"
 					label="Play Poker"
 				/>
 				<GameCard
-					image={imagenPoker}
+					image={ImagenPoker}
 					alt="Slots"
 					to="/slots"
 					label="Play Slots"
