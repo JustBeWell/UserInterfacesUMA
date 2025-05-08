@@ -6,7 +6,7 @@
 	width: 100vw; /* Escala al ancho de la ventana */
 	height: 100vh; /* Escala a la altura de la ventana */
 	background-color: #245b34;
-	background-image: url("../imagenes/Slots/FondoSlots.png");
+	background-image: url("../../imagenes/Slots/FondoSlots.png");
 	background-size: contain;
 	background-position: center;
 	background-repeat: no-repeat;
