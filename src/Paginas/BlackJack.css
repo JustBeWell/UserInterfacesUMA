@@ -1,61 +1,119 @@
 .blackjack-container {
-  position: relative;
-  width: 100vw; /* 100% del ancho de la ventana */
-  height: 100vh; /* 100% del alto de la ventana */
-  background-image: url("../imagenes/fondoCasino.png");
-  background-size: cover; /* Que cubra toda la pantalla */
-  background-position: center; /* Centrado */
-  background-repeat: no-repeat; /* Que no se repita */
+  width: 100vw;
+  height: 100vh;
+  background-image: linear-gradient(
+      rgba(0, 0, 0, 0.5), 
+      rgba(0, 0, 0, 0.5)
+    ),
+    url("../imagenes/fondoCasino.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* Alinea el contenido arriba */
-  padding-top: 50px; /* Espacio arriba para el título */
+  justify-content: flex-start;
+  padding-top: 50px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Botón de volver al menú */
-.btn-volver {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background-color: #222; /* fondo negro */
-  color: white;
-  padding: 10px 15px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background-color 0.3s ease;
+#controls {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
-.btn-volver:hover {
-  background-color: #444;
-}
-
-/* TODOS los botones de controles (apuestas, acciones, play again) */
-#controls .btn,
-.btn-play-again {
-  background-color: #222;
+.btn {
+  background-color: black;
   color: white;
   padding: 10px 20px;
-  margin: 5px;
   border: none;
-  border-radius: 6px;
-  cursor: pointer;
+  border-radius: 8px;
   font-weight: bold;
-  transition: background-color 0.3s ease;
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.3s;
 }
 
-/* Cabeceras */
-.bjh1{
-  margin-bottom: 10px;
-  color: white;
+.btn:hover {
+  background-color: #222;
+  transform: scale(1.05);
 }
-.bjh2{
-  margin-bottom: 10px;
-  color: white;
+
+.bet-input-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
-/* Mensajes */
-.bjp1{
-  color: #DDDDDD; /* gris clarito */
+
+.bet-input {
+  width: 120px;
+  padding: 8px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: none;
+  background-color: #111;
+  color: white;
+  text-align: center;
+}
+
+
+
+/* Modal styles */
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOutModal {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+  animation: fadeInModal 0.3s ease-out;
+}
+
+.modal-overlay.fade-out {
+  animation: fadeOutModal 0.4s ease-in forwards;
+}
+
+.modal-content {
+  background: #1a1a1a;
+  color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  width: 90%;
+  max-width: 400px;
+}
+
+.modal-content h2 {
+  margin-bottom: 1rem;
 }

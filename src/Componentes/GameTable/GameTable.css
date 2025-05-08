@@ -1,0 +1,38 @@
+.score-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 260px;
+    margin: 0.5rem auto 0;
+    padding: 4px 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    font-size: 14px;
+    color: #ddd;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  
+  .score-label {
+    text-transform: uppercase;
+    font-size: 12px;
+    opacity: 0.7;
+  }
+  
+  .score-value {
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .bet-label {
+    color: #ccc;
+    font-size: 0.9rem;
+
+  }
+
+  .available-chips {
+    color: #ccc;
+    font-size: 0.9rem;
+  }
+  
