@@ -21,7 +21,7 @@ const valores = [
 	{ valor: "K", valorNumerico: 10 },
 ];
 
-function BlackJack({ volumen }) {
+function BlackJack({ volumen,fichas,setFichas}) {
 	const [baraja, setBaraja] = useState([]);
 	const [cards, setCards] = useState([]);
 	const [cartasCrupier, setCartasCrupier] = useState([]);
@@ -82,7 +82,7 @@ function BlackJack({ volumen }) {
 	}
 
 	function iniciarJuego() {
-		if (betAmount === 0 || betAmount > chips) {
+		if (betAmount === 0 || betAmount > fichas) {
 			setMensaje("You must place a valid bet.");
 			return;
 		}
@@ -103,7 +103,7 @@ function BlackJack({ volumen }) {
 		setIsAlive(true);
 		setHasBlackJack(false);
 		setMensaje("Good luck!");
-		setChips((prev) => prev - betAmount);
+		setFichas((prev) => prev - betAmount);
 		setApuestaActual(betAmount);
 		setBetAmount(0);
 
@@ -173,7 +173,7 @@ function BlackJack({ volumen }) {
 			setMensaje("You lost!");
 			ganancia = 0;
 		}
-		setChips((prev) => prev + ganancia);
+		setFichas((prev) => prev + ganancia);
 		setIsAlive(false);
 	}
 
@@ -198,7 +198,7 @@ function BlackJack({ volumen }) {
 
 	return (
 		<div className="blackjack-container">
-			<HeaderBlackjack chips={chips} betAmount={betAmount} mensaje={mensaje} />
+			<HeaderBlackjack chips={fichas} betAmount={betAmount} mensaje={mensaje} />
 			<GameTable
 				dealerCards={cartasCrupier}
 				playerCards={cards}

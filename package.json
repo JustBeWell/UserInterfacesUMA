@@ -6,7 +6,8 @@
 		"react": "^19.1.0",
 		"react-audio-player": "^0.17.0",
 		"react-dom": "^19.1.0",
-		"react-router-dom": "^7.4.1"
+		"react-router-dom": "^7.4.1",
+		"royalflushuma": "file:"
 	},
 	"scripts": {
 		"start": "vite",

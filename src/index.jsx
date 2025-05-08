@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home volumen={volumen} />} />
         <Route path="/menu" element={<MenuPrincipal volumen={volumen} />} />
-        <Route path="/blackjack" element={<BlackJack volumen={volumen} />} />
+        <Route path="/blackjack" element={<BlackJack volumen={volumen} fichas={fichas} setFichas={setFichas}/>} />
         <Route path="/slots" element={<Slots volumen={volumen} />} />
         <Route path="/ajustes" element={<Ajustes volumen={volumen} setVolumen = {setVolumen}/>} />
         <Route path="/poker" element={<Poker volumen={volumen} />} />
