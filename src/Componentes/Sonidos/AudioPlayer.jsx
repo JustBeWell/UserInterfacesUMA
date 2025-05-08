@@ -1,4 +1,4 @@
-import {carta1} from "../Sonidos";
+import {carta1} from "../../Sonidos";
 
 function AudioPlayer(volumen){
     const audioCarta1 = new Audio(carta1);

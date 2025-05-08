@@ -1,99 +1,120 @@
 .tienda-container {
-    min-height: 100vh;
-    background-position: center;
-    padding: 40px;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+  min-height: 100vh;
+  background: url("../imagenes/fondoTienda.png") no-repeat center center/cover;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
 
-  .tienda-content {
-    display: flex;
-    gap: 30px;
-    justify-content: center;
-    flex-wrap: wrap;
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  
-  .tienda-header {
-    text-align: center;
-    margin-bottom: 40px;
-  }
-  
-  .btn-top-left {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background-color: #1a1a1a;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
-  
- 
+.tienda-header {
+  margin-bottom: 40px;
+  text-align: center;
+  color: white;
+  text-shadow: 0 0 10px #000;
+}
+
+.tienda-header h1 {
+  font-size: 2rem;
+}
+
+.tienda-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: center;
+}
+
 .store-section {
-    flex: 1 1 400px;
-    background: rgba(0, 0, 0, 0.65);
-    border-radius: 12px;
-    padding: 30px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.5);
-    text-align: center;
-    min-width: 300px;
-    max-width: 500px;
-  }
-  
-  .item-list {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  }
-  
-  .item p {
-    font-size: 18px;
-    margin-bottom: 10px;
-  }
-  
-  .btn-buy {
-    background-color: #1a1a1a;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-  }
-  
-  .btn-buy:hover {
-    background-color: #333;
-  }
-  
-  .range {
-    width: 100%;
-    margin: 20px 0;
-    appearance: none;
-    height: 8px;
-    border-radius: 5px;
-    background: #ccc;
-    outline: none;
-    transition: background 0.3s ease;
-  }
-  .range::-webkit-slider-thumb {
-    appearance: none;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #1a1a1a;
-    cursor: pointer;
-    border: 2px solid #fff;
-  }
-  
-  h1{
-    color: black;
-    font-weight: bold;
-  }
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 16px;
+  padding: 30px;
+  color: #fff;
+  width: 320px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+}
+
+.store-section h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+}
+
+.item {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.item p {
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.btn-buy {
+  background: #ff00cc;
+  color: white;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 14px;
+  box-shadow: 0 0 10px #ff00cc;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-buy:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #ff00cc, 0 0 30px #ff00cc;
+}
+
+.range {
+  width: 100%;
+  margin-top: 15px;
+  accent-color: #00ffff;
+  -webkit-appearance: none;
+  height: 8px;
+
+}
+
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #00ffff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.range::-webkit-slider-thumb:hover {
+  background: #00ccff;
+}
+
+.money {
+  font-size: 18px;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.btn-top-left {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: #111;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  transition: 0.3s;
+}
+
+.btn-top-left:hover {
+  background: #222;
+  box-shadow: 0 0 15px #fff;
+}

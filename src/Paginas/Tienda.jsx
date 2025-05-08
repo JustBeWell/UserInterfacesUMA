@@ -1,11 +1,13 @@
-import React, { use, useState, useRef } from "react";
+import React, { use, useState, useRef,useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Tienda.css";
+import AudioShop from "../Componentes/Sonidos/AudioShop";
+function Tienda({dinero,fichas,setFichas,setDinero,volumen}){ 
 
-
-
-
-function Tienda({volumen,dinero,fichas,setFichas,setDinero}){ 
+    const [intercambio, setIntercambio] = useState(0);
+    const audioCompra = new AudioShop(volumen);
+    
+    
     function handleBuy(amount) {
         if (dinero >= amount) {
           setFichas(fichas + amount);
@@ -13,6 +15,7 @@ function Tienda({volumen,dinero,fichas,setFichas,setDinero}){
         } else {
           alert("Not enough money to buy tokens.");
         }
+        audioCompra.reproducirCompra(); 
     }
     function handleExchange() {
         const fichasSeleccionadas = parseInt(intercambio);
@@ -20,14 +23,13 @@ function Tienda({volumen,dinero,fichas,setFichas,setDinero}){
             alert("You don't have enough tokens.");
             return;
         }
-    
         setFichas(prev => prev - fichasSeleccionadas);
         setDinero(prev => prev + fichasSeleccionadas); // 1 ficha = 1 euro
         setIntercambio(0); // reseteamos el slider
+        audioCompra.reproducirCompra(); 
     } 
 
-    const [intercambio, setIntercambio] = useState(0);
-
+    
     return (
         <div className="tienda-container">
             <header className="tienda-header">

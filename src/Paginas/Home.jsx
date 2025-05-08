@@ -8,9 +8,6 @@ function Home() {
 	return (
 		<div className="home-container">
 			<header className="home-header">
-				<Link to="/slots">
-					<button className="btn-top-left">Play Slots</button>
-				</Link>
 				<Link to="/ajustes">
 					<button className="btn-top-right"></button>
 				</Link>

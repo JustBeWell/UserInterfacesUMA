@@ -1,9 +1,8 @@
-// BlackJack.jsx
 import { useState } from "react";
 import HeaderBlackjack from "../Componentes/HeaderBlackjack/HeaderBlackJack";
 import GameTable from "../Componentes/GameTable/GameTable";
 import "../Paginas/BlackJack.css";
-import AudioPlayer from "../Componentes/AudioPlayer";
+import AudioPlayer from "../Componentes/Sonidos/AudioPlayer";
 
 const palos = ["corazones", "diamantes", "tréboles", "picas"];
 const valores = [
@@ -148,8 +147,10 @@ function BlackJack({ volumen, fichas, setFichas }) {
       mensajePopup = "You lost!";
       ganancia = 0;
     }
-    setResultadoFinal(mensajePopup);
-    setModalVisible(true);
+    setTimeout(() => {
+      setResultadoFinal(mensajePopup);
+      setModalVisible(true);
+    }, 1000);
     setFichas(prev => prev + ganancia);
     setIsAlive(false);
   }
@@ -205,7 +206,7 @@ function BlackJack({ volumen, fichas, setFichas }) {
               onClick={() => {
                 setModalVisible(false);
                 setTimeout(() => setResultadoFinal(""), 400);
-				resetGame();
+				        resetGame();
               }}
             >OK</button>
           </div>

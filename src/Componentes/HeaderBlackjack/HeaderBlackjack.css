@@ -2,9 +2,9 @@
     text-align: center;
     color: white;
     padding: 1rem 2rem;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.05);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 0 0 12px 12px;
+    border-radius: 12px 12px 12px 12px;
     max-width: 900px;
     margin: 0 auto 2rem;
   }
