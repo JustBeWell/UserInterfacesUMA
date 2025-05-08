@@ -1,6 +1,6 @@
 import { useState } from "react";
-import "../Paginas/BlackJack.css";
-import { HeaderBlackjack, AudioPlayer, GameTable } from "../Componentes";
+import "./BlackJack.css";
+import { HeaderBlackjack, AudioPlayer, GameTable } from "../../Componentes";
 
 const palos = ["corazones", "diamantes", "tréboles", "picas"];
 const valores = [

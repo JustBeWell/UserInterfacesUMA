@@ -1,6 +1,6 @@
-import { GameCard } from "../Componentes";
+import { GameCard } from "../../Componentes";
 import "./Home.css";
-import { ImagenBlackjack, ImagenPoker } from "../imagenes";
+import { ImagenBlackjack, ImagenPoker } from "../../imagenes";
 import { Link } from "react-router-dom";
 
 function Home() {

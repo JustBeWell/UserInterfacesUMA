@@ -1,7 +1,7 @@
-import botonAjustes from "./botonAjustes.png";
+import botonAjustes from "./Botones/botonAjustes.png";
 import ImagenBlackjack from "./MenuPrincipal/ImagenBlackjack.png";
 import ImagenPoker from "./MenuPrincipal/ImagenPoker.png";
-import fichaAzul from "./fichaAzul.png";
+import fichaAzul from "./Fichas/fichaAzul.png";
 
 // Importación de imágenes de cartas de diamantes
 import DiamAce from "./Diamante/As.png";

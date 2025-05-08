@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Tienda.css";
-import { AudioShop } from "../Componentes";
+import { AudioShop } from "../../Componentes";
 function Tienda({ dinero, fichas, setFichas, setDinero, volumen }) {
 	const [intercambio, setIntercambio] = useState(0);
 	const audioCompra = new AudioShop(volumen);
