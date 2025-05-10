@@ -1,32 +1,77 @@
-.ajustes-container{
+.ajustes-container {
     position: relative;
-    width: 100vw; /* 100% del ancho de la ventana */
-    height: 100vh; /* 100% del alto de la ventana */
-    background-size: cover; /* Que cubra toda la pantalla */
-    background-position: center; /* Centrado */
+    width: 100vw;
+    height: 100vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                      url("/images/Fondos/FondoCasino.png"); /* Usa public */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start; /* Alinea el contenido arriba */
-    padding-top: 50px; /* Espacio arriba para el título */
+    justify-content: center;
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.ajustes-header{
-    font-size: 25px;
-    text-align: center;
-    font-weight: bold;
+.ajustes-header h1 {
+    font-size: 3rem;
+    margin-bottom: 3rem;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.5);
 }
 
-.ajustes-linea{
-    width: 500px;
-    margin-left: 100px;
-}
-
-.ajustes-texto{
-    width: 200px;
-}
-
-.ajustes-mismaLinea{
+.ajustes-mismaLinea {
     display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
+.ajustes-texto {
+    font-size: 1.3rem;
+    font-weight: bold;
+    min-width: 150px;
+}
+
+.ajustes-linea {
+    width: 300px;
+    height: 8px;
+    appearance: none;
+    background: #ddd;
+    border-radius: 4px;
+    outline: none;
+    transition: background 0.3s;
+}
+
+.ajustes-linea::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #007bff;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.btn-top-left {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #111;
+    color: #fff;
+    padding: 0.7rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.btn-top-left:hover {
+    background-color: #333;
+}

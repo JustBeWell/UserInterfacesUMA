@@ -6,11 +6,11 @@ function Ajustes({volumen, setVolumen}){
     return <div className="ajustes-container">
         <div className="ajustes-header">
             <h1>
-                AJUSTES
+                SETTINGS
             </h1>
         </div>
         <div className="ajustes-mismaLinea">
-            <p className="ajustes-texto">Volumen: {Math.floor(volumen*100)}</p>
+            <p className="ajustes-texto">Volume: {Math.floor(volumen*100)}</p>
             <input className="ajustes-linea"
                 type="range"
                 min="0"
