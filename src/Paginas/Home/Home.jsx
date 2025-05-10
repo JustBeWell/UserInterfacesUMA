@@ -29,8 +29,13 @@ function Home() {
 			</section>
 
 			<footer className="home-footer">
+				<div className="footer-icons">
+					<img src="../../imagenes/iconos/juego-autorizado.png"/>
+					<img src="../../imagenes/iconos/juego-seguro.png"/>
+					<img src="../../imagenes/iconos/plus18.png"/>
+				</div>
 				<p>© 2025 RoyalFlush Casino</p>
-			</footer>
+</footer>
 		</main>
 	);
 }
