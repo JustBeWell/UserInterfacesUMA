@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home, BlackJack, Ajustes, Slots, Poker, Tienda } from "./Paginas";
+import { Home, BlackJack, Ajustes, Slots, Poker, Tienda,MayoriaDeEdad } from "./Paginas";
 
 function App() {
 	const [volumen, setVolumen] = useState(0.5);
@@ -40,6 +40,7 @@ function App() {
 						/>
 					}
 				/>
+				<Route path="/mayoriaDeEdad" element={<MayoriaDeEdad />} />
 				{/* más rutas aquí */}
 			</Routes>
 		</BrowserRouter>

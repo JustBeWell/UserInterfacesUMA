@@ -34,9 +34,9 @@ function Home() {
 
 			<footer className="home-footer">
 				<div className="footer-icons">
-					<img src={IconoAutorizado}/>
-					<img src={IconoSeguro}/>
-					<img src={Icono18Plus}/>
+					<a href="https://www.ordenacionjuego.es/participantes-juego/juego-autorizado"><img src={IconoAutorizado}/></a>
+					<a href="https://www.ordenacionjuego.es/participantes-juego/juego-seguro"><img src={IconoSeguro}/></a>
+					<a href="https://www.pokerstars.es/about/responsible-gaming/?_gl=1*28jpiz*_up*MQ..*_gs*MQ..&gclid=Cj0KCQjw8vvABhCcARIsAOCfwwqFXVjNvsNJMUWJ0imgaw3TU1ok47OJY4PLd0imU-mLApzILhPNJxUaAlelEALw_wcB&gbraid=0AAAAADjJa3MHZtSpO3dpv-QYEvZfbSw13#verification"><img src={Icono18Plus}/></a>
 				</div>
 				<p>© 2025 RoyalFlush Casino</p>
 </footer>

@@ -4,5 +4,5 @@ import Slots from "./Slots/Slots";
 import BlackJack from "./BlackJack/BlackJack";
 import Ajustes from "./Ajustes/Ajustes";
 import Poker from "./Poker/Poker";
-
-export { Home, Tienda, Slots, BlackJack, Ajustes, Poker };
+import MayoriaDeEdad from "./MayoriaDeEdad";
+export { Home, Tienda, Slots, BlackJack, Ajustes, Poker, MayoriaDeEdad };
