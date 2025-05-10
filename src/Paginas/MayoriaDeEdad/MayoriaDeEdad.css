@@ -1,0 +1,67 @@
+.edad-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #1a1a1a, #0a3e2f);
+    padding: 2rem;
+    font-family: 'Segoe UI', sans-serif;
+  }
+  
+  .edad-card {
+    background-color: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    border-radius: 16px;
+    padding: 2rem;
+    max-width: 600px;
+    text-align: center;
+    color: #f0f0f0;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  }
+  
+  .edad-card h1 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: #ffffff;
+    text-shadow: 1px 1px 4px #000;
+  }
+  
+  .edad-icon {
+    height: 80px;
+    margin: 1rem 0;
+    filter: drop-shadow(0 0 4px #00ff88);
+  }
+  
+  .edad-card p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  
+  .edad-card a {
+    color: #1db954;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+  
+  .btn-volver {
+    display: inline-block;
+    background-color: #0a3e2f;
+    color: #ffffff;
+    padding: 1rem 2rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    text-decoration: none;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .btn-volver:hover {
+    background-color: #148c3f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  }
+  

@@ -36,7 +36,7 @@ function Home() {
 				<div className="footer-icons">
 					<a href="https://www.ordenacionjuego.es/participantes-juego/juego-autorizado"><img src={IconoAutorizado}/></a>
 					<a href="https://www.ordenacionjuego.es/participantes-juego/juego-seguro"><img src={IconoSeguro}/></a>
-					<a href="https://www.pokerstars.es/about/responsible-gaming/?_gl=1*28jpiz*_up*MQ..*_gs*MQ..&gclid=Cj0KCQjw8vvABhCcARIsAOCfwwqFXVjNvsNJMUWJ0imgaw3TU1ok47OJY4PLd0imU-mLApzILhPNJxUaAlelEALw_wcB&gbraid=0AAAAADjJa3MHZtSpO3dpv-QYEvZfbSw13#verification"><img src={Icono18Plus}/></a>
+					<Link to="/mayoriaDeEdad"><img src={Icono18Plus}/></Link>
 				</div>
 				<p>© 2025 RoyalFlush Casino</p>
 </footer>
