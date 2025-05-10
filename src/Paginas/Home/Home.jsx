@@ -1,45 +1,37 @@
 import { GameCard } from "../../Componentes";
 import "./Home.css";
-import { ImagenBlackjack, ImagenPoker } from "../../imagenes";
+import { ImagenBlackjack, ImagenPoker, ImagenSlots} from "../../imagenes/";
 import { Link } from "react-router-dom";
 
 function Home() {
 	return (
-		<div className="home-container">
+		<main className="home-container">
 			<header className="home-header">
-				<Link to="/ajustes">
-					<button className="btn-top-right"></button>
-				</Link>
-				<Link to="/tienda">
-					<button className="btn-top-right-store"></button>
-				</Link>
-				<h1>
+				<nav className="top-nav">
+					<Link to="/tienda">
+						<button className="icon-btn" aria-label="Open Store" title="Store"></button>
+					</Link>
+					<Link to="/ajustes">
+						<button className="icon-btn settings" aria-label="Settings" title="Settings"></button>
+					</Link>
+				</nav>
+
+				<h1 className="home-title">
 					Welcome to <strong>RoyalFlush</strong>
 				</h1>
-				<p>Where your dreams come true</p>
+				<p className="home-subtitle">Where your dreams come true</p>
 			</header>
 
-			<div className="games-section">
-				<GameCard
-					image={ImagenBlackjack}
-					alt="Blackjack"
-					to="/blackjack"
-					label="Play Blackjack"
-				/>
-				<GameCard
-					image={ImagenPoker}
-					alt="Poker"
-					to="/poker"
-					label="Play Poker"
-				/>
-				<GameCard
-					image={ImagenPoker}
-					alt="Slots"
-					to="/slots"
-					label="Play Slots"
-				/>
-			</div>
-		</div>
+			<section className="games-section" aria-label="Available Games">
+				<GameCard image={ImagenBlackjack} alt="Blackjack" to="/blackjack" label="Play Blackjack" />
+				<GameCard image={ImagenPoker} alt="Poker" to="/poker" label="Play Poker" />
+				<GameCard image={ImagenSlots} alt="Slots" to="/slots" label="Play Slots" />
+			</section>
+
+			<footer className="home-footer">
+				<p>© 2025 RoyalFlush Casino</p>
+			</footer>
+		</main>
 	);
 }
 

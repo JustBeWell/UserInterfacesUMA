@@ -1,59 +1,81 @@
+:root {
+	--background: #f2f2f2;
+	--text-color: #1a1a1a;
+	--primary: #007bff;
+	--accent: #333;
+	--white: #fff;
+}
+
+body {
+	margin: 0;
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	color: var(--text-color);
+	background-color: var(--background);
+}
+
 .home-container {
-    padding: 40px;
-  }
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+	padding: 2rem;
+	box-sizing: border-box;
+	background: linear-gradient(to bottom, #ffffff 0%, #8f8f8f 100%);
+}
 
+.top-nav {
+	display: flex;
+	justify-content: flex-end;
+	gap: 1rem;
+	margin-bottom: 1rem;
+}
 
-  
-  .home-header {
-    margin-bottom: 40px;
-  }
-  
-  .btn-top-left {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background-color: #333;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-  }
+.icon-btn {
+	width: 40px;
+	height: 40px;
+	background: url("../../imagenes/botones/botonTienda.png") no-repeat center;
+	background-size: contain;
+	border: none;
+	cursor: pointer;
+	border-radius: 50%;
+	transition: transform 0.2s;
+}
 
-  .btn-top-right {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    background-image: url("../../imagenes/botones/botonAjustes.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 40px 40px;
-    width: 40px;
-    height: 40px;
-  }
-  
-  .btn-top-right-store{
-    position: absolute;
-    top: 20px;
-    right: 80px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    background-image: url("../../imagenes/botones/botonTienda.png");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 40px 40px;
-    width: 40px;
-    height: 40px;
-  }
-  
-  .games-section {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    flex-wrap: wrap;
-  }
-  
+.icon-btn:hover {
+	transform: scale(1.1);
+}
+
+.icon-btn.settings {
+	background-image: url("../../imagenes/botones/botonAjustes.png");
+}
+
+.home-header {
+	text-align: center;
+	margin-bottom: 3rem;
+}
+
+.home-title {
+	font-size: 2.5rem;
+	margin: 0;
+}
+
+.home-subtitle {
+	color: var(--accent);
+	margin-top: 0.5rem;
+	font-size: 1.1rem;
+}
+
+.games-section {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 2rem;
+	padding: 1rem 0;
+}
+
+.home-footer {
+	text-align: center;
+	margin-top: auto;
+	padding: 1rem;
+	font-size: 0.9rem;
+	color: #666;
+}

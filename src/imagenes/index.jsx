@@ -2,7 +2,7 @@ import botonAjustes from "./Botones/botonAjustes.png";
 import ImagenBlackjack from "./MenuPrincipal/ImagenBlackjack.png";
 import ImagenPoker from "./MenuPrincipal/ImagenPoker.png";
 import fichaAzul from "./Fichas/fichaAzul.png";
-
+import ImagenSlots from "./MenuPrincipal/ImagenSlots.png";
 // Importación de imágenes de cartas de diamantes
 import DiamAce from "./Diamante/As.png";
 import Diam2 from "./Diamante/2.png";
@@ -165,7 +165,7 @@ export { CartaPorDetras, botonAjustes };
 export { imagenesDiamante, imagenesCorazon, imagenesTrebol, imagenesPica };
 
 //Exportamos las imagenes de los botones
-export { ImagenBlackjack, ImagenPoker };
+export { ImagenBlackjack, ImagenPoker,ImagenSlots };
 
 //Exportamos otras imagenes
 export { fichaAzul };
