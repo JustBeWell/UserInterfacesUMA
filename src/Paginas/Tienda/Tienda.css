@@ -6,17 +6,29 @@
   align-items: center;
   padding: 40px 20px;
   font-family: 'Segoe UI', sans-serif;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+.mensaje-header{
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 16px;
+  padding: 30px;
+  color: #fff;
+  width: 400px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
 }
 
 .tienda-header {
   margin-bottom: 40px;
   text-align: center;
   color: white;
-  text-shadow: 0 0 10px #000;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
 }
 
 .tienda-header h1 {
   font-size: 2rem;
+  color: #b4b4b4;
 }
 
 .tienda-content {
@@ -31,7 +43,7 @@
   border-radius: 16px;
   padding: 30px;
   color: #fff;
-  width: 320px;
+  width: 400px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(8px);
 }
@@ -39,41 +51,44 @@
 .store-section h2 {
   text-align: center;
   margin-bottom: 20px;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+  color: #b4b4b4;
 }
 
 .item {
   text-align: center;
   margin-bottom: 20px;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
 }
 
 .item p {
   font-weight: bold;
   margin-bottom: 10px;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
 }
 
 .btn-buy {
-  background: #ff00cc;
+  background: #1db954;
   color: white;
   border: none;
   padding: 10px 22px;
   border-radius: 12px;
+  margin-top: 10px;
   font-weight: bold;
   font-size: 14px;
-  box-shadow: 0 0 10px #ff00cc;
+  box-shadow: 0 0 10px #1db954;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .btn-buy:hover {
   transform: scale(1.05);
-  box-shadow: 0 0 20px #ff00cc, 0 0 30px #ff00cc;
+  box-shadow: 0 0 20px #17a34a, 0 0 30px #17a34a;
+  background: #17a34a;
 }
 
 .range {
   width: 100%;
-  margin-top: 15px;
   accent-color: #00ffff;
   -webkit-appearance: none;
   height: 8px;
@@ -85,12 +100,12 @@
   appearance: none;
   width: 20px;
   height: 20px;
-  background: #00ffff;
+  background: #17a34a;
   border-radius: 50%;
   cursor: pointer;
 }
 .range::-webkit-slider-thumb:hover {
-  background: #00ccff;
+  background: #17a34a;
 }
 
 .money {

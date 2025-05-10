@@ -33,12 +33,14 @@ function Tienda({ dinero, fichas, setFichas, setDinero, volumen }) {
 				<Link to="/">
 					<button className="btn-top-left">Back to main menu</button>
 				</Link>
-				<h1>Buy or Exchange Tokens</h1>
+				<div className="mensaje-header">
+					<h1>Buy or Exchange Tokens</h1>
+				</div>
 			</header>
 
 			<div className="tienda-content">
 				<div className="store-section">
-					<h2>Buy Tokens</h2>
+					<h2><strong>Buy Tokens</strong></h2>
 					<p>
 						You have <strong>{dinero}</strong> €
 					</p>
@@ -65,7 +67,7 @@ function Tienda({ dinero, fichas, setFichas, setDinero, volumen }) {
 				</div>
 
 				<div className="store-section">
-					<h2>Exchange Tokens for Money</h2>
+					<h2><strong>Exchange Tokens for Money</strong></h2>
 					<p>
 						You have <strong>{fichas}</strong> tokens
 					</p>
