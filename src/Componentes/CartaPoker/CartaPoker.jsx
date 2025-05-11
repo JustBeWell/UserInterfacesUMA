@@ -2,47 +2,55 @@ import { useEffect, useState } from "react";
 import CartaPorDetras from "../../imagenes/CartaPorDetras.png";
 import "./CartaPoker.css";
 
-function formatearNombreArchivo(valor, palo) {
-  const valorMapeado = {
-    "A": "ace",
-    "J": "jack",
-    "Q": "queen",
-    "K": "king"
-  };
+function formatearRutaCarta(valor, palo) {
 
-  const v = valorMapeado[valor] || valor;
-  return `${v}_of_${palo.toLowerCase()}.png`;
+
+  const carpeta = palo;
+  return `../../imagenes/${carpeta}/${valor}.png`;
 }
 
-function CartaPoker({ carta, rotada = false, inclinacion = 0, nueva = false, girarSolo = false }) {
-  const [mostrarCarta, setMostrarCarta] = useState(rotada || nueva || girarSolo);
+
+function CartaPoker({ carta, inclinacion = 0, nueva = false, girarSolo = false,  villain = false}) {
+  // 1. Estado inicial
+const [mostrarCarta, setMostrarCarta] = useState(false); // siempre empieza boca abajo
+
+// 2. Forzamos que si es rival, nunca se muestre la delantera
+
+  const [montado, setMontado] = useState(false);
+  // y depende de si está rotada, de si es nueva y de si girar solo, si alguna está true se muestra boca a abajo
+  const rutaImagen = new URL(formatearRutaCarta(carta.valor, carta.palo), import.meta.url).href;
 
   useEffect(() => {
-    if (nueva || girarSolo) {
-      const tiempo = nueva ? 1000 : 500;
-      const timer = setTimeout(() => setMostrarCarta(false), tiempo);
+    if (girarSolo && montado && !villain)  {
+      const timer = setTimeout(() => setMostrarCarta(true), 1000); // o el tiempo que prefieras
       return () => clearTimeout(timer);
     }
-  }, [nueva, girarSolo]);
+  }, [girarSolo, montado, villain]);
 
-  const nombreArchivo = formatearNombreArchivo(carta.valor, carta.palo);
+  useEffect(() => {
+    setMontado(true);
+  }, []);
 
-  const rutaImagen = new URL(
-    `../../imagenes/cartasMazoNormal/Playing Cards/PNG-cards-1.3/${nombreArchivo}`,
-    import.meta.url
-  ).href;
 
-  const imagen = mostrarCarta ? CartaPorDetras : rutaImagen;
+
+ 
+ 
 
   return (
     <div
-      className={`carta ${nueva ? "carta-nueva" : ""} ${girarSolo ? "carta-giro" : ""}`}
-      style={{
-        transform: `rotate(${inclinacion}deg)`,
-        backgroundImage: `url(${imagen})`
-      }}
-    ></div>
+      className={`carta-wrapper ${nueva ? "carta-nueva" : ""} `}
+      style={{ transform: `rotate(${inclinacion}deg)` }}
+    >
+      <div className={`carta ${mostrarCarta ? "girada" : ""}`}>
+
+
+
+        <div className="cara cara-trasera" style={{ backgroundImage: `url(${CartaPorDetras})` }} />
+        <div className="cara cara-delantera" style={{ backgroundImage: `url(${rutaImagen})` }} />
+      </div>
+    </div>
   );
+  
 }
 
 export default CartaPoker;

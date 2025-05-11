@@ -9,8 +9,15 @@
   display:grid;             /* seguimos con las 3 filas que ya tienes */
   grid-template-rows:auto 1fr auto;
   place-items:center;
+  transform: scale(1.2);        /* Escala toda la mesa al 110% */
+  transform-origin: center;
+  
 }
-
+@media (max-width: 768px) {
+  .mesa {
+    transform: scale(1); /* sin escalado en móvil */
+  }
+}
 
 /* sin posición absoluta aquí */
 .jugador-top   { grid-row:1; }

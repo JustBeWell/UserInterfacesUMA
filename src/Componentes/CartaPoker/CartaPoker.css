@@ -1,18 +1,47 @@
-/* src/Componentes/CartaPoker/CartaPoker.css */
-.carta {
-  --w: clamp(64px, 8vw, 80px);   /* ancho responsivo y tope 80 px */
-  width: var(--w);
-  height: calc(var(--w) * 1.44); /* 1.44 ≈ relación real 63×88 mm */
-  border-radius:6px;
-  background-size:cover;
-  transition:transform .35s, box-shadow .35s;
-  box-shadow:0 4px 10px rgba(0,0,0,.25);
-  z-index:5;
+.carta-wrapper {
+  perspective: 1600px;
+  display: inline-block;
 }
 
-  
-  .carta:hover {
-    transform: translateY(-6px) scale(1.08);
-    box-shadow: 0 12px 24px rgba(0,0,0,.35);
-  }
-  
+.carta {
+  --w: clamp(72px, 9vw, 96px);
+  width: var(--w);
+  height: calc(var(--w) * 1.44);
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s, box-shadow 0.35s;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+  background-size: cover;
+}
+
+.carta.girada {
+  transform: rotateY(180deg);
+   
+}
+
+.carta.girada:hover {
+  transform: rotateY(180deg) translateY(-8px) scale(1.08);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+
+
+
+.cara {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  backface-visibility: hidden;
+  background-size: cover;
+}
+
+.cara-delantera {
+  transform: rotateY(180deg);
+}
+
+.cara-trasera {
+  transform: rotateY(0deg);
+}

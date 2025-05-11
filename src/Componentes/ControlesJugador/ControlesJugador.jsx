@@ -8,9 +8,11 @@ import "./ControlesJugador.css";
 function ControlesJugador({ onAccion }) {
   return (
     <div className="controles-jugador">
-      <button onClick={() => onAccion("check")}>CHECK / FOLD</button>
-      <button onClick={() => onAccion("call-any")}>CALL ANY</button>
-      <button onClick={() => onAccion("call-current")}>CALL CURRENT</button>
+    <button onClick={() => onAccion("check")}>CHECK</button>
+    <button onClick={() => onAccion("call")}>CALL</button>
+    <button onClick={() => onAccion("raise")}>RAISE</button>
+    <button onClick={() => onAccion("fold")}>FOLD</button>
+
     </div>
   );
 }
