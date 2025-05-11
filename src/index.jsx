@@ -22,7 +22,14 @@ function App() {
 						/>
 					}
 				/>
-				<Route path="/slots" element={<Slots volumen={volumen} />} />
+				<Route 
+					path="/slots" 
+					element={
+						<Slots 
+							volumen={volumen}
+							fichas={fichas}
+							setFichas={setFichas}
+							/>} />
 				<Route
 					path="/ajustes"
 					element={<Ajustes volumen={volumen} setVolumen={setVolumen} />}

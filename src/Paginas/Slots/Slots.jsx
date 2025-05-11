@@ -1,168 +1,181 @@
 import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import "./Slots.css";
+import HeaderSlots from "../../Componentes/HeaderSlots/HeaderSlots";
+import winSound from "../../Sonidos/jackpot1.mp3";
 
-function Slots() {
-	const [slots1, setSlots1] = useState(["🍒", "🍋", "🍊"]);
-	const [slots2, setSlots2] = useState(["🍒", "🍋", "🍊"]);
-	const [slots3, setSlots3] = useState(["🍒", "🍋", "🍊"]);
+function Slots({ volumen, fichas, setFichas }) {
+	const reelsRef = [useRef(), useRef(), useRef()];
+	const iconHeight = 79;
+	const iconWidth = 79;
+	const numIcons = 9;
+	const timePerIcon = 100;
+  	const indexes = useRef([0, 0, 0]);
+	const [betAmount, setBetAmount] = useState(Number(10));
+	const [winClass, setWinClass] = useState(""); // para animación
 
-	const [result, setResult] = useState("");
-	const isSpinning = useRef(false);
-	const isStopping = useRef(false);
+	const [isSpinning, setIsSpinning] = useState(false); 
+	const winSoundRef = useRef(new Audio(winSound));
 
-	const generatedSlots1 = Array.from([
-		"🍒",
-		"🍋",
-		"🍊",
-		"7️⃣",
-		"🅱️",
-		"🍉",
-		"🍇",
-		"🔔",
-		"⭐",
-		"💎",
-	]);
-	const generatedSlots2 = [...generatedSlots1];
-	const generatedSlots3 = [...generatedSlots1];
+	const roll = (reel, offset) =>{
+		const alfa = (offset + 2) * numIcons + Math.round(Math.random() * numIcons);
+		return new Promise((resolve) => {
+			const style = getComputedStyle(reel); // Para obtener luego el valor de backgroundPositionY (actual)
+			const currentY = parseFloat(style.backgroundPositionY) || 0; // Obtiene la posición actual del fondo (actual)
+			const targetY = currentY + alfa * iconHeight; // Calcula la posicion del fondo (donde se quiere llegar)
+			const normalizedY = targetY % (numIcons * iconHeight);
 
-	let currentIndex1 = useRef(0);
-	let currentIndex2 = useRef(0);
-	let currentIndex3 = useRef(0);
+			setTimeout(() => {
+				reel.style.transition = `background-position-y ${(8 + alfa) * timePerIcon}ms 
+				cubic-bezier(.41,-0.01,.63,1.09)`;
+				reel.style.backgroundPositionY = `${targetY}px`;
+			}, offset * 150); // El offset sera 0 para la primera columna, 150 para la segunda y 300 para la tercera
+			// Se le da un tiempo de espera para que la animacion no empiece a girar a la vez.
 
-	const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+			setTimeout(() => {
+				reel.style.transition = "none";
+				reel.style.backgroundPositionY = `${normalizedY}px`;
+				resolve(alfa % numIcons);
+			}, (8 + alfa) * timePerIcon + offset * 150);
+		});
+	};
+	
+	const rollAll = async () => {
+		setIsSpinning(true);
+		setFichas(fichas - betAmount);
+		const alfas = await Promise.all(
+			reelsRef.map((ref, i) => roll(ref.current, i))
+		);
+		
+		alfas.forEach((d, i) => {
+			indexes.current[i] = (indexes.current[i] + d) % numIcons;
+		});
+		console.log("Valores de indexes después de girar:", indexes.current);
+		if (calcularPuntuacion(indexes.current) > 1) {
+			setWinClass("win1");
+			
+			// Reproducir sonido de victoria
+            winSoundRef.current.volume = volumen; // Ajusta el volumen si es necesario
+            winSoundRef.current.play();
+		}
+		setTimeout(() => setWinClass(""), 2000);
+		setFichas(fichas-betAmount + (betAmount*calcularPuntuacion(indexes.current)));
+		setIsSpinning(false);
+		
+  	};
 
-	const spinIndefinido = async (generatedSlots, setColumn, currentIndex) => {
-		const speed = Math.floor(Math.random() * (50 - 20 + 1)) + 20;
-		while (!isStopping.current) {
-			const currentSlots = [
-				generatedSlots[currentIndex.current % generatedSlots.length],
-				generatedSlots[(currentIndex.current + 1) % generatedSlots.length],
-				generatedSlots[(currentIndex.current + 2) % generatedSlots.length],
-			];
-			setColumn(currentSlots);
-			currentIndex.current += 1 % generatedSlots.length;
-			await delay(speed);
+	const calcularPuntuacion = (indexes) => {
+		/*
+		Tenemos 9 iconos, y los valores de los iconos son:
+		0:Plátano
+		1: 7
+		2: Cereza
+		3: Uva
+		4: Naranja
+		5: Campana
+		6: BAR	
+		7: Limón
+		8: Sandía
+
+		Si los tres son frutas --> x2
+		Si las 3 son frutas iguales --> x10
+		Si las 3 son Campanas --> x50
+		Si las 3 son BAR --> x75
+		Si las 3 son 7 --> x100
+		Si hay BAR y otras 2 diferetes --> x2
+		Si hay dos BAR y una diferente --> x5
+		Si hay BAR campana y 7 sin importar la posicion --> x150
+		*/
+		const TODOS = [0, 1, 2, 3, 4, 5, 6, 7, 8]; 
+		const FRUTAS = [0, 2, 3, 4, 7, 8];
+		const BAR = [6];
+		const CAMPANA = [5];
+		const SIETE = [1];
+		const col1 = Number(indexes[0]);
+		const col2 = Number(indexes[1]);
+		const col3 = Number(indexes[2]);
+
+		if (BAR.includes(col1) && SIETE.includes(col2) && CAMPANA.includes(col3) ||
+			BAR.includes(col2) && SIETE.includes(col3) && CAMPANA.includes(col1) ||
+			BAR.includes(col3) && SIETE.includes(col1) && CAMPANA.includes(col2) ||
+			BAR.includes(col1) && SIETE.includes(col3) && CAMPANA.includes(col2) ||
+			BAR.includes(col2) && SIETE.includes(col1) && CAMPANA.includes(col3) ||
+			BAR.includes(col3) && SIETE.includes(col2) && CAMPANA.includes(col1)){
+			
+			return 150;
+		}
+		else if (SIETE.includes(col1) && 
+			SIETE.includes(col2) && 
+			SIETE.includes(col3)) {
+			
+			return 100;
+		}
+		else if(CAMPANA.includes(col1) && 
+			CAMPANA.includes(col2) && 
+			CAMPANA.includes(col3)) {
+			
+			return 50;
+		}
+		else if(BAR.includes(col1) && 
+			BAR.includes(col2) && 
+			BAR.includes(col3)) {
+			
+			return 75;
+		}
+		else if (BAR.includes(col1) && BAR.includes(col2) && TODOS.includes(col3) ||
+			BAR.includes(col1) && TODOS.includes(col2) && BAR.includes(col3) ||
+			TODOS.includes(col1) && BAR.includes(col2) && BAR.includes(col3)) {
+			
+			return 5;
+		}
+		else if (BAR.includes(col1) && TODOS.includes(col2) && TODOS.includes(col3) ||
+			TODOS.includes(col1) && BAR.includes(col2) && TODOS.includes(col3) ||
+			TODOS.includes(col1) && TODOS.includes(col2) && BAR.includes(col3)) {
+			
+			return 2;
+		}
+		else if (FRUTAS.includes(col1) && FRUTAS.includes(col2) && FRUTAS.includes(col3)) {
+			
+			return 1.5;
+		}
+		else if (col1 === col2 && col2 === col3){
+			
+			return 10;	
+		}
+		else{
+			
+			return Number(0);
 		}
 	};
 
-	const spinParada = async (generatedSlots, setColumn, currentIndex) => {
-		const velocidadInicial = Math.floor(Math.random() * (50 - 20 + 1)) + 20;
-		const velocidadMedia = Math.floor(Math.random() * (100 - 50 + 1)) + 50;
-		const velocidadFinal = Math.floor(Math.random() * (300 - 150 + 1)) + 150;
-
-		for (let i = 0; i < 30; i++) {
-			const currentSlots = [
-				generatedSlots[currentIndex.current % generatedSlots.length],
-				generatedSlots[(currentIndex.current + 1) % generatedSlots.length],
-				generatedSlots[(currentIndex.current + 2) % generatedSlots.length],
-			];
-
-			setColumn(currentSlots);
-			currentIndex.current += 1 % generatedSlots.length;
-
-			const randomFactor = Math.random() * 10;
-
-			const speed =
-				i < 10
-					? velocidadInicial +
-					  ((velocidadMedia - velocidadInicial) * i) / 10 +
-					  randomFactor
-					: i < 25
-					? velocidadMedia +
-					  ((velocidadFinal - velocidadMedia) * (i - 10)) / 15 +
-					  randomFactor
-					: velocidadFinal +
-					  ((1000 - velocidadFinal) * (i - 25)) / 15 +
-					  randomFactor;
-
-			await delay(speed);
-		}
-	};
-
-	const spinSlots = async () => {
-		setResult("Girando.....");
-		isSpinning.current = true;
-		isStopping.current = false;
-
-		await Promise.all([
-			spinIndefinido(generatedSlots1, setSlots1, currentIndex1),
-			spinIndefinido(generatedSlots2, setSlots2, currentIndex2),
-			spinIndefinido(generatedSlots3, setSlots3, currentIndex3),
-		]);
-	};
-
-	const stopSlots = async () => {
-		isStopping.current = true; // Iniciar el proceso de parada
-
-		await Promise.all([
-			spinParada(generatedSlots1, setSlots1, currentIndex1),
-			spinParada(generatedSlots2, setSlots2, currentIndex2),
-			spinParada(generatedSlots3, setSlots3, currentIndex3),
-		]);
-
-		isSpinning.current = false;
-		// Determina el resulatado despues de pararse
-		const finalSlots = [
-			generatedSlots1[(currentIndex1.current + 1) % generatedSlots1.length],
-			generatedSlots2[(currentIndex2.current + 1) % generatedSlots2.length],
-			generatedSlots3[(currentIndex3.current + 1) % generatedSlots3.length],
-		];
-
-		if (finalSlots[0] === finalSlots[1] && finalSlots[1] === finalSlots[2]) {
-			setResult("¡Victoria!");
-		} else {
-			setResult("Has perdido");
-		}
-	};
-
-	return (
-		<div className="slots-page">
-			<div className="background-image"></div>
-			<header>
-				<Link to="/">
-					<button className="btn-top-left">Volver al menú principal</button>
-				</Link>
-			</header>
-			<div className="slots-container">
-				<div className="slots-column">
-					{slots1.map((number, index) => (
-						<div key={index} className="slot-number">
-							{number}
-						</div>
-					))}
-				</div>
-				<div className="slots-column">
-					{slots2.map((number, index) => (
-						<div key={index} className="slot-number">
-							{number}
-						</div>
-					))}
-				</div>
-				<div className="slots-column">
-					{slots3.map((number, index) => (
-						<div key={index} className="slot-number">
-							{number}
-						</div>
-					))}
-				</div>
-			</div>
-			<button
-				className="boton-play"
-				onClick={spinSlots}
-				disabled={isSpinning.current}
-			>
-				Jugar
-			</button>
-			<button
-				className="boton-stop"
-				onClick={stopSlots}
-				disabled={isStopping.current}
-			>
-				Parar
-			</button>
-			<h2 className="resultado">{result}</h2>
+	return(
+	<div className="slots-container">
+		<HeaderSlots/>
+		<div className={`slots ${winClass}`}> 
+			<div className="reel" ref={reelsRef[0]}></div>
+			<div className="reel" ref={reelsRef[1]}></div>
+			<div className="reel" ref={reelsRef[2]}></div>
 		</div>
+		<button className="spin-button" onClick={rollAll} disabled={isSpinning || betAmount < 10}>Spin</button>
+		<div className="bet-input-group">
+            <span className="bet-label">Enter your bet:</span>
+            <input
+              type="text"
+              id="betAmount"
+              placeholder="Enter amount"
+			  className="bet-input"
+			  value={betAmount}
+			  onChange={(e) => setBetAmount(e.target.value)}
+            />
+            <span className="available-chips">
+              Available: <strong>{fichas}</strong> tokens
+            </span>
+          </div>
+		  {/* Mostrar mensaje de advertencia si el monto es <= 10 y no está girando */}
+    		{!isSpinning && betAmount < 10 && (
+        	<p className="bet-warning">You must bet 10 or more tokens to play!</p>)}
+	</div>
+	
 	);
 }
 
