@@ -18,6 +18,20 @@
     transform: scale(1); /* sin escalado en móvil */
   }
 }
+.jugada-encima {
+  position: absolute;
+  top: 92%; /* puedes ajustar esto si se monta sobre las cartas */
+  left: 60%;
+  transform: translate(-50%, -100%);
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+  text-shadow: 0 0 4px black;
+  z-index: 10; /* mayor que el resto */
+  white-space: nowrap;
+  pointer-events: none;
+}
+
 
 /* sin posición absoluta aquí */
 .jugador-top   { grid-row:1; }

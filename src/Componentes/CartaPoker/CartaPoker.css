@@ -1,6 +1,15 @@
+
 .carta-wrapper {
   perspective: 1600px;
   display: inline-block;
+  opacity: 0;
+  transform: translateY(-20px) scale(0.95);
+  transition: opacity 0.4s ease, transform 0.5s ease;
+}
+
+.carta-wrapper.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 .carta {

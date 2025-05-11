@@ -10,9 +10,16 @@ function formatearRutaCarta(valor, palo) {
 }
 
 
-function CartaPoker({ carta, inclinacion = 0, nueva = false, girarSolo = false,  villain = false}) {
+function CartaPoker({ carta, inclinacion = 0, nueva = false, girarSolo = false,  villain = false, showdown = false}) {
   // 1. Estado inicial
 const [mostrarCarta, setMostrarCarta] = useState(false); // siempre empieza boca abajo
+const [visible, setVisible] = useState(false);
+
+useEffect(() => {
+  const timer = setTimeout(() => setVisible(true), 10); // pequeño retraso para montar
+  return () => clearTimeout(timer);
+}, []);
+
 
 // 2. Forzamos que si es rival, nunca se muestre la delantera
 
@@ -28,6 +35,15 @@ const [mostrarCarta, setMostrarCarta] = useState(false); // siempre empieza boca
   }, [girarSolo, montado, villain]);
 
   useEffect(() => {
+    if (showdown)  {
+      const timer = setTimeout(() => setMostrarCarta(true), 1000); // o el tiempo que prefieras
+      return () => clearTimeout(timer);
+    }else{
+      const timer = setTimeout(() => setMostrarCarta(false), 0); // o el tiempo que prefieras
+      return () => clearTimeout(timer);
+    }
+  }, [showdown]);
+  useEffect(() => {
     setMontado(true);
   }, []);
 
@@ -38,7 +54,7 @@ const [mostrarCarta, setMostrarCarta] = useState(false); // siempre empieza boca
 
   return (
     <div
-      className={`carta-wrapper ${nueva ? "carta-nueva" : ""} `}
+      className={`carta-wrapper ${nueva ? "carta-nueva" : ""} ${visible ? "visible" : ""}`}
       style={{ transform: `rotate(${inclinacion}deg)` }}
     >
       <div className={`carta ${mostrarCarta ? "girada" : ""}`}>

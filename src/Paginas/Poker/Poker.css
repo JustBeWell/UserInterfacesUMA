@@ -1,11 +1,31 @@
 /* src/Paginas/Poker.css  (crea el archivo si no existe) */
-.poker-pagina{
-  min-height:100vh;         /* toma todo el alto disponible */
-  display:flex;
-  align-items:center;       /* centra verticalmente */
-  justify-content:center;   /* y horizontalmente */
-  padding-block:2rem;       /* un respiro en pantallas muy bajas */
+body {
+  margin: 0;
+  background: linear-gradient(160deg, #f0f2f5, #ffffff);
+  background-attachment: fixed;
+  font-family: "Segoe UI", sans-serif;
 }
+
+
+.poker-pagina {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-block: 2rem;
+}
+/* Poker.css */
+.overlay-go{
+  position:fixed; inset:0; background:rgba(0,0,0,.8);
+  display:flex; flex-direction:column; gap:1rem;
+  align-items:center; justify-content:center;
+  color:#fff; z-index:5000; text-align:center;
+}
+.overlay-go button{
+  padding:.7rem 1.6rem; font-weight:bold; cursor:pointer;
+  border:none; border-radius:10px;
+}
+
 .boton-ronda-container {
   display: flex;
   justify-content: center;
@@ -24,6 +44,29 @@
 }
 .boton-ronda-container button:hover {
   background-color: #eee;
+}
+.boton-menu-container {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 2000;
+}
+
+.boton-menu-container button {
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(to right, #ddd, #fefefe);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.boton-menu-container button:hover {
+  background: linear-gradient(to right, #ccc, #f0f0f0);
+  transform: scale(1.05);
 }
 
 .poker-container {
@@ -48,14 +91,20 @@
 .intro-overlay {
   position: absolute;
   inset: 0;
-  
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 999;
-  animation: fadeOutOverlay 0.5s ease-in-out forwards;
-  animation-delay: 1.8s; /* un pelín antes del cambio de fase */
+  background: rgba(255, 255, 255, 0.6);
+  opacity: 1;
+  transition: opacity 0.6s ease-out;
 }
+
+.intro-overlay.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
 
 /* Imagen de introducción */
 .intro-overlay img {
@@ -100,6 +149,57 @@
 
   z-index: 999;
   animation: fadeInUp 0.4s ease-out;
+}
+.mensaje-final {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* ya centrado desde el principio */
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(to right, #444, #222);
+  padding: 1rem 2rem;
+  border-radius: 16px;
+  text-align: center;
+  z-index: 999;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  animation: aparecerSuave 0.4s ease-out;
+}
+
+@keyframes aparecerSuave {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+.boton-menu-container {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 3000;
+}
+
+.boton-menu-container button {
+  font-size: 0.95rem;
+  padding: 0.5rem 1rem;
+  border-radius: 10px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: linear-gradient(to bottom, #f9f9f9, #e0e0e0);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+}
+
+.boton-menu-container button:hover {
+  background: linear-gradient(to bottom, #e6e6e6, #cccccc);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
 }
 
 @keyframes fadeInUp {

@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
+		"pokersolver": "^2.1.4",
 		"react": "^19.1.0",
 		"react-audio-player": "^0.17.0",
 		"react-dom": "^19.1.0",

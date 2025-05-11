@@ -4,7 +4,7 @@ import React from "react";
 import "./Jugador.css"
 
 
-function Jugador({ nombre, fichas, cartas, posicion, controles , fase, turno}) {
+function Jugador({ nombre, fichas, cartas, posicion, controles , fase, turno, showdown}) {
   return (
     <div className={`jugador jugador-${posicion}`}>
       <div className="jugador-cartas">
@@ -15,6 +15,7 @@ function Jugador({ nombre, fichas, cartas, posicion, controles , fase, turno}) {
         rotada={posicion === "top"}
         girarSolo={posicion === "bottom" && fase === "juego"}
         nueva={false}
+        showdown={showdown}
       />
       
       ))}
@@ -24,6 +25,7 @@ function Jugador({ nombre, fichas, cartas, posicion, controles , fase, turno}) {
       <span className="jugador-fichas">{fichas}</span>
       {controles}
     </div>
+    
   );
 }
 export default Jugador;
