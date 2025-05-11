@@ -63,6 +63,8 @@ function Poker() {
 	const [fase,  setFase]  = useState("inicio");          // SE MANTIENE para blur y giros
 	const [ronda, setRonda] = useState(RONDA.PREFLOP);     // NUEVO para la lógica de juego
 	const [turno, setTurno] = useState("jugador"); 
+	
+	const [mensajeRival, setMensajeRival] = useState("");
 
 	/*
 	useEffect(() => {
@@ -100,11 +102,13 @@ function Poker() {
 		// SHOWDOWN: ya no se sacan cartas
 	  }, [ronda]);
 	  useEffect(() => {
+		//Este useEffect se triggerea cuando cambia el turno
+		
 		if (turno !== "rival") return;
-	  
+		//Al principio es mi turno luego esto, que es para la ia no afecta
 		const delay = setTimeout(() => {
 		  const necesitaIgualar = apuestaActual - apuestaRival;
-	  
+			
 		  // decidir acción
 		  const r = Math.random();
 		  if (necesitaIgualar > 0 && r < 0.1) {
@@ -123,16 +127,32 @@ function Poker() {
 		  } else {
 			apostarRival(necesitaIgualar); // call / check
 		  }
-		}, 800);
+		  if (ronda !== RONDA.SHOWDOWN) {
+			setTimeout(() => {
+			  avanzarRonda(); // nueva función que define la transición
+			}, 1500);
+		  }
+		}, 2000);
 	  
 		return () => clearTimeout(delay);
 	  }, [turno]);
+	  function avanzarRonda() {
+		setRonda(r => ({
+		  preflop: "flop",
+		  flop: "turn",
+		  turn: "river",
+		  river: "showdown",
+		  showdown: "showdown"
+		}[r]));
+	  }
 	  
 	//Ahora mismo el único estable que se puede mutar es ficharJugador y pot
 	/* --- función que SÍ existe --- */
-	function handleAccion(tipo) {
+	function handleAccion(tipo, cantidad = 0) {
+		console.log("Acción:", tipo, "Cantidad:", cantidad);
 		if (turno !== "jugador") return;              // no es tu turno
-
+		//Esta es la función que gestiona las acciones que realiza el jugador
+		//Para empezar necesitamos que se vea de quien es el turno
 		switch (tipo) {
 		  case "check":
 			if (apuestaActual === apuestaJugador) setTurno("rival");
@@ -143,7 +163,7 @@ function Poker() {
 			break;
 	  
 		  case "raise":
-			const subida =  Math.floor(Math.random() * 100) + 50; // de momento random
+			const subida = Math.max(cantidad, 1); // mínimo 1
 			setApuesta(a => a + subida);
 			apostarJugador(apuestaActual - apuestaJugador + subida);
 			break;
@@ -193,9 +213,16 @@ function Poker() {
 	  }
 	  function apostarRival(cantidad) {
 		if (cantidad > fichasRival) cantidad = fichasRival;
+		
 		setFichasRival(f => f - cantidad);
+		//Se resta la apuesta
 		setApuR(a => a + cantidad);
 		setPot(p => p + cantidad);
+		setMensajeRival(`Rival apuesta ${cantidad} fichas`);
+		setTimeout(() => setMensajeRival(""), 2000);
+
+		
+		//Se actua
 		setTurno("jugador");
 	  }
 	  const comunitariasVisibles = ronda === RONDA.FLOP ? cartasMesa.slice(0,3)
@@ -214,25 +241,18 @@ function Poker() {
 		</div>
 		)}
 
-
+		{/* ✅ Mensaje que flota sobre la mesa */}
+		{mensajeRival && (
+			<div className="mensaje-rival">{mensajeRival}</div>
+		)}
 
 		<div className={fase === "inicio" ? "poker-blur" : ""}>
 		
-		<MesaPoker {...estado} comunitarias={comunitariasVisibles} fase={fase} />
+		<MesaPoker {...estado} comunitarias={comunitariasVisibles} fase={fase} turno={turno}/>
 		
 		</div>
 		<div className="boton-ronda-container">
-		<button onClick={() =>
-		setRonda(r => ({
-			preflop: "flop",
-			flop: "turn",
-			turn: "river",
-			river: "showdown",
-			showdown: "showdown",
-		}[r]))
-		}>
-		Próxima ronda
-		</button>
+
 	</div>
 		</div>
 		

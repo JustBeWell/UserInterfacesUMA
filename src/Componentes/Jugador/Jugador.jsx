@@ -4,7 +4,7 @@ import React from "react";
 import "./Jugador.css"
 
 
-function Jugador({ nombre, fichas, cartas, posicion, controles , fase}) {
+function Jugador({ nombre, fichas, cartas, posicion, controles , fase, turno}) {
   return (
     <div className={`jugador jugador-${posicion}`}>
       <div className="jugador-cartas">
@@ -20,7 +20,7 @@ function Jugador({ nombre, fichas, cartas, posicion, controles , fase}) {
       ))}
     </div>
 
-      <span className="jugador-nombre">{nombre}</span>
+    <span className={`jugador-nombre ${turno ? "jugador-turno" : ""}`}>{nombre}</span>
       <span className="jugador-fichas">{fichas}</span>
       {controles}
     </div>

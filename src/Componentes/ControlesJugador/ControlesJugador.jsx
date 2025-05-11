@@ -1,18 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import "./ControlesJugador.css";
 
-/**
- *  Botonera básica de acciones del jugador local
- *  ▸  onAccion("check") | onAccion("call-any") | onAccion("call-current")
- */
 function ControlesJugador({ onAccion }) {
+  const [cantidad, setCantidad] = useState(100);
+
+  const handleChange = (e) => {
+    const valor = parseInt(e.target.value);
+    if (!isNaN(valor)) setCantidad(valor);
+  };
+
   return (
     <div className="controles-jugador">
-    <button onClick={() => onAccion("check")}>CHECK</button>
-    <button onClick={() => onAccion("call")}>CALL</button>
-    <button onClick={() => onAccion("raise")}>RAISE</button>
-    <button onClick={() => onAccion("fold")}>FOLD</button>
-
+      <input
+        type="number"
+        value={cantidad}
+        min={1}
+        step={10}
+        onChange={handleChange}
+        className="input-apuesta"
+      />
+      <button onClick={() => onAccion("check")}>CHECK</button>
+      <button onClick={() => onAccion("call")}>CALL</button>
+      <button onClick={() => onAccion("raise", cantidad)}>RAISE</button>
+      <button onClick={() => onAccion("fold")}>FOLD</button>
     </div>
   );
 }
