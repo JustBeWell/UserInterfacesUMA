@@ -1,27 +1,49 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Slots.css";
 import HeaderSlots from "../../Componentes/HeaderSlots/HeaderSlots";
 import winSound from "../../Sonidos/jackpot1.mp3";
+import GirandoSound from "../../Sonidos/GirandoSlots.mp3";
+import AudioSlots from "../../Componentes/Sonidos/AudioSlots";
 
-function Slots({ volumen, fichas, setFichas }) {
+function Slots({ volumenEfectos, volumenMusica, fichas, setFichas }) {
+	const audioRef = useRef(null);
+	useEffect(() => {
+		const { reproducirMusica, pararMusica, audio } = AudioSlots(volumenMusica);
+		audioRef.current = { pararMusica, audio };
+		const handleFirstInput = () => {
+			reproducirMusica();
+			window.removeEventListener("pointerdown", handleFirstInput);
+			window.removeEventListener("keydown", handleFirstInput);
+		};
+
+		window.addEventListener("pointerdown", handleFirstInput);
+		window.addEventListener("keydown", handleFirstInput);
+
+		return () => {
+			pararMusica();
+			window.removeEventListener("pointerdown", handleFirstInput);
+			window.removeEventListener("keydown", handleFirstInput);
+		};
+	}, [volumenMusica]);
 	const reelsRef = [useRef(), useRef(), useRef()];
 	const iconHeight = 79;
 	const iconWidth = 79;
 	const numIcons = 9;
 	const timePerIcon = 100;
-  	const indexes = useRef([0, 0, 0]);
+	const indexes = useRef([0, 0, 0]);
 	const [betAmount, setBetAmount] = useState("100");
 	const [winClass, setWinClass] = useState(""); // para animación
 
-	const [isSpinning, setIsSpinning] = useState(false); 
+	const [isSpinning, setIsSpinning] = useState(false);
 	const winSoundRef = useRef(new Audio(winSound));
+	const girandoSoundRef = useRef(new Audio(GirandoSound));
 
 	const [showRules, setShowRules] = useState(false);
 	const [resultadoFinal, setResultadoFinal] = useState("");
 	const [modalVisible, setModalVisible] = useState(false);
 
-	const roll = (reel, offset) =>{
+	const roll = (reel, offset) => {
 		const alfa = (offset + 2) * numIcons + Math.round(Math.random() * numIcons);
 		return new Promise((resolve) => {
 			const style = getComputedStyle(reel); // Para obtener luego el valor de backgroundPositionY (actual)
@@ -30,7 +52,9 @@ function Slots({ volumen, fichas, setFichas }) {
 			const normalizedY = targetY % (numIcons * iconHeight);
 
 			setTimeout(() => {
-				reel.style.transition = `background-position-y ${(8 + alfa) * timePerIcon}ms 
+				reel.style.transition = `background-position-y ${
+					(8 + alfa) * timePerIcon
+				}ms 
 				cubic-bezier(.41,-0.01,.63,1.09)`;
 				reel.style.backgroundPositionY = `${targetY}px`;
 			}, offset * 150); // El offset sera 0 para la primera columna, 150 para la segunda y 300 para la tercera
@@ -43,38 +67,41 @@ function Slots({ volumen, fichas, setFichas }) {
 			}, (8 + alfa) * timePerIcon + offset * 150);
 		});
 	};
-	
+
 	const rollAll = async () => {
 		const apuesta = parseInt(betAmount);
-		if (
-			apuesta > fichas || apuesta <= 0
-		  ) {
+		if (apuesta > fichas || apuesta <= 0) {
 			setResultadoFinal("Invalid bet. Make sure it's within your tokens.");
 			setModalVisible(true);
 			return;
-			}
+		}
+		girandoSoundRef.current.playbackRate = 0.75;
+		girandoSoundRef.current.volume = volumenEfectos;
+		girandoSoundRef.current.play();
+
 		setIsSpinning(true);
 		setFichas(fichas - betAmount);
 		const alfas = await Promise.all(
 			reelsRef.map((ref, i) => roll(ref.current, i))
 		);
-		
+
 		alfas.forEach((d, i) => {
 			indexes.current[i] = (indexes.current[i] + d) % numIcons;
 		});
 		console.log("Valores de indexes después de girar:", indexes.current);
 		if (calcularPuntuacion(indexes.current) > 1) {
 			setWinClass("win1");
-			
+
 			// Reproducir sonido de victoria
-            winSoundRef.current.volume = volumen; // Ajusta el volumen si es necesario
-            winSoundRef.current.play();
+			winSoundRef.current.volume = volumenEfectos; // Ajusta el volumen si es necesario
+			winSoundRef.current.play();
 		}
 		setTimeout(() => setWinClass(""), 2000);
-		setFichas(fichas-betAmount + (betAmount*calcularPuntuacion(indexes.current)));
+		setFichas(
+			fichas - betAmount + betAmount * calcularPuntuacion(indexes.current)
+		);
 		setIsSpinning(false);
-		
-  	};
+	};
 
 	const calcularPuntuacion = (indexes) => {
 		/*
@@ -98,7 +125,7 @@ function Slots({ volumen, fichas, setFichas }) {
 		Si hay dos BAR y una diferente --> x5
 		Si hay BAR campana y 7 sin importar la posicion --> x150
 		*/
-		const TODOS = [0, 1, 2, 3, 4, 5, 6, 7, 8]; 
+		const TODOS = [0, 1, 2, 3, 4, 5, 6, 7, 8];
 		const FRUTAS = [0, 2, 3, 4, 7, 8];
 		const BAR = [6];
 		const CAMPANA = [5];
@@ -107,123 +134,122 @@ function Slots({ volumen, fichas, setFichas }) {
 		const col2 = Number(indexes[1]);
 		const col3 = Number(indexes[2]);
 
-		if (BAR.includes(col1) && SIETE.includes(col2) && CAMPANA.includes(col3) ||
-			BAR.includes(col2) && SIETE.includes(col3) && CAMPANA.includes(col1) ||
-			BAR.includes(col3) && SIETE.includes(col1) && CAMPANA.includes(col2) ||
-			BAR.includes(col1) && SIETE.includes(col3) && CAMPANA.includes(col2) ||
-			BAR.includes(col2) && SIETE.includes(col1) && CAMPANA.includes(col3) ||
-			BAR.includes(col3) && SIETE.includes(col2) && CAMPANA.includes(col1)){
-			
+		if (
+			(BAR.includes(col1) && SIETE.includes(col2) && CAMPANA.includes(col3)) ||
+			(BAR.includes(col2) && SIETE.includes(col3) && CAMPANA.includes(col1)) ||
+			(BAR.includes(col3) && SIETE.includes(col1) && CAMPANA.includes(col2)) ||
+			(BAR.includes(col1) && SIETE.includes(col3) && CAMPANA.includes(col2)) ||
+			(BAR.includes(col2) && SIETE.includes(col1) && CAMPANA.includes(col3)) ||
+			(BAR.includes(col3) && SIETE.includes(col2) && CAMPANA.includes(col1))
+		) {
 			return 150;
-		}
-		else if (SIETE.includes(col1) && 
-			SIETE.includes(col2) && 
-			SIETE.includes(col3)) {
-			
+		} else if (
+			SIETE.includes(col1) &&
+			SIETE.includes(col2) &&
+			SIETE.includes(col3)
+		) {
 			return 100;
-		}
-		else if(CAMPANA.includes(col1) && 
-			CAMPANA.includes(col2) && 
-			CAMPANA.includes(col3)) {
-			
+		} else if (
+			CAMPANA.includes(col1) &&
+			CAMPANA.includes(col2) &&
+			CAMPANA.includes(col3)
+		) {
 			return 50;
-		}
-		else if(BAR.includes(col1) && 
-			BAR.includes(col2) && 
-			BAR.includes(col3)) {
-			
+		} else if (BAR.includes(col1) && BAR.includes(col2) && BAR.includes(col3)) {
 			return 75;
-		}
-		else if (BAR.includes(col1) && BAR.includes(col2) && TODOS.includes(col3) ||
-			BAR.includes(col1) && TODOS.includes(col2) && BAR.includes(col3) ||
-			TODOS.includes(col1) && BAR.includes(col2) && BAR.includes(col3)) {
-			
+		} else if (
+			(BAR.includes(col1) && BAR.includes(col2) && TODOS.includes(col3)) ||
+			(BAR.includes(col1) && TODOS.includes(col2) && BAR.includes(col3)) ||
+			(TODOS.includes(col1) && BAR.includes(col2) && BAR.includes(col3))
+		) {
 			return 5;
-		}
-		else if (BAR.includes(col1) && TODOS.includes(col2) && TODOS.includes(col3) ||
-			TODOS.includes(col1) && BAR.includes(col2) && TODOS.includes(col3) ||
-			TODOS.includes(col1) && TODOS.includes(col2) && BAR.includes(col3)) {
-			
+		} else if (
+			(BAR.includes(col1) && TODOS.includes(col2) && TODOS.includes(col3)) ||
+			(TODOS.includes(col1) && BAR.includes(col2) && TODOS.includes(col3)) ||
+			(TODOS.includes(col1) && TODOS.includes(col2) && BAR.includes(col3))
+		) {
 			return 2;
-		}
-		else if (FRUTAS.includes(col1) && FRUTAS.includes(col2) && FRUTAS.includes(col3)) {
-			
+		} else if (
+			FRUTAS.includes(col1) &&
+			FRUTAS.includes(col2) &&
+			FRUTAS.includes(col3)
+		) {
 			return 1.5;
-		}
-		else if (col1 === col2 && col2 === col3){
-			
-			return 10;	
-		}
-		else{
-			
+		} else if (col1 === col2 && col2 === col3) {
+			return 10;
+		} else {
 			return Number(0);
 		}
 	};
 
-
-	return(
-	<div className="slots-container">
-		{showRules && (
-		<div className="rules-modal">
-			<h2>Winning Combinations</h2>
-			<ul>
-			<li>🎰 3x 7 → x100</li>
-			<li>🔔 3x Bell → x50</li>
-			<li>🟩 3x BAR → x75</li>
-			<li>🍒 + 🍌 + 🍇 (all fruits) → x1.5</li>
-			<li>3x same fruit → x10</li>
-			<li>Any BAR + 2 random → x2</li>
-			<li>2 BAR + 1 random → x5</li>
-			<li>BAR + 7 + Bell (any order) → x150</li>
-			</ul>
-			<button onClick={() => setShowRules(false)} className="close-rules">✖</button>
-		</div>
-		)}
-		<button className="rules-button" onClick={() => setShowRules(true)}>ℹ️</button>
-		<HeaderSlots/>
-		<div className={`slots ${winClass}`}> 
-			<div className="reel" ref={reelsRef[0]}></div>
-			<div className="reel" ref={reelsRef[1]}></div>
-			<div className="reel" ref={reelsRef[2]}></div>
-		</div>
-		<button className="spin-button" onClick={rollAll} disabled={isSpinning}>Spin</button>
-		<div className="bet-input-group">
-            <span className="bet-label">Enter your bet:</span>
-            <input
-              type="text"
-              id="betAmount"
-              placeholder="Enter amount"
-			  className="bet-input"
-			  value={betAmount}
-			  onChange={(e) => {
-				const value = e.target.value;
-				if (/^\d*$/.test(value)) {
-				  setBetAmount(value);
-				}
-			  }}
-            />
-            <span className="available-chips">
-              Available: <strong>{fichas}</strong> tokens
-            </span>
-          </div>
-		  {modalVisible && (
-			<div className="modal-overlay">
-				<div className="modal-content">
-				<p>{resultadoFinal}</p>
-				<button
-					className="btn"
-					onClick={() => {
-					setModalVisible(false);
-					setTimeout(() => setResultadoFinal(""), 300);
-					}}
-				>
-					OK
-				</button>
+	return (
+		<div className="slots-container">
+			{showRules && (
+				<div className="rules-modal">
+					<h2>Winning Combinations</h2>
+					<ul>
+						<li>🎰 3x 7 → x100</li>
+						<li>🔔 3x Bell → x50</li>
+						<li>🟩 3x BAR → x75</li>
+						<li>🍒 + 🍌 + 🍇 (all fruits) → x1.5</li>
+						<li>3x same fruit → x10</li>
+						<li>Any BAR + 2 random → x2</li>
+						<li>2 BAR + 1 random → x5</li>
+						<li>BAR + 7 + Bell (any order) → x150</li>
+					</ul>
+					<button onClick={() => setShowRules(false)} className="close-rules">
+						✖
+					</button>
 				</div>
+			)}
+			<button className="rules-button" onClick={() => setShowRules(true)}>
+				ℹ️
+			</button>
+			<HeaderSlots />
+			<div className={`slots ${winClass}`}>
+				<div className="reel" ref={reelsRef[0]}></div>
+				<div className="reel" ref={reelsRef[1]}></div>
+				<div className="reel" ref={reelsRef[2]}></div>
 			</div>
-)}
-	</div>
-	
+			<button className="spin-button" onClick={rollAll} disabled={isSpinning}>
+				Spin
+			</button>
+			<div className="bet-input-group">
+				<span className="bet-label">Enter your bet:</span>
+				<input
+					type="text"
+					id="betAmount"
+					placeholder="Enter amount"
+					className="bet-input"
+					value={betAmount}
+					onChange={(e) => {
+						const value = e.target.value;
+						if (/^\d*$/.test(value)) {
+							setBetAmount(value);
+						}
+					}}
+				/>
+				<span className="available-chips">
+					Available: <strong>{fichas}</strong> tokens
+				</span>
+			</div>
+			{modalVisible && (
+				<div className="modal-overlay">
+					<div className="modal-content">
+						<p>{resultadoFinal}</p>
+						<button
+							className="btn"
+							onClick={() => {
+								setModalVisible(false);
+								setTimeout(() => setResultadoFinal(""), 300);
+							}}
+						>
+							OK
+						</button>
+					</div>
+				</div>
+			)}
+		</div>
 	);
 }
 

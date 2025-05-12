@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./BlackJack.css";
 import { HeaderBlackjack, AudioPlayer, GameTable } from "../../Componentes";
+import AudioBlackjack from "../../Componentes/Sonidos/AudioBlackjack";
 
 const palos = ["corazones", "diamantes", "tréboles", "picas"];
 const valores = [
@@ -19,7 +20,7 @@ const valores = [
 	{ valor: "K", valorNumerico: 10 },
 ];
 
-function BlackJack({ volumen, fichas, setFichas }) {
+function BlackJack({ volumenMusica, volumenEfectos, fichas, setFichas }) {
 	const [baraja, setBaraja] = useState([]);
 	const [cards, setCards] = useState([]);
 	const [cartasCrupier, setCartasCrupier] = useState([]);
@@ -33,7 +34,28 @@ function BlackJack({ volumen, fichas, setFichas }) {
 	const [apuestaActual, setApuestaActual] = useState(0);
 	const [resultadoFinal, setResultadoFinal] = useState("");
 	const [modalVisible, setModalVisible] = useState(false);
-	const { reproducirCarta1 } = AudioPlayer(volumen);
+	const { reproducirCarta1 } = AudioPlayer(volumenEfectos);
+	const audioRef = useRef(null);
+	useEffect(() => {
+		const { reproducirMusica, pararMusica, audio } =
+			AudioBlackjack(volumenMusica);
+		audioRef.current = { pararMusica, audio };
+
+		const handleFirstInput = () => {
+			reproducirMusica();
+			window.removeEventListener("pointerdown", handleFirstInput);
+			window.removeEventListener("keydown", handleFirstInput);
+		};
+
+		window.addEventListener("pointerdown", handleFirstInput);
+		window.addEventListener("keydown", handleFirstInput);
+
+		return () => {
+			pararMusica();
+			window.removeEventListener("pointerdown", handleFirstInput);
+			window.removeEventListener("keydown", handleFirstInput);
+		};
+	}, [volumenMusica]);
 
 	function crearBaraja() {
 		const mazo = [];
