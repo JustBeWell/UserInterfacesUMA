@@ -1,11 +1,8 @@
 .blackjack-container {
   width: 100vw;
   height: 100vh;
-  background-image: linear-gradient(
-      rgba(0, 0, 0, 0.5), 
-      rgba(0, 0, 0, 0.5)
-    ),
-    url("../../imagenes/Fondos/fondoCasino.png");
+	background: linear-gradient(to bottom, #0a3e2f 0%, #242525 50%, #0D0D0D 100%);
+
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

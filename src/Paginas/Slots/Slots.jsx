@@ -17,6 +17,8 @@ function Slots({ volumen, fichas, setFichas }) {
 	const [isSpinning, setIsSpinning] = useState(false); 
 	const winSoundRef = useRef(new Audio(winSound));
 
+	const [showRules, setShowRules] = useState(false);
+
 	const roll = (reel, offset) =>{
 		const alfa = (offset + 2) * numIcons + Math.round(Math.random() * numIcons);
 		return new Promise((resolve) => {
@@ -150,6 +152,23 @@ function Slots({ volumen, fichas, setFichas }) {
 
 	return(
 	<div className="slots-container">
+		{showRules && (
+		<div className="rules-modal">
+			<h2>Winning Combinations</h2>
+			<ul>
+			<li>🎰 3x 7 → x100</li>
+			<li>🔔 3x Bell → x50</li>
+			<li>🟩 3x BAR → x75</li>
+			<li>🍒 + 🍌 + 🍇 (all fruits) → x1.5</li>
+			<li>3x same fruit → x10</li>
+			<li>Any BAR + 2 random → x2</li>
+			<li>2 BAR + 1 random → x5</li>
+			<li>BAR + 7 + Bell (any order) → x150</li>
+			</ul>
+			<button onClick={() => setShowRules(false)} className="close-rules">✖</button>
+		</div>
+		)}
+		<button className="rules-button" onClick={() => setShowRules(true)}>ℹ️</button>
 		<HeaderSlots/>
 		<div className={`slots ${winClass}`}> 
 			<div className="reel" ref={reelsRef[0]}></div>
