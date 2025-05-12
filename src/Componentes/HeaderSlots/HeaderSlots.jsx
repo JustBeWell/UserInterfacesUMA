@@ -5,17 +5,14 @@ function HeaderSlots() {
   return (
     <header className="header-slots">
       <Link to="/">
-        <button className="btn-top-left">Return to Menu</button>
+        <button className="btn-top-left">⏴ Return to Menu</button>
       </Link>
-      <p className="instruction">
-        <strong>Goal:</strong> Get one of the combinations.
-      </p>
-      <p className="instruction">
-        <strong>Step 1:</strong> Press the "Spin" button.
-      </p>
-      <p className="instruction">
-        <strong>Step 2:</strong> After the animation you will see.
-      </p>
+      
+      <section className="instructions">
+        <p className="instruction"><strong> Objective:</strong> Match symbols to win tokens!</p>
+        <p className="instruction"><strong> Step 1:</strong> Set your bet and press <em>Spin</em>.</p>
+        <p className="instruction"><strong> Step 2:</strong> Win multipliers based on the result!</p>
+      </section>
     </header>
   );
 }

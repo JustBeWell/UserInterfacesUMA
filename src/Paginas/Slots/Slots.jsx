@@ -11,7 +11,7 @@ function Slots({ volumen, fichas, setFichas }) {
 	const numIcons = 9;
 	const timePerIcon = 100;
   	const indexes = useRef([0, 0, 0]);
-	const [betAmount, setBetAmount] = useState(Number(10));
+	const [betAmount, setBetAmount] = useState(Number(100));
 	const [winClass, setWinClass] = useState(""); // para animación
 
 	const [isSpinning, setIsSpinning] = useState(false); 

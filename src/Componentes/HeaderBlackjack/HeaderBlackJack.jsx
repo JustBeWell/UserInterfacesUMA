@@ -19,9 +19,6 @@ function HeaderBlackjack({ chips, betAmount, mensaje }) {
       <p className="instruction">
         <strong>Step 3:</strong> Choose <em>Hit</em> to take another card, or <em>Stand</em> to finish.
       </p>
-      <p className="instruction">
-        <strong>Win</strong> if you beat the dealer without going over 21!
-      </p>
     </header>
   );
 }
