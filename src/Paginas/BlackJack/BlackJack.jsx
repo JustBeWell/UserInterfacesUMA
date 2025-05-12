@@ -72,7 +72,7 @@ function BlackJack({ volumen, fichas, setFichas }) {
 
 	function iniciarJuego() {
 		if (betAmount === 0 || betAmount > fichas) {
-			setResultadoFinal("You don't have enough chips to place that bet.");
+			setResultadoFinal("Invalid bet. Make sure it's within your tokens.");
 			setModalVisible(true);
 			return;
 		}

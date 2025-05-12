@@ -134,7 +134,7 @@
 .modal-content .btn:hover {
   background-color: #1f1f1f;
   border-color: #888;
-  box-shadow: 0 0 10px #0ff;
+  box-shadow: 0 0 10px rgb(255, 255, 255);
 }
 
 .modal-content,

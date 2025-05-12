@@ -11,13 +11,15 @@ function Slots({ volumen, fichas, setFichas }) {
 	const numIcons = 9;
 	const timePerIcon = 100;
   	const indexes = useRef([0, 0, 0]);
-	const [betAmount, setBetAmount] = useState(Number(100));
+	const [betAmount, setBetAmount] = useState("100");
 	const [winClass, setWinClass] = useState(""); // para animación
 
 	const [isSpinning, setIsSpinning] = useState(false); 
 	const winSoundRef = useRef(new Audio(winSound));
 
 	const [showRules, setShowRules] = useState(false);
+	const [resultadoFinal, setResultadoFinal] = useState("");
+	const [modalVisible, setModalVisible] = useState(false);
 
 	const roll = (reel, offset) =>{
 		const alfa = (offset + 2) * numIcons + Math.round(Math.random() * numIcons);
@@ -43,6 +45,14 @@ function Slots({ volumen, fichas, setFichas }) {
 	};
 	
 	const rollAll = async () => {
+		const apuesta = parseInt(betAmount);
+		if (
+			apuesta > fichas || apuesta <= 0
+		  ) {
+			setResultadoFinal("Invalid bet. Make sure it's within your tokens.");
+			setModalVisible(true);
+			return;
+			}
 		setIsSpinning(true);
 		setFichas(fichas - betAmount);
 		const alfas = await Promise.all(
@@ -150,6 +160,7 @@ function Slots({ volumen, fichas, setFichas }) {
 		}
 	};
 
+
 	return(
 	<div className="slots-container">
 		{showRules && (
@@ -175,7 +186,7 @@ function Slots({ volumen, fichas, setFichas }) {
 			<div className="reel" ref={reelsRef[1]}></div>
 			<div className="reel" ref={reelsRef[2]}></div>
 		</div>
-		<button className="spin-button" onClick={rollAll} disabled={isSpinning || betAmount < 10}>Spin</button>
+		<button className="spin-button" onClick={rollAll} disabled={isSpinning}>Spin</button>
 		<div className="bet-input-group">
             <span className="bet-label">Enter your bet:</span>
             <input
@@ -184,15 +195,33 @@ function Slots({ volumen, fichas, setFichas }) {
               placeholder="Enter amount"
 			  className="bet-input"
 			  value={betAmount}
-			  onChange={(e) => setBetAmount(e.target.value)}
+			  onChange={(e) => {
+				const value = e.target.value;
+				if (/^\d*$/.test(value)) {
+				  setBetAmount(value);
+				}
+			  }}
             />
             <span className="available-chips">
               Available: <strong>{fichas}</strong> tokens
             </span>
           </div>
-		  {/* Mostrar mensaje de advertencia si el monto es <= 10 y no está girando */}
-    		{!isSpinning && betAmount < 10 && (
-        	<p className="bet-warning">You must bet 10 or more tokens to play!</p>)}
+		  {modalVisible && (
+			<div className="modal-overlay">
+				<div className="modal-content">
+				<p>{resultadoFinal}</p>
+				<button
+					className="btn"
+					onClick={() => {
+					setModalVisible(false);
+					setTimeout(() => setResultadoFinal(""), 300);
+					}}
+				>
+					OK
+				</button>
+				</div>
+			</div>
+)}
 	</div>
 	
 	);
