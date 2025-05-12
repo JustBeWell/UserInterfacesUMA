@@ -5,7 +5,7 @@ function HeaderSlots() {
   return (
     <header className="header-slots">
       <Link to="/">
-        <button className="btn-top-left">⏴ Return to Menu</button>
+        <button className="btn-top-left">Return to Menu</button>
       </Link>
       
       <section className="instructions">
