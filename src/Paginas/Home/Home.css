@@ -34,7 +34,7 @@ body {
 .icon-btn {
 	width: 40px;
 	height: 40px;
-	background: url("../../imagenes/botones/botonTienda.png") no-repeat center;
+	background: url("../../imagenes/Botones/botonTienda.png") no-repeat center;
 	background-size: contain;
 	border: none;
 	cursor: pointer;
@@ -47,7 +47,7 @@ body {
 }
 
 .icon-btn.settings {
-	background-image: url("../../imagenes/botones/botonAjustes.png");
+	background-image: url("../../imagenes/Botones/botonAjustes.png");
 }
 
 .home-header {

@@ -1,7 +1,7 @@
 /* src/Paginas/Poker.css  (crea el archivo si no existe) */
 body {
   margin: 0;
-  background: linear-gradient(160deg, #f0f2f5, #ffffff);
+  background: linear-gradient(to bottom, #0a3e2f 0%, #242525 50%, #0D0D0D 100%);
   background-attachment: fixed;
   font-family: "Segoe UI", sans-serif;
 }

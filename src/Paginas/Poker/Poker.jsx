@@ -6,31 +6,10 @@ import introPoker from "../../imagenes/Poker/introPoker.png";
 import MesaPoker from "../../Componentes/MesaPoker/MesaPoker";
 import ControlesJugador from "../../Componentes/ControlesJugador/ControlesJugador"; // <-- importa
 import "./Poker.css";
-import { evaluarMano,VAL, BASE , rankToNumber } from "./evaluador.js";
+import { evaluarMano,VAL, BASE , rankToNumber } from "../../utils/Poker/evaluador.js";
+import {generarMazo, barajar} from "../../utils/Poker/mazo.js"
 
 
-  
-function generarMazo() {
-	const palos = ["Corazon", "Diamante", "Trebol", "Pica"];
-	const valores = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "As"];
-	const mazo = [];
-
-	for (const palo of palos) {
-		for (const valor of valores) {
-			mazo.push({ valor, palo });
-		}
-	}
-
-	return mazo;
-}
-
-function barajar(mazo) {
-	for (let i = mazo.length - 1; i > 0; i--) {
-		const j = Math.floor(Math.random() * (i + 1));
-		[mazo[i], mazo[j]] = [mazo[j], mazo[i]];
-	}
-	return mazo;
-}
 
 // ─── FASES DE RONDA (lógica de póker) ───────────────────────────────
 export const RONDA = {
@@ -56,7 +35,7 @@ function Poker() {
 	const [fichasRival,   setFichasRival]   = useState(1500);
 
 	const [pot, setPot]               = useState(0);
-	const [apuestaActual, setApuesta] = useState(0);   // lo que hay que igualar
+	const [apuestaActual, setApuesta] = useState(0);   // Apuesta 
 	const [apuestaJugador, setApuJ]   = useState(0);
 	const [apuestaRival,   setApuR]   = useState(0);
 
@@ -76,16 +55,23 @@ function Poker() {
 // dentro del componente Poker ------------------------------
 	const [gameOver, setGameOver]     = useState(false);
 	const [mensajeGO, setMensajeGO]   = useState("");   // overlay final
+	//Este useState sirve únicamente para girar las cartas del rival o no
 	const [rondaShowdown, setRondaShowdown] = useState(false)
+
+	//Gestion del avance de ronda
+	const [accionJugador, setAccionJugador] = useState(null); // 'check', 'bet', 'call', 'raise'
+	const [accionRival,   setAccionRival]   = useState(null);
+
 	function checkGameOver(j, r){
 	if (gameOver) return;
 	if (j <= 0){
-		setMensajeGO("😢 Has perdido la partida");
+		setMensajeGO("😢 You los the game");
 		setGameOver(true);
 	} else if (r <= 0){
-		setMensajeGO("🎉 ¡Has ganado la partida!");
+		setMensajeGO("🎉 You won the game!");
 		setGameOver(true);
 	}else{
+		//El problema es que si esto se ejecuta en un fold, se lanza iniciarNuevaMano dos veces
 		iniciarNuevaMano();
 	}
 	}
@@ -121,6 +107,10 @@ function Poker() {
 	  }, []);
 	  
 	
+	 /* /////////////////////////////////////////////////////////////////
+	 /* ////GESTIÓN CARTAS DE LA MESA AL ACTUALIZAR LA VARIABLE RONDA////
+	 /*//////////////////////////////////////////////////////////////////
+	 
 	useEffect(() => {
 		const mazo = mazoRef.current;
 	  
@@ -129,6 +119,13 @@ function Poker() {
 		if (ronda === RONDA.RIVER)  setCartasMesa(m => [...m, mazo.pop()]);
 		// SHOWDOWN: ya no se sacan cartas
 	  }, [ronda]);
+
+
+
+
+	 /* ///////////////////////////////////////////////////
+	 /* ////GESTIÓN DE LA IA DEL RIVAL Y SALTO DE RONDA////
+	 /*////////////////////////////////////////////////////
 	  useEffect(() => {
 		//Este useEffect se triggerea cuando cambia el turno
 		
@@ -136,26 +133,26 @@ function Poker() {
 		//Al principio es mi turno luego esto, que es para la ia no afecta
 		const delay = setTimeout(() => {
 		  const necesitaIgualar = apuestaActual - apuestaRival;
-			
+			 
 		  // decidir acción
 		  const r = Math.random();
 		  if (necesitaIgualar > 0 && r < 0.1) {
 			// 10 % fold
 			
-			setMensajeRival("Rival se retira");
+			setMensajeRival("Rival folds");
 
 			setMensajeFinal(
 				<span>
-				  🎉  ¡Tú ganas la ronda!
+				  🎉  ¡Yoy win the round
 				</span>
 			  );
 			setRondaShowdown(true)
 
 			  const nuevoJ = fichasJugador + pot;
 			  setFichasJugador(nuevoJ);
-			  checkGameOver(nuevoJ, fichasRival);   // 👈 añadido
+			  //   // 👈 añadido
 			  setTimeout(() => {
-				if (!gameOver) iniciarNuevaMano();
+				checkGameOver(nuevoJ, fichasRival);
 			  }, 2000);
 			  
 					return;
@@ -167,24 +164,66 @@ function Poker() {
 			apostarRival(necesitaIgualar + subida, "raise");
 		  } else {
 			const tipoAccion = necesitaIgualar > 0 ? "call" : "check";
-  			apostarRival(necesitaIgualar, tipoAccion);
+			if (tipoAccion === "call") {
+				apostarRival(necesitaIgualar, "call");  // ✅ hay algo que igualar
+			} else {
+				apostarRival(0, "check");               // ✅ sin apuesta = check
+			}
 		  }
+		  //Es aquí donde estamos gestionando el cambio de ronda
 		  if (ronda !== RONDA.SHOWDOWN) {
-			setTimeout(() => {
+			/*setTimeout(() => {
 			  avanzarRonda(); // nueva función que define la transición
 			}, 1500);
+			*/
+			//Voy a intentar sustituir esto por un useEffect
 		  }
 		}, 2000);
 	  
 		return () => clearTimeout(delay);
 	  }, [turno]);
 
+	  /* //////////////////////////////
+	/* ////GESTIÓN AVANCE DE RONDA////
+	/*///////////////////////////////
+	useEffect(() => {
+		// 0) Si estamos en showdown o la mano terminó, no hagas nada
+		if (ronda === RONDA.SHOWDOWN || gameOver) return;
+	  
+		// 1) Ambos han actuado
+		const ambosActuaron = accionJugador && accionRival;
+	  
+		if (!ambosActuaron) return;
+	  
+		const ambosCheck   = accionJugador === "check" && accionRival === "check";
+		const apuestaIgual = apuestaJugador === apuestaRival;
+		const huboRaise    = accionJugador === "raise" || accionRival === "raise";
+		
+		// 2) Casos que hacen avanzar
+		const pasarPorCheck = ambosCheck;                 // check / check
+		const pasarPorCall  = apuestaIgual && (accionJugador === "call" || accionRival === "call"); // …call que iguala
+	  
+		if (pasarPorCheck || pasarPorCall) {
+		  resetApuestas();            // limpia la mesa de apuestas
+		  setAccionJugador(null);     // resetea acciones para la ronda siguiente
+		  setAccionRival(null);
+			
+		  avanzarRonda()
+		}
+	  }, [accionJugador, accionRival,
+		  apuestaJugador, apuestaRival,
+		  ronda, gameOver]);
+	  
+
+	/* ////////////////////////////
+	/* ////GESTIÓN DEL SHOWDOWN////
+	/*////////////////////////////
 	useEffect(() => {
 	if (ronda !== RONDA.SHOWDOWN) return;
-		console.log("peta 1")
+		
 	const manoJ = evaluarMano([...cartasJugador, ...cartasMesa]);
 	const manoR = evaluarMano([...cartasRival,   ...cartasMesa]);
-		console.log("Peta 2")
+		
 	const nJ = manoJ.rank;
 	const nR = manoR.rank;
 
@@ -192,21 +231,22 @@ function Poker() {
 		const nuevoJ = fichasJugador + pot;
 			
 		setFichasJugador(nuevoJ);
-		setTimeout(() => {
-			setMensajeFinal(`🏆 ¡Tú ganas la ronda con ${manoJ.tipo}!`);
-		}, 1500)
-		
+		setMensajeFinal(`🏆 ¡You win the round with ${manoJ.tipo}!`);
 		setRondaShowdown(true)
-		setTimeout(() => checkGameOver(nuevoJ, fichasRival), 2000); 
+		
+		
+		
+		
+		checkGameOver(nuevoJ, fichasRival)
 		
 		
 		
   }else if (nJ < nR){
-	setMensajeFinal(`🤖 El rival gana la ronda con ${manoR.tipo}`);
+	setMensajeFinal(`🤖 Villain wins the round with ${manoR.tipo}`);
 	setRondaShowdown(true);
 	const nuevoR = fichasRival + pot;
 	setFichasRival(nuevoR);
-	setTimeout(() => checkGameOver(fichasJugador, nuevoR), 2000); // 👈
+	checkGameOver(fichasJugador, nuevoR) // 👈
   }else{
 	setMensajeFinal(`🤝 ¡Empate! Ambos con ${manoJ.tipo}`);
 	setRondaShowdown(true);
@@ -215,7 +255,7 @@ function Poker() {
 	const nuevoR = fichasRival   + mitad;
 	setFichasJugador(nuevoJ);
 	setFichasRival(nuevoR);
-	setTimeout(() => checkGameOver(nuevoJ, nuevoR), 2000); // 👈
+	checkGameOver(nuevoJ, nuevoR) // 👈
   }
 
   resetApuestas();
@@ -229,6 +269,9 @@ function Poker() {
 		  setJugadaActualJugador(evaluacion.tipo);
 		}
 	  }, [cartasJugador, cartasMesa]);
+
+	//Este useEffect salta cuando, se actualizan las fichas del rival o del jugador, se cambia de ronda y gameOver
+ 	/*
 	  useEffect(() => {
 		if (gameOver) return;
 	
@@ -251,7 +294,7 @@ function Poker() {
 	
 		return () => clearTimeout(delay);
 	}, [fichasJugador, fichasRival, ronda, gameOver]);
-	
+	*/
 	
 	  function reiniciarPartida(){
 		setFichasJugador(INICIAL_JUG);
@@ -280,33 +323,62 @@ function Poker() {
 		//Para empezar necesitamos que se vea de quien es el turno
 		switch (tipo) {
 		  case "check":
-			if (apuestaActual === apuestaJugador) setTurno("rival");
-			break;
+
+            if (apuestaActual === apuestaJugador) {
+                // If the player checks and has matched the current bet
+				setAccionJugador("check");
+				setTurno("rival");
+            } else {
+                setMensajeFinal("You cannot check, Either Call the bet 💰, Raise☝️ or Fold 🃏");
+				setTimeout(() => {
+					setMensajeFinal("");
+				}, 2000);
+            }
+            break;
 	  
 		  case "call":
-			apostarJugador(apuestaActual - apuestaJugador);
+			 // solo tiene sentido si hay algo que igualar
+			if (apuestaActual > apuestaJugador && apuestaActual != 0) {
+		
+				apostarJugador(apuestaActual - apuestaJugador);
+				setAccionJugador("call");
+			} else {
+			setMensajeFinal("There is no bet to call. Use Check ✔️, Raise☝️ or Fold 🃏");
+			setTimeout(() => setMensajeFinal(""), 2000);
+			return;                   // evita pasar turno
+			}	//Hacer call tiene sentido de esta manera cuando el rival haya apostado, por lo que hay que mejorar la gestión de paso de ronda
 			break;
 	  
 		  case "raise":
 			const subida = Math.max(cantidad, 1); // mínimo 1
 			setApuesta(a => a + subida);
 			apostarJugador(apuestaActual - apuestaJugador + subida);
+			setAccionJugador("raise");
+			//El raise funciona bien
 			break;
 	  
 		  case "fold":
 			// rival gana el bote
-			setMensajeFinal("🏳️ El rival gana la ronda");
-			setRondaShowdown(true);
-			const nuevoR = fichasRival + pot;
-			setFichasRival(nuevoR);
-			resetApuestas();
-			setRonda(RONDA.PREFLOP);
-			setTurno("ninguno");
+			setMensajeFinal("🏳️ El rival gana la ronda"); //Esto hace que se muestre en pantalla
+			setRondaShowdown(true);//Muestro las cartas del rival
+			const nuevoR = fichasRival + pot; //Actualizo las fichas del rival
+			setFichasRival(nuevoR); //Solo hay que ajustar las fichas del rival, las apuestas y el pot se actualizan en iniciarNuevaMano() y 
+			//la cantidad del jugador ya se ha quitado de su stack en apostarJugador()
+			//Esto se elimina porque ya se llama en iniciar nueva mano resetApuestas();
+			//Lo mismo ocurre con esto setRonda(RONDA.PREFLOP);
+			//En principio esto podríamos quitarlo porque no afecta a nada
+			
+			//setTurno("ninguno");
+			
 			setTimeout(() => {
-				if (!gameOver) iniciarNuevaMano();
-			  }, 4000);
+				checkGameOver(fichasJugador, nuevoR); 
+				//if (!gameOver) iniciarNuevaMano();
+
+			  }, 2000); 
 			  
-			checkGameOver(fichasJugador, nuevoR); 
+			//Al foldear se acaba la mano, pero sin entrar en showDown, por lo que no debemos cambiar la ronda, para que no se active el
+			//useEffect[ronda] de cuando ronda === RONDA.SHOWDOWN
+			
 			break;
 	  
 		  default:
@@ -317,13 +389,13 @@ function Poker() {
 	/* --- datos que enviamos a MesaPoker --- */
 	const estado = {
 		jugador: {
-			nombre: "Tú",
+			nombre: "You",
 			fichas: fichasJugador,
 			cartas: cartasJugador,
 			controles: <ControlesJugador onAccion={handleAccion} />,
 		},
 		rival: {
-			nombre: "Rival",
+			nombre: "Villain",
 			fichas: fichasRival,
 			cartas: cartasRival,
 		},
@@ -343,7 +415,8 @@ function Poker() {
 		const resto = fichasJugador - cantidad;          // NUEVO
 		setFichasJugador(resto);
 		
-		setApuJ(a => a + cantidad);
+		setApuJ(a => a + cantidad); //Cómo están tratando con useState, lo que hacen es coger el valor de la variable actual, 
+		//en vez de acceder directamente a la variable de estado, en react usar la flecha garantiza que el estado de esa variable es el más actual
 		setPot(p => p + cantidad);
 		setTurno("rival");
 		
@@ -358,16 +431,16 @@ function Poker() {
 		setApuR(a => a + cantidad);
 		setPot(p => p + cantidad);
 		const mensaje =
-		tipo === "raise" ? `Rival sube ${cantidad} fichas` :
-		tipo === "call"  ? `Rival iguala la apuesta` :
-		tipo === "check" ? `Rival pasa` :
+		tipo === "raise" ? `Villain raises ${cantidad} chips` :
+		tipo === "call"  ? `Villain calls the bet` :
+		tipo === "check" ? `Villain checks` :
 		"";
-	
+		
 	  if (mensaje) {
 		setMensajeRival(mensaje);
 		setTimeout(() => setMensajeRival(""), 2000);
 	  }
-	
+	  setAccionRival(tipo); 
 	  setTurno("jugador");
 	 
 	  }
@@ -378,21 +451,31 @@ function Poker() {
 	  : [];
 	  function iniciarNuevaMano() {
 		const nuevoMazo = barajar(generarMazo());
-		mazoRef.current = nuevoMazo;
-		setRondaShowdown(false);
-		setCartasJugador([nuevoMazo.pop(), nuevoMazo.pop()]);
-		setCartasRival([nuevoMazo.pop(), nuevoMazo.pop()]);
-		setCartasMesa([]);
-		setPot(0);
-		setApuesta(0);
-		setApuJ(0);
-		setApuR(0);
-		setMensajeFinal("");
+		mazoRef.current = nuevoMazo; //Aquí actualizo la referencia al mazo
+		setTimeout(() => {
+			setRondaShowdown(false);
+			setTimeout(() => {
+				setCartasJugador([nuevoMazo.pop(), nuevoMazo.pop()]);
+			setCartasRival([nuevoMazo.pop(), nuevoMazo.pop()]);
+			setCartasMesa([]);
+			setPot(0);
+			
+			resetApuestas()
+			/*setApuesta(0);
+			setApuJ(0);
+			setApuR(0);
+			*/
+	
+			setMensajeFinal("");
+			
+			setMensajeRival("");
+			setTurno("jugador");
+	
+			setRonda(RONDA.PREFLOP);
+			},1000);
+		}, 3000)
 		
-		setMensajeRival("");
-		setTurno("jugador");
-		setTimeout(1000)
-		setRonda(RONDA.PREFLOP);
+
 		
 
 	  }
@@ -406,18 +489,25 @@ function Poker() {
 		</div>
 		) : null}
 
-		<div className="boton-menu-container">
-		<button onClick={() => window.location.href = "/"}>Return to Menu</button>
-		</div>
+		
 		{mensajeFinal && (
 		<div className="mensaje-final">{mensajeFinal}</div>
 		)}
+		{/*Aclarción sobre la sintaxis {condition && html}
+			Los brackets nos permiten inyectar código de javaScript en html, cuando hacemos {condition && (html)} lo
+			que estamos haciendo es, en caso de que lo primero sea true, devolvemos el componenteç
+		 
 		
+		*/}
+
+
 		{/* ✅ Mensaje que flota sobre la mesa */}
 		{mensajeRival && (
 			<div className="mensaje-rival">{mensajeRival}</div>
 		)}
+		
 		{gameOver && (
+			//Lo que hacemos aquí es cargar este componente si y solo si, gameOver está en true
 		<div className="overlay-go">
 			<h2>{mensajeGO}</h2>
 			<button onClick={reiniciarPartida}>Jugar otra vez</button>
@@ -428,7 +518,9 @@ function Poker() {
 		<div className={fase === "inicio" ? "poker-blur" : ""}>
 		
 		<MesaPoker {...estado} comunitarias={comunitariasVisibles} fase={fase} turno={turno} jugadaActualJugador={jugadaActualJugador} showdown={rondaShowdown}/>
-		
+		<div className="boton-menu-container">
+		<button onClick={() => window.location.href = "/"}>Return to Menu</button>
+		</div>
 		</div>
 		<div className="boton-ronda-container">
 
@@ -438,4 +530,6 @@ function Poker() {
 	);
 }
 
+
+//En react solo puedo tener un componente que exporto con export default pero si que puedo tener varios componentes locales que devuelvan jsx dentro de un mismo archivo
 export default Poker;
