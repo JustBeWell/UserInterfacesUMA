@@ -128,7 +128,7 @@ function Poker() {
 	 /*////////////////////////////////////////////////////
 	  useEffect(() => {
 		//Este useEffect se triggerea cuando cambia el turno
-		
+		if(mensajeFinal !== "") return;
 		if (turno !== "rival") return;
 		//Al principio es mi turno luego esto, que es para la ia no afecta
 		const delay = setTimeout(() => {
