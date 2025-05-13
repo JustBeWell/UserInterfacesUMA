@@ -119,7 +119,7 @@ body {
 		circle at center,
 		#103b2f 0%,
 		#0a3e2f 50%,
-		#000000 100%
+		#032b1f 100%
 	);
 	color: white;
 	box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -142,5 +142,5 @@ body {
 .home-subtitle {
 	font-size: 1.2rem;
 	font-weight: 300;
-	color: #d0f8ce; /* Verde suave para subtítulo */
+	color: #d0f8ce;
 }

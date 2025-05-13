@@ -61,7 +61,6 @@
 
 
 
-/* Modal styles */
 @keyframes fadeInModal {
   from {
     opacity: 0;
@@ -153,15 +152,3 @@
   box-shadow: 0 0 12px rgba(0, 255, 150, 0.6), 0 0 4px rgba(255, 255, 255, 0.1);
 }
 
-.modal-content ul {
-  list-style: none;
-  padding-left: 0;
-  margin-top: 1rem;
-}
-
-.modal-content li {
-  margin-bottom: 0.75rem;
-  font-size: 1rem;
-  color: #f8f8f8;
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
-}
