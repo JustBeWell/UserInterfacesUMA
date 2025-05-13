@@ -1,10 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Tienda.css";
 import { AudioShop } from "../../Componentes";
-function Tienda({ dinero, fichas, setFichas, setDinero, volumen }) {
+import AudioFondoShop from "../../Componentes/Sonidos/AudioFondoShop";
+function Tienda({
+	volumenMusica,
+	dinero,
+	fichas,
+	setFichas,
+	setDinero,
+	volumenEfectos,
+}) {
 	const [intercambio, setIntercambio] = useState(0);
-	const audioCompra = new AudioShop(volumen);
+	const audioCompra = new AudioShop(volumenEfectos);
+	const audioRef = useRef(null);
+	useEffect(() => {
+		const { reproducirMusica, pararMusica, audio } =
+			AudioFondoShop(volumenMusica);
+		audioRef.current = { pararMusica, audio };
+		const handleFirstInput = () => {
+			reproducirMusica();
+			window.removeEventListener("pointerdown", handleFirstInput);
+			window.removeEventListener("keydown", handleFirstInput);
+		};
+
+		window.addEventListener("pointerdown", handleFirstInput);
+		window.addEventListener("keydown", handleFirstInput);
+
+		return () => {
+			pararMusica();
+			window.removeEventListener("pointerdown", handleFirstInput);
+			window.removeEventListener("keydown", handleFirstInput);
+		};
+	}, [volumenMusica]);
 
 	function handleBuy(amount) {
 		if (dinero >= amount) {
@@ -40,7 +68,9 @@ function Tienda({ dinero, fichas, setFichas, setDinero, volumen }) {
 
 			<div className="tienda-content">
 				<div className="store-section">
-					<h2><strong>Buy Tokens</strong></h2>
+					<h2>
+						<strong>Buy Tokens</strong>
+					</h2>
 					<p>
 						You have <strong>{dinero}</strong> €
 					</p>
@@ -67,7 +97,9 @@ function Tienda({ dinero, fichas, setFichas, setDinero, volumen }) {
 				</div>
 
 				<div className="store-section">
-					<h2><strong>Exchange Tokens for Money</strong></h2>
+					<h2>
+						<strong>Exchange Tokens for Money</strong>
+					</h2>
 					<p>
 						You have <strong>{fichas}</strong> tokens
 					</p>

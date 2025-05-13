@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import "./BlackJack.css";
 import { HeaderBlackjack, AudioPlayer, GameTable } from "../../Componentes";
+import AudioBlackjack from "../../Componentes/Sonidos/AudioBlackjack";
 
 const palos = ["corazones", "diamantes", "tréboles", "picas"];
 const valores = [
@@ -19,7 +20,7 @@ const valores = [
 	{ valor: "K", valorNumerico: 10 },
 ];
 
-function BlackJack({ volumen, fichas, setFichas }) {
+function BlackJack({ volumenMusica, volumenEfectos, fichas, setFichas }) {
 	const [baraja, setBaraja] = useState([]);
 	const [cards, setCards] = useState([]);
 	const [cartasCrupier, setCartasCrupier] = useState([]);
@@ -33,7 +34,30 @@ function BlackJack({ volumen, fichas, setFichas }) {
 	const [apuestaActual, setApuestaActual] = useState(0);
 	const [resultadoFinal, setResultadoFinal] = useState("");
 	const [modalVisible, setModalVisible] = useState(false);
-	const { reproducirCarta1 } = AudioPlayer(volumen);
+	const { reproducirCarta1 } = AudioPlayer(volumenEfectos);
+	const audioRef = useRef(null);
+	const [showRules, setShowRules] = useState(false);
+	
+	useEffect(() => {
+		const { reproducirMusica, pararMusica, audio } =
+			AudioBlackjack(volumenMusica);
+		audioRef.current = { pararMusica, audio };
+
+		const handleFirstInput = () => {
+			reproducirMusica();
+			window.removeEventListener("pointerdown", handleFirstInput);
+			window.removeEventListener("keydown", handleFirstInput);
+		};
+
+		window.addEventListener("pointerdown", handleFirstInput);
+		window.addEventListener("keydown", handleFirstInput);
+
+		return () => {
+			pararMusica();
+			window.removeEventListener("pointerdown", handleFirstInput);
+			window.removeEventListener("keydown", handleFirstInput);
+		};
+	}, [volumenMusica]);
 
 	function crearBaraja() {
 		const mazo = [];
@@ -188,6 +212,26 @@ function BlackJack({ volumen, fichas, setFichas }) {
 
 	return (
 		<div className="blackjack-container">
+			{showRules && (
+				<div className="rules-modal">
+					<h2>Blackjack Rules</h2>
+					<p> Dealer hit cards until 17.</p>
+					<h2>Winning Conditions</h2>
+					<ul>
+						<li>Blackjack: 3:2 payout</li>
+						<li>Win: 2:1 payout</li>
+						<li>Push: 1:1 payout</li>
+						<li>Lose: Lose your bet</li>
+					</ul>
+					<h6>Blackjack only counts if you have two cards in your hand</h6>
+					<button onClick={() => setShowRules(false)} className="close-rules">
+						✖
+					</button>
+				</div>
+			)}
+			<button className="rules-button" onClick={() => setShowRules(true)}>
+				ℹ️
+			</button>
 			<HeaderBlackjack chips={fichas} betAmount={betAmount} mensaje={mensaje} />
 			<GameTable
 				dealerCards={cartasCrupier}

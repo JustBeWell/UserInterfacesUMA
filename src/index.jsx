@@ -2,44 +2,81 @@ import React, { useState } from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Home, BlackJack, Ajustes, Slots, Poker, Tienda,MayoriaDeEdad} from "./Paginas";
+import {
+	Home,
+	BlackJack,
+	Ajustes,
+	Slots,
+	Poker,
+	Tienda,
+	MayoriaDeEdad,
+} from "./Paginas";
 
 function App() {
-	const [volumen, setVolumen] = useState(0.5);
+	const [volumenEfectos, setVolumenEfectos] = useState(0.5);
+	const [volumenMusica, setVolumenMusica] = useState(0.5);
 	const [dinero, setDinero] = useState(100);
 	const [fichas, setFichas] = useState(1000);
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path="/" element={<Home volumen={volumen} />} />
+				<Route
+					path="/"
+					element={
+						<Home
+							volumenEfectos={volumenEfectos}
+							volumenMusica={volumenMusica}
+						/>
+					}
+				/>
 				<Route
 					path="/blackjack"
 					element={
 						<BlackJack
-							volumen={volumen}
+							volumenEfectos={volumenEfectos}
+							volumenMusica={volumenMusica}
 							fichas={fichas}
 							setFichas={setFichas}
 						/>
 					}
 				/>
-				<Route 
-					path="/slots" 
+				<Route
+					path="/slots"
 					element={
-						<Slots 
-							volumen={volumen}
+						<Slots
+							volumenEfectos={volumenEfectos}
+							volumenMusica={volumenMusica}
 							fichas={fichas}
 							setFichas={setFichas}
-							/>} />
+						/>
+					}
+				/>
 				<Route
 					path="/ajustes"
-					element={<Ajustes volumen={volumen} setVolumen={setVolumen} />}
+					element={
+						<Ajustes
+							volumenEfectos={volumenEfectos}
+							volumenMusica={volumenMusica}
+							setVolumenEfectos={setVolumenEfectos}
+							setVolumenMusica={setVolumenMusica}
+						/>
+					}
 				/>
-				<Route path="/poker" element={<Poker volumen={volumen} />} />
+				<Route
+					path="/poker"
+					element={
+						<Poker
+							volumenEfectos={volumenEfectos}
+							volumenMusica={volumenMusica}
+						/>
+					}
+				/>
 				<Route
 					path="/tienda"
 					element={
 						<Tienda
-							volumen={volumen}
+							volumenEfectos={volumenEfectos}
+							volumenMusica={volumenMusica}
 							fichas={fichas}
 							dinero={dinero}
 							setDinero={setDinero}

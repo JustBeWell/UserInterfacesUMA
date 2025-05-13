@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import "./HeaderBlackjack.css"; // Asegúrate de tener estilos separados
 
-function HeaderBlackjack({ chips, betAmount, mensaje }) {
+function HeaderBlackjack({ chips, betAmount, mensaje }) {  
   return (
     <header className="header-blackjack">
       <Link to="/">
