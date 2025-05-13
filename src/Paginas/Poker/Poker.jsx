@@ -64,6 +64,9 @@ function Poker() {
 
 	function checkGameOver(j, r){
 	if (gameOver) return;
+	setTimeout(() => {
+
+	
 	if (j <= 0){
 		setMensajeGO("😢 You los the game");
 		setGameOver(true);
@@ -74,6 +77,7 @@ function Poker() {
 		//El problema es que si esto se ejecuta en un fold, se lanza iniciarNuevaMano dos veces
 		iniciarNuevaMano();
 	}
+	}, 2000)
 	}
 
 	/*
@@ -321,8 +325,8 @@ function Poker() {
 	  function reiniciarPartida(){
 		setFichasJugador(INICIAL_JUG);
 		setFichasRival(INICIAL_RIV);
-		setTimeout(() => {
-		iniciarNuevaMano()}, 1000);
+
+		iniciarNuevaMano();
 		setGameOver(false);
 		setMensajeGO("");
 		setAccionJugador(null);

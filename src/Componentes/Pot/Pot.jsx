@@ -1,8 +1,6 @@
 // src/Componentes/Pot/Pot.jsx
 import { fichaAzul } from "../../imagenes"; // ✅
 
-// si prefieres seguir tu patrón ↓
-// const fichaAzul = new URL("../../imagenes/fichaAzul.png", import.meta.url).href;
 
 import "./Pot.css"; // añadiremos estilos ahora
 
