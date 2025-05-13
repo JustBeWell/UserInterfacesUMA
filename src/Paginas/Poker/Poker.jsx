@@ -128,7 +128,8 @@ function Poker() {
 	 /*////////////////////////////////////////////////////
 	  useEffect(() => {
 		//Este useEffect se triggerea cuando cambia el turno
-		if(mensajeFinal !== "") return;
+		//if(mensajeFinal !== "") return;
+		if(ronda === RONDA.SHOWDOWN) return;
 		if (turno !== "rival") return;
 		//Al principio es mi turno luego esto, que es para la ia no afecta
 		const delay = setTimeout(() => {
@@ -143,7 +144,7 @@ function Poker() {
 
 			setMensajeFinal(
 				<span>
-				  🎉  ¡Yoy win the round
+				  🎉  ¡You win the round
 				</span>
 			  );
 			setRondaShowdown(true)
@@ -171,13 +172,7 @@ function Poker() {
 			}
 		  }
 		  //Es aquí donde estamos gestionando el cambio de ronda
-		  if (ronda !== RONDA.SHOWDOWN) {
-			/*setTimeout(() => {
-			  avanzarRonda(); // nueva función que define la transición
-			}, 1500);
-			*/
-			//Voy a intentar sustituir esto por un useEffect
-		  }
+
 		}, 2000);
 	  
 		return () => clearTimeout(delay);
