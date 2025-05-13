@@ -62,7 +62,7 @@ function Ajustes({
 					onChange={(e) => setVolumenMusica(e.target.value)}
 					step={0.01}
 				/>
-			</div>
+				</div>
 			<Link to="/">
 				<button className="btn-top-left">Return to Menu</button>
 			</Link>

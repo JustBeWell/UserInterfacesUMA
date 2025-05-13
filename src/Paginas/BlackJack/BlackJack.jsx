@@ -36,6 +36,8 @@ function BlackJack({ volumenMusica, volumenEfectos, fichas, setFichas }) {
 	const [modalVisible, setModalVisible] = useState(false);
 	const { reproducirCarta1 } = AudioPlayer(volumenEfectos);
 	const audioRef = useRef(null);
+	const [showRules, setShowRules] = useState(false);
+	
 	useEffect(() => {
 		const { reproducirMusica, pararMusica, audio } =
 			AudioBlackjack(volumenMusica);
@@ -210,6 +212,26 @@ function BlackJack({ volumenMusica, volumenEfectos, fichas, setFichas }) {
 
 	return (
 		<div className="blackjack-container">
+			{showRules && (
+				<div className="rules-modal">
+					<h2>Blackjack Rules</h2>
+					<p> Dealer hit cards until 17.</p>
+					<h2>Winning Conditions</h2>
+					<ul>
+						<li>Blackjack: 3:2 payout</li>
+						<li>Win: 2:1 payout</li>
+						<li>Push: 1:1 payout</li>
+						<li>Lose: Lose your bet</li>
+					</ul>
+					<h6>Blackjack only counts if you have two cards in your hand</h6>
+					<button onClick={() => setShowRules(false)} className="close-rules">
+						✖
+					</button>
+				</div>
+			)}
+			<button className="rules-button" onClick={() => setShowRules(true)}>
+				ℹ️
+			</button>
 			<HeaderBlackjack chips={fichas} betAmount={betAmount} mensaje={mensaje} />
 			<GameTable
 				dealerCards={cartasCrupier}
