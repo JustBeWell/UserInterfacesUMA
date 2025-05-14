@@ -7,6 +7,8 @@ import GirandoSound from "../../Sonidos/GirandoSlots.mp3";
 import AudioSlots from "../../Componentes/Sonidos/AudioSlots";
 
 function Slots({ volumenEfectos, volumenMusica, fichas, setFichas }) {
+
+	
 	const audioRef = useRef(null);
 	useEffect(() => {
 		const { reproducirMusica, pararMusica, audio } = AudioSlots(volumenMusica);
@@ -182,6 +184,14 @@ function Slots({ volumenEfectos, volumenMusica, fichas, setFichas }) {
 		}
 	};
 
+	function rules(showRules){
+		if(showRules === true){
+			setShowRules(false);
+		}else{
+			setShowRules(true);
+		}
+	}
+
 	return (
 		<div className="slots-container">
 			{showRules && (
@@ -197,12 +207,9 @@ function Slots({ volumenEfectos, volumenMusica, fichas, setFichas }) {
 						<li>2 BAR + 1 random → x5</li>
 						<li>BAR + 7 + Bell (any order) → x150</li>
 					</ul>
-					<button onClick={() => setShowRules(false)} className="close-rules">
-						✖
-					</button>
 				</div>
 			)}
-			<button className="rules-button" onClick={() => setShowRules(true)}>
+			<button className="rules-button" onClick={() => rules(showRules)}>
 				ℹ️
 			</button>
 			<HeaderSlots />

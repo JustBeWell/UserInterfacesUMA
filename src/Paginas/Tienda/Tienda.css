@@ -28,7 +28,7 @@
 
 .tienda-header h1 {
   font-size: 2rem;
-  color: #b4b4b4;
+  color: #ffffff;
 }
 
 .tienda-content {
@@ -52,7 +52,7 @@
   text-align: center;
   margin-bottom: 20px;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
-  color: #b4b4b4;
+  color: #ffffff;
 }
 
 .item {
@@ -68,7 +68,7 @@
 }
 
 .btn-buy {
-  background: #1db954;
+  background: #0f5829;
   color: white;
   border: none;
   padding: 10px 22px;
@@ -76,7 +76,7 @@
   margin-top: 10px;
   font-weight: bold;
   font-size: 14px;
-  box-shadow: 0 0 10px #1db954;
+  box-shadow: 0 0 10px #116930;
   cursor: pointer;
   transition: all 0.3s ease;
 }
@@ -116,8 +116,8 @@
 
 .btn-top-left {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 10%;
+  left: 10%;
   background: #111;
   color: #fff;
   padding: 10px 16px;

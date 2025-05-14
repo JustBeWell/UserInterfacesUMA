@@ -210,6 +210,14 @@ function BlackJack({ volumenMusica, volumenEfectos, fichas, setFichas }) {
 		setResultadoFinal("");
 	}
 
+	function rules(showRules){
+		if(showRules === true){
+			setShowRules(false);
+		}else{
+			setShowRules(true);
+		}
+	}
+
 	return (
 		<div className="blackjack-container">
 			{showRules && (
@@ -224,12 +232,9 @@ function BlackJack({ volumenMusica, volumenEfectos, fichas, setFichas }) {
 						<li>Lose: Lose your bet</li>
 					</ul>
 					<h6>Blackjack only counts if you have two cards in your hand</h6>
-					<button onClick={() => setShowRules(false)} className="close-rules">
-						✖
-					</button>
 				</div>
 			)}
-			<button className="rules-button" onClick={() => setShowRules(true)}>
+			<button className="rules-button" onClick={() => rules(showRules)}>
 				ℹ️
 			</button>
 			<HeaderBlackjack chips={fichas} betAmount={betAmount} mensaje={mensaje} />
