@@ -30,12 +30,12 @@
     border-radius: 20px;
     padding: 10px 24px;
     font-weight: bold;
-    font-size: 150%;
+    font-size: 20px;
     cursor: pointer;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25); /* sombra para resaltarlo */
     transition: all 0.3s ease;
-    width: 50%;
-    height: 15%;
+    width: 200px;
+    height: 40px;
   }
   
   .game-card .btn:hover {
