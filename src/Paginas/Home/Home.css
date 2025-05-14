@@ -20,8 +20,32 @@ body {
 	padding: 2rem;
 	box-sizing: border-box;
 	/*background: linear-gradient(to bottom, #F5F0E6 0%, #CFCAC2 100%);*/
-	background: linear-gradient(to bottom, #0a3e2f 0%, #242525 50%, #0d0d0d 100%);
+  	background: linear-gradient(135deg, 
+    	#103b2f 0%,
+		#0a3e2f 50%,
+		#032b1f 100%
+  	);
+	background-size: 100% 200%;
+  	animation: moverFondo 5s linear infinite;
 	/*background: linear-gradient(to bottom, #3A3A3A 0%, #1F1F1F 50%, #000000 100%);*/
+}
+
+@keyframes moverFondo {
+  0% {
+    background-position: 0 0; 
+  }
+  25% {
+    background-position: 100% 0; 
+  }
+  50% {
+    background-position: 100% 100%; 
+  }
+  75% {
+    background-position: 0 100%;
+  }
+  100% {
+    background-position: 0 0; 
+  }
 }
 
 .top-nav {
@@ -34,7 +58,7 @@ body {
 .icon-btn {
 	width: 60px;
 	height: 60px;
-	background: url("../../imagenes/Botones/botonTienda.png") no-repeat center;
+	background: url("../../imagenes/Botones/botonTienda.png") no-repeat center ;
 	background-size: contain;
 	border: none;
 	cursor: pointer;

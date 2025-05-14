@@ -33,7 +33,11 @@ function MayoriaDeEdad() {
             Please confirm your age and continue only if you are legally permitted to use this service.
             </p>
 
-            <Link to="/" className="btn-volver">Return to Homepage</Link>
+            <Link to="/" > 
+            <button className="btn-volver">
+            Return to Homepage
+            </button>
+            </Link>
         </div>
     </body>
 

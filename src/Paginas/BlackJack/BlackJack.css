@@ -1,9 +1,13 @@
 .blackjack-container {
-  width: 100vw;
-  height: 100vh;
-	background: linear-gradient(to bottom, #0a3e2f 0%, #242525 50%, #0D0D0D 100%);
-
-  background-size: cover;
+  max-width: 100vw;
+  min-height: 100vh;
+  background: linear-gradient(135deg, 
+    #103b2f 0%,
+		#0a3e2f 50%,
+		#032b1f 100%
+  );  
+  background-size: 100% 200%;
+  animation: moverFondo 5s linear infinite;
   background-position: center;
   background-repeat: no-repeat;
   display: flex;
@@ -14,6 +18,24 @@
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   letter-spacing: 0.5px;
   font-weight: 400;
+}
+
+@keyframes moverFondo {
+  0% {
+    background-position: 0 0; 
+  }
+  25% {
+    background-position: 100% 0; 
+  }
+  50% {
+    background-position: 100% 100%; 
+  }
+  75% {
+    background-position: 0 100%;
+  }
+  100% {
+    background-position: 0 0; 
+  }
 }
 
 #controls {

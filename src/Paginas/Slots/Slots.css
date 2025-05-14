@@ -4,15 +4,38 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  width: 100%;
-  background: linear-gradient(to bottom, #0a3e2f 0%, #242525 50%, #0D0D0D 100%);
-  background-size: cover; 
+  width: 100vw;
+  background: linear-gradient(135deg, 
+    #103b2f 0%,
+		#0a3e2f 50%,
+		#032b1f 100%
+  );   
+  background-size: 100% 200%;
+  animation: moverFondo 5s linear infinite;
   padding: 20px;
   box-sizing: border-box; 
   overflow: hidden;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   letter-spacing: 0.5px;
   font-weight: 400;
+}
+
+@keyframes moverFondo {
+  0% {
+    background-position: 0 0; 
+  }
+  25% {
+    background-position: 100% 0; 
+  }
+  50% {
+    background-position: 100% 100%; 
+  }
+  75% {
+    background-position: 0 100%;
+  }
+  100% {
+    background-position: 0 0; 
+  }
 }
 
 
@@ -153,8 +176,14 @@
   top: 70px;
   right: 20px;
   width: 320px;
-  background: linear-gradient(to bottom right, #20443a 25%,#0a3e2f 50%, #0a0a0a 75%, #000000 100%);
-  color: #fffbe6;
+  background: linear-gradient(135deg, 
+    #134739 0%, 
+    #0e2b15 30%, 
+    #072e23 60%, 
+    #0a3e2f 100% 
+  );  
+  background-size: 100% 200%;
+  animation: moverFondo 5s linear infinite;  color: #fffbe6;
   padding: 1.5rem;
   border-radius: 14px;
   z-index: 20;
