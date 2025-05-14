@@ -210,7 +210,7 @@ function Slots({ volumenEfectos, volumenMusica, fichas, setFichas }) {
 				</div>
 			)}
 			<button className="rules-button" onClick={() => rules(showRules)}>
-				ℹ️
+				More Info ℹ️
 			</button>
 			<HeaderSlots />
 			<div className={`slots ${winClass}`}>

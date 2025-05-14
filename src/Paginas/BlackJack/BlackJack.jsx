@@ -235,7 +235,7 @@ function BlackJack({ volumenMusica, volumenEfectos, fichas, setFichas }) {
 				</div>
 			)}
 			<button className="rules-button" onClick={() => rules(showRules)}>
-				ℹ️
+				More Info ℹ️
 			</button>
 			<HeaderBlackjack chips={fichas} betAmount={betAmount} mensaje={mensaje} />
 			<GameTable

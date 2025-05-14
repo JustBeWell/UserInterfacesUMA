@@ -59,7 +59,7 @@ function Tienda({
 		<div className="tienda-container">
 			<header className="tienda-header">
 				<Link to="/">
-					<button className="btn-top-left">Back to main menu</button>
+					<button className="btn-top-left">Return to Menu</button>
 				</Link>
 				<div className="mensaje-header">
 					<h1>Buy or Exchange Tokens</h1>
