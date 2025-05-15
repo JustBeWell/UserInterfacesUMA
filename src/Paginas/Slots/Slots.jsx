@@ -167,12 +167,8 @@ function Slots({ reproducirEfecto, fichas, setFichas }) {
 		}
 	};
 
-	function rules(showRules) {
-		if (showRules === true) {
-			setShowRules(false);
-		} else {
-			setShowRules(true);
-		}
+	function rules() {
+		setShowRules(!showRules);
 	}
 
 	return (

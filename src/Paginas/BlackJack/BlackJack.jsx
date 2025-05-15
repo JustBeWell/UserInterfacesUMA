@@ -186,12 +186,8 @@ function BlackJack({ reproducirEfecto, fichas, setFichas }) {
 		setResultadoFinal("");
 	}
 
-	function rules(showRules) {
-		if (showRules === true) {
-			setShowRules(false);
-		} else {
-			setShowRules(true);
-		}
+	function rules() {
+		setShowRules(!showRules);
 	}
 
 	return (

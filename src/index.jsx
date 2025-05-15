@@ -64,17 +64,15 @@ function App() {
 	});
 	useEffect(() => {
 		if (!primerClick) return; // Esperar al primer click
-		if (location.pathname === "/home") {
-			reproducirMusica("menu");
-		} else if (location.pathname === "/blackjack") {
-			reproducirMusica("blackjack");
-		} else if (location.pathname === "/slots") {
-			reproducirMusica("slots");
-		} else if (location.pathname === "/ajustes") {
-			reproducirMusica("ajustes");
-		} else if (location.pathname === "/tienda") {
-			reproducirMusica("tienda");
-		}
+		const rutaAMusica = {
+			"/home": "menu",
+			"/blackjack": "blackjack",
+			"/slots": "slots",
+			"/ajustes": "ajustes",
+			"/tienda": "tienda",
+		};
+		const pista = rutaAMusica[location.pathname];
+		if (pista) reproducirMusica(pista);
 		return () => {
 			pararTodo();
 		};
