@@ -54,6 +54,8 @@ function Login() {
 
   return (
     <div className="login-container">
+      <div className="login-wrapper">
+      <h1 className="login-title">🎲 RoyalFlush UMA</h1>
       <div className={`login-card ${fadeOut ? "fade-out" : ""}`}>
         <h2>{isLogin ? "Login to Your Account" : "Create a New Account"}</h2>
         <form onSubmit={handleSubmit}>
@@ -76,6 +78,7 @@ function Login() {
         </form>
         <div className="toggle" onClick={toggleForm}>
           {isLogin ? "Don't have an account? Register" : "Already have an account? Login"}
+          </div>
         </div>
       </div>
     </div>

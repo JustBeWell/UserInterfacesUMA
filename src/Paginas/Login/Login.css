@@ -10,8 +10,13 @@
   );
   background-size: 100% 200%;
   animation: moverFondo 5s linear infinite;
-  padding: 2rem;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .login-card {
@@ -128,4 +133,70 @@
   100% {
     background-position: 0 0; 
   }
+}
+
+.login-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #e6c972; 
+  text-align: center;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 4px rgba(255, 235, 150, 0.3), 0 0 10px rgba(255, 255, 200, 0.2);
+  animation: revealGlow 1s ease-out both;
+  animation-delay: 0.5s;
+  letter-spacing: 1px;
+}
+
+@keyframes revealGlow {
+  0% {
+    opacity: 0;
+    filter: blur(6px);
+    transform: translateY(-30px) scale(0.95);
+    text-shadow: none;
+  }
+  50% {
+    opacity: 0.8;
+    filter: blur(2px);
+    transform: translateY(0) scale(1.02);
+    text-shadow: 0 0 10px rgba(230, 230, 230, 0.2);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+    text-shadow:
+      0 0 6px rgba(255, 255, 255, 0.2),
+      0 0 12px rgba(255, 255, 255, 0.1);
+  }
+}
+
+
+@media (max-width: 500px) {
+  .login-container {
+    box-sizing: border-box !important;
+    min-height: 100vh !important;
+    overflow-x: hidden !important;
+  }
+  .login-title {
+    font-size: 2.2rem;
+    margin-bottom: 1.5rem;
+  }
+  .login-card {
+    padding: 2rem;
+    max-width: 300px;
+    width: 90%;
+  }
+  .login-card h2 {
+    font-size: 1.8rem;
+  }
+  .login-card input {
+    font-size: 1rem;
+  }
+  .login-card button {
+    font-size: 1rem;
+  }
+  .login-card .toggle {
+    font-size: 0.9rem;
+  }
+
 }
