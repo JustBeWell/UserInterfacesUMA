@@ -4,7 +4,7 @@ import "./HeaderSlots.css";
 function HeaderSlots() {
   return (
     <header className="header-slots">
-      <Link to="/">
+      <Link to="/home">
         <button className="btn-top-left">Return to Menu</button>
       </Link>
       

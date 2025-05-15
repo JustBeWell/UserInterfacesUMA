@@ -4,7 +4,7 @@ import "./HeaderBlackjack.css"; // Asegúrate de tener estilos separados
 function HeaderBlackjack({ chips, betAmount, mensaje }) {  
   return (
     <header className="header-blackjack">
-      <Link to="/">
+      <Link to="/home">
         <button className="btn-top-left">Return to Menu</button>
       </Link>
       <p className="instruction">

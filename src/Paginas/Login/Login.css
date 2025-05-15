@@ -1,0 +1,131 @@
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, 
+    #103b2f 0%,
+    #0a3e2f 50%,
+    #032b1f 100%
+  );
+  background-size: 100% 200%;
+  animation: moverFondo 5s linear infinite;
+  padding: 2rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 3rem;
+  max-width: 500px;
+  width: 100%;
+  color: #fff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  animation: fadeIn 1s ease forwards;
+  transition: all 0.4s ease;
+}
+
+.login-card.fade-out {
+  animation: fadeOut 1s ease forwards;
+}
+
+.login-card h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.login-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.login-card input {
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(0, 0, 0, 0.25);
+  color: white;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+}
+
+.login-card input::placeholder {
+  color: #ccc;
+}
+
+.login-card input:focus {
+  outline: none;
+  background: rgba(0, 0, 0, 0.35);
+  box-shadow: 0 0 0 2px var(--primary);
+}
+
+.login-card button {
+  background-color: var(--primary);
+  color: var(--white);
+  border: none;
+  padding: 1rem;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.login-card button:hover {
+  background-color: #0056b3;
+  transform: scale(1.03);
+}
+
+.login-card .toggle {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #d0f8ce;
+  transition: color 0.2s;
+}
+
+.login-card .toggle:hover {
+  text-decoration: underline;
+  color: #ffffff;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+}
+
+@keyframes moverFondo {
+  0% {
+    background-position: 0 0; 
+  }
+  25% {
+    background-position: 100% 0; 
+  }
+  50% {
+    background-position: 100% 100%; 
+  }
+  75% {
+    background-position: 0 100%;
+  }
+  100% {
+    background-position: 0 0; 
+  }
+}

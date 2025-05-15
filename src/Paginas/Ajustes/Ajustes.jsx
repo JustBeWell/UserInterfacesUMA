@@ -63,7 +63,7 @@ function Ajustes({
 					step={0.01}
 				/>
 				</div>
-			<Link to="/">
+			<Link to="/home">
 				<button className="btn-top-left">Return to Menu</button>
 			</Link>
 		</div>

@@ -58,7 +58,7 @@ function Tienda({
 	return (
 		<div className="tienda-container">
 			<header className="tienda-header">
-				<Link to="/">
+				<Link to="/home">
 					<button className="btn-top-left">Return to Menu</button>
 				</Link>
 				<div className="mensaje-header">

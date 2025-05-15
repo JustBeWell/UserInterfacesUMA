@@ -24,15 +24,15 @@
     bottom: 10%;
     left: 50%;
     transform: translateX(-50%);
-    background-color: rgba(255, 255, 255, 0.85); /* fondo semitransparente */
-    color: #000; /* texto negro para contraste */
+    background-color: rgba(255, 255, 255, 0.85);
+    color: #000; 
     border: none;
     border-radius: 20px;
     padding: 10px 24px;
     font-weight: bold;
     font-size: 20px;
     cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25); /* sombra para resaltarlo */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
     transition: all 0.3s ease;
     width: 200px;
     height: 40px;
