@@ -313,6 +313,12 @@
     top: 80px !important;
   }
 
+  .rules-button {
+    width: 35% !important;
+    font-size: 1rem !important;
+    padding: 0.75rem !important;
+  }
+
    body:not(.home-container) .btn-top-left,
   .blackjack-container .btn-top-left,
   .slots-container .btn-top-left,

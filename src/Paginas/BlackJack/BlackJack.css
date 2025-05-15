@@ -246,6 +246,13 @@
     height: 50% !important;
     top: 80px !important;
   }
+
+  .rules-button {
+    width: 35% !important;
+    font-size: 1rem !important;
+    padding: 0.75rem !important;
+  }
+
 }
 
 @media (max-width: 768px) {
