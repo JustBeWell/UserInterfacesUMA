@@ -64,6 +64,9 @@ function Poker() {
 
 	function checkGameOver(j, r){
 	if (gameOver) return;
+	setTimeout(() => {
+
+	
 	if (j <= 0){
 		setMensajeGO("😢 You los the game");
 		setGameOver(true);
@@ -74,6 +77,7 @@ function Poker() {
 		//El problema es que si esto se ejecuta en un fold, se lanza iniciarNuevaMano dos veces
 		iniciarNuevaMano();
 	}
+	}, 2000)
 	}
 
 	/*
@@ -89,6 +93,24 @@ function Poker() {
 		setCartasMesa(comunitarias);
 	}, []);
 	*/
+	/*
+	useEffect(() => {
+		if (gameOver) return;
+		
+		const alguienSinFichas = fichasJugador === 0 || fichasRival === 0;
+		if (!alguienSinFichas) return;
+		const jugadorSinFichas = fichasJugador === 0;
+		const rivalSinFichas = fichasRival === 0;
+		
+		if (ronda !== RONDA.SHOWDOWN) {
+			//No basta con que uno de los dos esté sin fichas, si está sin fichas el jugador entonces el rival tiene que haber hecho call o raise
+			if((jugadorSinFichas && accionRival !=null) || (rivalSinFichas && accionJugador != null)){
+			const id = setTimeout(avanzarRonda, 1000);      // avanza cada 0,8 s
+			return () => clearTimeout(id);}
+		}
+	  }, [fichasJugador, fichasRival, ronda, gameOver]);
+	  */
+
 	useEffect(() => {
 		const mazo = mazoRef.current;
 		setCartasJugador([ mazo.pop(), mazo.pop() ]);
@@ -159,14 +181,17 @@ function Poker() {
 					return;
 			}
 	  
-		  if (r < IA.PROB_RAISE) {
+		  if ((r < IA.PROB_RAISE) && fichasJugador !== 0 && (fichasRival - apuestaJugador !== 0)) {
 			const subida = IA.SUBIDA_MIN + Math.floor(Math.random() * (IA.SUBIDA_MAX - IA.SUBIDA_MIN));
 			setApuesta(a => a + subida);
-			apostarRival(necesitaIgualar + subida, "raise");
+			apostarRival(apuestaJugador + subida, "raise");
+			
+			
 		  } else {
 			const tipoAccion = necesitaIgualar > 0 ? "call" : "check";
 			if (tipoAccion === "call") {
-				apostarRival(necesitaIgualar, "call");  // ✅ hay algo que igualar
+				apostarRival(apuestaJugador, "call");  // ✅ hay algo que igualar
+				
 			} else {
 				apostarRival(0, "check");               // ✅ sin apuesta = check
 			}
@@ -197,13 +222,19 @@ function Poker() {
 		// 2) Casos que hacen avanzar
 		const pasarPorCheck = ambosCheck;                 // check / check
 		const pasarPorCall  = apuestaIgual && (accionJugador === "call" || accionRival === "call"); // …call que iguala
-	  
-		if (pasarPorCheck || pasarPorCall) {
-		  resetApuestas();            // limpia la mesa de apuestas
-		  setAccionJugador(null);     // resetea acciones para la ronda siguiente
-		  setAccionRival(null);
+		const hayAllInJugador = accionJugador === "allin";
+		const hayAllInRival = accionRival === "allin" //el allin se activa cuando uno de los dos hace una apuesta en la que se queda sin fichas
+		if ((hayAllInJugador && (accionRival === "call" || accionRival === "raise") || (hayAllInRival && (accionJugador === "call" || accionJugador === "raise")
+		|| (hayAllInJugador && hayAllInRival))) && ronda !== RONDA.SHOWDOWN  ) { //ESTO FUNCIONA SI GARANTIZAMOS QUE UNA ACCION DE ALGUNO QUE LE DEJA SIN FICHAS TERMINA EN ALLIN
+		  const id = setTimeout(avanzarRonda, 1000);      // avanza cada 0,8 s
+		  return () => clearTimeout(id);
 			
-		  avanzarRonda()
+		  
+		} else if((pasarPorCheck || pasarPorCall ) && ronda !== RONDA.SHOWDOWN){
+			resetApuestas();            // limpia la mesa de apuestas
+			setAccionJugador(null);     // resetea acciones para la ronda siguiente
+			setAccionRival(null);
+			avanzarRonda()
 		}
 	  }, [accionJugador, accionRival,
 		  apuestaJugador, apuestaRival,
@@ -294,10 +325,12 @@ function Poker() {
 	  function reiniciarPartida(){
 		setFichasJugador(INICIAL_JUG);
 		setFichasRival(INICIAL_RIV);
-		setTimeout(() => {
-		iniciarNuevaMano()}, 3000);
+
+		iniciarNuevaMano();
 		setGameOver(false);
 		setMensajeGO("");
+		setAccionJugador(null);
+		setAccionRival(null);
 	  }
 	  function avanzarRonda() {
 		setRonda(r => ({
@@ -334,9 +367,9 @@ function Poker() {
 		  case "call":
 			 // solo tiene sentido si hay algo que igualar
 			if (apuestaActual > apuestaJugador && apuestaActual != 0) {
-		
-				apostarJugador(apuestaActual - apuestaJugador);
 				setAccionJugador("call");
+				apostarJugador(apuestaActual - apuestaJugador);
+				
 			} else {
 			setMensajeFinal("There is no bet to call. Use Check ✔️, Raise☝️ or Fold 🃏");
 			setTimeout(() => setMensajeFinal(""), 2000);
@@ -345,10 +378,12 @@ function Poker() {
 			break;
 	  
 		  case "raise":
+			
 			const subida = Math.max(cantidad, 1); // mínimo 1
 			setApuesta(a => a + subida);
-			apostarJugador(apuestaActual - apuestaJugador + subida);
 			setAccionJugador("raise");
+			apostarJugador(apuestaActual - apuestaJugador + subida);
+			
 			//El raise funciona bien
 			break;
 	  
@@ -407,7 +442,8 @@ function Poker() {
 
 	  function apostarJugador(cantidad) {
 		if (cantidad > fichasJugador) cantidad = fichasJugador;
-		const resto = fichasJugador - cantidad;          // NUEVO
+		const resto = fichasJugador - cantidad;   
+		if(resto === 0) setAccionJugador("allin")       // NUEVO
 		setFichasJugador(resto);
 		
 		setApuJ(a => a + cantidad); //Cómo están tratando con useState, lo que hacen es coger el valor de la variable actual, 
@@ -419,12 +455,15 @@ function Poker() {
 	  function apostarRival(cantidad, tipo = "call") {
 		if (cantidad > fichasRival) cantidad = fichasRival;
 		
-		const resto = fichasRival - cantidad;            // NUEVO
+		const resto = fichasRival - cantidad; 
+		         // NUEVO
  		setFichasRival(resto);
 		  
 		//Se resta la apuesta
 		setApuR(a => a + cantidad);
 		setPot(p => p + cantidad);
+		
+		  
 		const mensaje =
 		tipo === "raise" ? `Villain raises ${cantidad} chips` :
 		tipo === "call"  ? `Villain calls the bet` :
@@ -435,8 +474,16 @@ function Poker() {
 		setMensajeRival(mensaje);
 		setTimeout(() => setMensajeRival(""), 2000);
 	  }
+	  /*if ((fichasJugador === 0 || fichasRival === 0) && ronda !== RONDA.SHOWDOWN) {
+		// el que queda con fichas iguala la apuesta o se queda corto
+		setAccionRival(tipo);   // ya lo haces
+		setTurno("jugador");    // ya lo haces
+		avanzarRonda();         // ⇦ salta inmediatamente a la siguiente calle
+		return;                 // evita que la lógica normal espere más
+	  }*/
 	  setAccionRival(tipo); 
 	  setTurno("jugador");
+	  if(fichasRival === 0 || resto === 0) setAccionRival("allin");  
 	 
 	  }
 	  const comunitariasVisibles = ronda === RONDA.FLOP ? cartasMesa.slice(0,3)
@@ -467,6 +514,8 @@ function Poker() {
 			setTurno("jugador");
 	
 			setRonda(RONDA.PREFLOP);
+			setAccionJugador("null");
+			setAccionRival("null");
 			},1000);
 		}, 3000)
 		
