@@ -174,3 +174,106 @@
   box-shadow: 0 0 12px rgba(0, 255, 150, 0.6), 0 0 4px rgba(255, 255, 255, 0.1);
 }
 
+@media (max-width: 768px) {
+  .ajustes-container,
+  .blackjack-container,
+  .home-container,
+  .edad-container,
+  .slots-container,
+  .tienda-container {
+    padding: 1rem !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .ajustes-mismaLinea,
+  .mensaje-header,
+  .store-section,
+  .edad-card {
+    width: 90% !important;
+    padding: 1rem !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+
+  .ajustes-texto,
+  .ajustes-header h1,
+  .home-title,
+  .tienda-header h1 {
+    font-size: 2rem !important;
+    text-align: center !important;
+  }
+
+  .ajustes-linea,
+  .range,
+  .bet-input {
+    width: 100% !important;
+  }
+
+  .btn,
+  .btn-top-left,
+  .btn-volver,
+  .spin-button,
+  .rules-button,
+  .btn-buy {
+    width: 50% !important;
+    font-size: 1rem !important;
+    padding: 0.75rem !important;
+  }
+
+  .icon-btn {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .games-section {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .home-banner {
+    margin: 1rem auto !important;
+    padding: 1rem !important;
+  }
+
+  .modal-content {
+    width: 95% !important;
+  }
+
+  .rules-modal {
+    width: 50% !important;
+    right: 3% !important;
+    height: 50% !important;
+    top: 80px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  body:not(.home-container) .btn-top-left,
+  .blackjack-container .btn-top-left,
+  .slots-container .btn-top-left,
+  .tienda-container .btn-top-left,
+  .ajustes-container .btn-top-left,
+  .edad-container .btn-top-left {
+    position: fixed !important;
+    top: 10px !important;
+    left: 10px !important;
+    z-index: 999 !important;
+    width: auto !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .rules-button {
+    position: fixed !important;
+    top: 10px !important;
+    right: 10px !important;
+    z-index: 999 !important;
+    width: 40% !important;
+  }
+
+  .rules-button {
+    left: auto !important;
+    right: 10px !important;
+  }
+}
