@@ -555,7 +555,7 @@ function Poker() {
 		<div className="overlay-go">
 			<h2>{mensajeGO}</h2>
 			<button onClick={reiniciarPartida}>Jugar otra vez</button>
-			<button onClick={()=>window.location.href="/"}>Menú principal</button>
+			<button onClick={()=>window.location.href="/home"}>Menú principal</button>
 		</div>
 		)}
 
@@ -563,7 +563,7 @@ function Poker() {
 		
 		<MesaPoker {...estado} comunitarias={comunitariasVisibles} fase={fase} turno={turno} jugadaActualJugador={jugadaActualJugador} showdown={rondaShowdown}/>
 		<div className="boton-menu-container">
-		<button onClick={() => window.location.href = "/"}>Return to Menu</button>
+		<button onClick={() => window.location.href = "/home"}>Return to Menu</button>
 		</div>
 		</div>
 		<div className="boton-ronda-container">
