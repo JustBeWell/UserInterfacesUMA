@@ -1,33 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
 import "./Slots.css";
 import HeaderSlots from "../../Componentes/HeaderSlots/HeaderSlots";
-import winSound from "../../Sonidos/jackpot1.mp3";
-import GirandoSound from "../../Sonidos/GirandoSlots.mp3";
-import AudioSlots from "../../Componentes/Sonidos/AudioSlots";
-import loseSound from "../../Sonidos/sad-trumpet-audio.mp3";
-function Slots({ volumenEfectos, volumenMusica, fichas, setFichas }) {
 
-	
-	const audioRef = useRef(null);
-	useEffect(() => {
-		const { reproducirMusica, pararMusica, audio } = AudioSlots(volumenMusica);
-		audioRef.current = { pararMusica, audio };
-		const handleFirstInput = () => {
-			reproducirMusica();
-			window.removeEventListener("pointerdown", handleFirstInput);
-			window.removeEventListener("keydown", handleFirstInput);
-		};
-
-		window.addEventListener("pointerdown", handleFirstInput);
-		window.addEventListener("keydown", handleFirstInput);
-
-		return () => {
-			pararMusica();
-			window.removeEventListener("pointerdown", handleFirstInput);
-			window.removeEventListener("keydown", handleFirstInput);
-		};
-	}, [volumenMusica]);
+function Slots({ reproducirEfecto, fichas, setFichas }) {
 	const reelsRef = [useRef(), useRef(), useRef()];
 	const iconHeight = 79;
 	const iconWidth = 79;
@@ -38,9 +13,6 @@ function Slots({ volumenEfectos, volumenMusica, fichas, setFichas }) {
 	const [winClass, setWinClass] = useState(""); // para animación
 
 	const [isSpinning, setIsSpinning] = useState(false);
-	const winSoundRef = useRef(new Audio(winSound));
-	const loseSoundRef = useRef(new Audio(loseSound));
-	const girandoSoundRef = useRef(new Audio(GirandoSound));
 
 	const [showRules, setShowRules] = useState(false);
 	const [resultadoFinal, setResultadoFinal] = useState("");
@@ -80,9 +52,7 @@ function Slots({ volumenEfectos, volumenMusica, fichas, setFichas }) {
 			setModalVisible(true);
 			return;
 		}
-		girandoSoundRef.current.playbackRate = 0.75;
-		girandoSoundRef.current.volume = volumenEfectos;
-		girandoSoundRef.current.play();
+		reproducirEfecto("girandoSlots");
 
 		setIsSpinning(true);
 		setFichas(fichas - betAmount);
@@ -98,13 +68,11 @@ function Slots({ volumenEfectos, volumenMusica, fichas, setFichas }) {
 
 		if (resultado > 1) {
 			setWinClass("win1");
-			winSoundRef.current.volume = volumenEfectos;
-			winSoundRef.current.play();
+			reproducirEfecto("jackpot");
 			setFloatingResult(`🎉 You won! x${resultado}`);
 		} else {
 			setWinClass("lose1");
-			loseSoundRef.current.volume = volumenEfectos;
-			loseSoundRef.current.play();
+			reproducirEfecto("sadTrumpet");
 			setFloatingResult(`💀 You lost!`);
 		}
 
@@ -199,10 +167,10 @@ function Slots({ volumenEfectos, volumenMusica, fichas, setFichas }) {
 		}
 	};
 
-	function rules(showRules){
-		if(showRules === true){
+	function rules(showRules) {
+		if (showRules === true) {
 			setShowRules(false);
-		}else{
+		} else {
 			setShowRules(true);
 		}
 	}
@@ -229,9 +197,7 @@ function Slots({ volumenEfectos, volumenMusica, fichas, setFichas }) {
 			</button>
 			<HeaderSlots />
 			{floatingResult && (
-				<div className="floating-result">
-					{floatingResult}
-				</div>
+				<div className="floating-result">{floatingResult}</div>
 			)}
 			<div className={`slots ${winClass}`}>
 				<div className="reel" ref={reelsRef[0]}></div>

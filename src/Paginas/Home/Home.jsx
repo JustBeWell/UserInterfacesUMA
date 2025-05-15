@@ -1,5 +1,4 @@
-import { GameCard, AudioMenus } from "../../Componentes";
-import { useEffect, useRef } from "react";
+import { GameCard } from "../../Componentes";
 import "./Home.css";
 import { ImagenBlackjack, ImagenPoker, ImagenSlots } from "../../imagenes/";
 import { Link } from "react-router-dom";
@@ -7,26 +6,7 @@ import IconoAutorizado from "../../imagenes/iconos/juego-autorizado.png";
 import IconoSeguro from "../../imagenes/iconos/juego-seguro.png";
 import Icono18Plus from "../../imagenes/iconos/plus18.png";
 
-function Home({ volumenEfectos, volumenMusica }) {
-	const audioRef = useRef(null);
-	useEffect(() => {
-		const { reproducirMusica, pararMusica, audio } = AudioMenus(volumenMusica);
-		audioRef.current = { pararMusica, audio };
-		const handleFirstInput = () => {
-			reproducirMusica();
-			window.removeEventListener("pointerdown", handleFirstInput);
-			window.removeEventListener("keydown", handleFirstInput);
-		};
-
-		window.addEventListener("pointerdown", handleFirstInput);
-		window.addEventListener("keydown", handleFirstInput);
-
-		return () => {
-			pararMusica();
-			window.removeEventListener("pointerdown", handleFirstInput);
-			window.removeEventListener("keydown", handleFirstInput);
-		};
-	}, [volumenMusica]);
+function Home() {
 	return (
 		<main className="home-container">
 			<header className="home-header">

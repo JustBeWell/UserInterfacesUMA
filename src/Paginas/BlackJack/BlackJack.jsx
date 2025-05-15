@@ -1,7 +1,6 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import "./BlackJack.css";
-import { HeaderBlackjack, AudioPlayer, GameTable } from "../../Componentes";
-import AudioBlackjack from "../../Componentes/Sonidos/AudioBlackjack";
+import { HeaderBlackjack, GameTable } from "../../Componentes";
 
 const palos = ["corazones", "diamantes", "tréboles", "picas"];
 const valores = [
@@ -20,7 +19,7 @@ const valores = [
 	{ valor: "K", valorNumerico: 10 },
 ];
 
-function BlackJack({ volumenMusica, volumenEfectos, fichas, setFichas }) {
+function BlackJack({ reproducirEfecto, fichas, setFichas }) {
 	const [baraja, setBaraja] = useState([]);
 	const [cards, setCards] = useState([]);
 	const [cartasCrupier, setCartasCrupier] = useState([]);
@@ -34,30 +33,7 @@ function BlackJack({ volumenMusica, volumenEfectos, fichas, setFichas }) {
 	const [apuestaActual, setApuestaActual] = useState(0);
 	const [resultadoFinal, setResultadoFinal] = useState("");
 	const [modalVisible, setModalVisible] = useState(false);
-	const { reproducirCarta1 } = AudioPlayer(volumenEfectos);
-	const audioRef = useRef(null);
 	const [showRules, setShowRules] = useState(false);
-	
-	useEffect(() => {
-		const { reproducirMusica, pararMusica, audio } =
-			AudioBlackjack(volumenMusica);
-		audioRef.current = { pararMusica, audio };
-
-		const handleFirstInput = () => {
-			reproducirMusica();
-			window.removeEventListener("pointerdown", handleFirstInput);
-			window.removeEventListener("keydown", handleFirstInput);
-		};
-
-		window.addEventListener("pointerdown", handleFirstInput);
-		window.addEventListener("keydown", handleFirstInput);
-
-		return () => {
-			pararMusica();
-			window.removeEventListener("pointerdown", handleFirstInput);
-			window.removeEventListener("keydown", handleFirstInput);
-		};
-	}, [volumenMusica]);
 
 	function crearBaraja() {
 		const mazo = [];
@@ -78,7 +54,7 @@ function BlackJack({ volumenMusica, volumenEfectos, fichas, setFichas }) {
 	}
 
 	function repartirCarta(mazoActual) {
-		reproducirCarta1();
+		reproducirEfecto("cartaBlackJack");
 		const carta = mazoActual.pop();
 		setBaraja([...mazoActual]);
 		return { ...carta, nueva: true };
@@ -210,10 +186,10 @@ function BlackJack({ volumenMusica, volumenEfectos, fichas, setFichas }) {
 		setResultadoFinal("");
 	}
 
-	function rules(showRules){
-		if(showRules === true){
+	function rules(showRules) {
+		if (showRules === true) {
 			setShowRules(false);
-		}else{
+		} else {
 			setShowRules(true);
 		}
 	}
@@ -259,25 +235,29 @@ function BlackJack({ volumenMusica, volumenEfectos, fichas, setFichas }) {
 			{resultadoFinal && (
 				<div className={`modal-overlay ${!modalVisible ? "fade-out" : ""}`}>
 					<div
-					className={`modal-content ${
-						resultadoFinal.includes("win") || resultadoFinal.includes("Blackjack") ? "modal-win" :
-						resultadoFinal.includes("Push") ? "modal-push" : "modal-lose"
-					}`}
+						className={`modal-content ${
+							resultadoFinal.includes("win") ||
+							resultadoFinal.includes("Blackjack")
+								? "modal-win"
+								: resultadoFinal.includes("Push")
+								? "modal-push"
+								: "modal-lose"
+						}`}
 					>
-					<p>{resultadoFinal}</p>
-					<button
-						className="btn"
-						onClick={() => {
-						setModalVisible(false);
-						setTimeout(() => setResultadoFinal(""), 400);
-						resetGame();
-						}}
-					>
-						OK
-					</button>
+						<p>{resultadoFinal}</p>
+						<button
+							className="btn"
+							onClick={() => {
+								setModalVisible(false);
+								setTimeout(() => setResultadoFinal(""), 400);
+								resetGame();
+							}}
+						>
+							OK
+						</button>
 					</div>
 				</div>
-				)}
+			)}
 		</div>
 	);
 }

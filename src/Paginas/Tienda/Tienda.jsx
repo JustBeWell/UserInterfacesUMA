@@ -1,38 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./Tienda.css";
-import { AudioShop } from "../../Componentes";
-import AudioFondoShop from "../../Componentes/Sonidos/AudioFondoShop";
-function Tienda({
-	volumenMusica,
-	dinero,
-	fichas,
-	setFichas,
-	setDinero,
-	volumenEfectos,
-}) {
+
+function Tienda({ reproducirEfecto, dinero, fichas, setFichas, setDinero }) {
 	const [intercambio, setIntercambio] = useState(0);
-	const audioCompra = new AudioShop(volumenEfectos);
-	const audioRef = useRef(null);
-	useEffect(() => {
-		const { reproducirMusica, pararMusica, audio } =
-			AudioFondoShop(volumenMusica);
-		audioRef.current = { pararMusica, audio };
-		const handleFirstInput = () => {
-			reproducirMusica();
-			window.removeEventListener("pointerdown", handleFirstInput);
-			window.removeEventListener("keydown", handleFirstInput);
-		};
-
-		window.addEventListener("pointerdown", handleFirstInput);
-		window.addEventListener("keydown", handleFirstInput);
-
-		return () => {
-			pararMusica();
-			window.removeEventListener("pointerdown", handleFirstInput);
-			window.removeEventListener("keydown", handleFirstInput);
-		};
-	}, [volumenMusica]);
 
 	function handleBuy(amount) {
 		if (dinero >= amount) {
@@ -41,7 +12,7 @@ function Tienda({
 		} else {
 			alert("Not enough money to buy tokens.");
 		}
-		audioCompra.reproducirCompra();
+		reproducirEfecto("pay");
 	}
 	function handleExchange() {
 		const fichasSeleccionadas = parseInt(intercambio);
@@ -52,7 +23,7 @@ function Tienda({
 		setFichas((prev) => prev - fichasSeleccionadas);
 		setDinero((prev) => prev + fichasSeleccionadas); // 1 ficha = 1 euro
 		setIntercambio(0); // reseteamos el slider
-		audioCompra.reproducirCompra();
+		reproducirEfecto("pay");
 	}
 
 	return (
