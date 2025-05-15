@@ -174,6 +174,42 @@
   box-shadow: 0 0 12px rgba(0, 255, 150, 0.6), 0 0 4px rgba(255, 255, 255, 0.1);
 }
 
+.modal-content.modal-win {
+  background: linear-gradient(to bottom right, #1a3d1a, #045d2f);
+  box-shadow: 0 0 25px #00ff88, 0 0 50px rgba(0, 255, 150, 0.4);
+  animation: pulsoGanador 1s ease-in-out infinite alternate;
+}
+
+.modal-content.modal-lose {
+  background: linear-gradient(to bottom right, #3d1a1a, #5d0404);
+  box-shadow: 0 0 25px #ff4d4d, 0 0 50px rgba(255, 50, 50, 0.3);
+  animation: shake 1s ease-in-out alternate;
+}
+
+.modal-content.modal-push{
+  background: linear-gradient(to bottom right, #373d1a, #2f045d);
+  box-shadow: 0 0 25px #373d1a, 0 0 50px rgba(50, 50, 255, 0.3);
+  animation: pulsoGanador 1s ease-in-out infinite alternate;
+}
+
+@keyframes pulsoGanador {
+  from {
+    transform: scale(0.95);
+  }
+  to {
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shake {
+  0% { transform: translateX(0px); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0px); }
+}
+
+
   @media (max-width: 768px) {
   .ajustes-container,
   .blackjack-container,

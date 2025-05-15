@@ -5,6 +5,7 @@ import AjustesMusica from "./Ajustes.mp3";
 import SlotsMusica from "./SlotsMusica.mp3";
 import TiendaMusica from "./TiendaMusica.mp3";
 import BlackjackMusica from "./BlackjackMusica.mp3";
+import SonidoDerrota from "./sad-trumpet-audio.mp3";
 export {
 	carta1,
 	applepay,
@@ -13,4 +14,5 @@ export {
 	SlotsMusica,
 	TiendaMusica,
 	BlackjackMusica,
+	SonidoDerrota,
 };

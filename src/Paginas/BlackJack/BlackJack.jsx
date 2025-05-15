@@ -178,7 +178,7 @@ function BlackJack({ volumenMusica, volumenEfectos, fichas, setFichas }) {
 			mensajePopup = "Push! You get your bet back.";
 			ganancia = apuestaActual;
 		} else if (resultado === "PERDER") {
-			mensajePopup = "You lost!";
+			mensajePopup = "You lost! You lose your bet.";
 			ganancia = 0;
 		}
 		setTimeout(() => {
@@ -258,21 +258,26 @@ function BlackJack({ volumenMusica, volumenEfectos, fichas, setFichas }) {
 
 			{resultadoFinal && (
 				<div className={`modal-overlay ${!modalVisible ? "fade-out" : ""}`}>
-					<div className="modal-content">
-						<p>{resultadoFinal}</p>
-						<button
-							className="btn"
-							onClick={() => {
-								setModalVisible(false);
-								setTimeout(() => setResultadoFinal(""), 400);
-								resetGame();
-							}}
-						>
-							OK
-						</button>
+					<div
+					className={`modal-content ${
+						resultadoFinal.includes("win") || resultadoFinal.includes("Blackjack") ? "modal-win" :
+						resultadoFinal.includes("Push") ? "modal-push" : "modal-lose"
+					}`}
+					>
+					<p>{resultadoFinal}</p>
+					<button
+						className="btn"
+						onClick={() => {
+						setModalVisible(false);
+						setTimeout(() => setResultadoFinal(""), 400);
+						resetGame();
+						}}
+					>
+						OK
+					</button>
 					</div>
 				</div>
-			)}
+				)}
 		</div>
 	);
 }

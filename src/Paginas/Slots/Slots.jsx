@@ -5,7 +5,7 @@ import HeaderSlots from "../../Componentes/HeaderSlots/HeaderSlots";
 import winSound from "../../Sonidos/jackpot1.mp3";
 import GirandoSound from "../../Sonidos/GirandoSlots.mp3";
 import AudioSlots from "../../Componentes/Sonidos/AudioSlots";
-
+import loseSound from "../../Sonidos/sad-trumpet-audio.mp3";
 function Slots({ volumenEfectos, volumenMusica, fichas, setFichas }) {
 
 	
@@ -39,11 +39,14 @@ function Slots({ volumenEfectos, volumenMusica, fichas, setFichas }) {
 
 	const [isSpinning, setIsSpinning] = useState(false);
 	const winSoundRef = useRef(new Audio(winSound));
+	const loseSoundRef = useRef(new Audio(loseSound));
 	const girandoSoundRef = useRef(new Audio(GirandoSound));
 
 	const [showRules, setShowRules] = useState(false);
 	const [resultadoFinal, setResultadoFinal] = useState("");
 	const [modalVisible, setModalVisible] = useState(false);
+
+	const [floatingResult, setFloatingResult] = useState(null);
 
 	const roll = (reel, offset) => {
 		const alfa = (offset + 2) * numIcons + Math.round(Math.random() * numIcons);
@@ -91,14 +94,26 @@ function Slots({ volumenEfectos, volumenMusica, fichas, setFichas }) {
 			indexes.current[i] = (indexes.current[i] + d) % numIcons;
 		});
 		console.log("Valores de indexes después de girar:", indexes.current);
-		if (calcularPuntuacion(indexes.current) > 1) {
-			setWinClass("win1");
+		const resultado = calcularPuntuacion(indexes.current);
 
-			// Reproducir sonido de victoria
-			winSoundRef.current.volume = volumenEfectos; // Ajusta el volumen si es necesario
+		if (resultado > 1) {
+			setWinClass("win1");
+			winSoundRef.current.volume = volumenEfectos;
 			winSoundRef.current.play();
+			setFloatingResult(`🎉 You won! x${resultado}`);
+		} else {
+			setWinClass("lose1");
+			loseSoundRef.current.volume = volumenEfectos;
+			loseSoundRef.current.play();
+			setFloatingResult(`💀 You lost!`);
 		}
+
 		setTimeout(() => setWinClass(""), 2000);
+
+		setTimeout(() => {
+			setWinClass("");
+			setFloatingResult(null);
+		}, 1000);
 		setFichas(
 			fichas - betAmount + betAmount * calcularPuntuacion(indexes.current)
 		);
@@ -213,6 +228,11 @@ function Slots({ volumenEfectos, volumenMusica, fichas, setFichas }) {
 				More Info ℹ️
 			</button>
 			<HeaderSlots />
+			{floatingResult && (
+				<div className="floating-result">
+					{floatingResult}
+				</div>
+			)}
 			<div className={`slots ${winClass}`}>
 				<div className="reel" ref={reelsRef[0]}></div>
 				<div className="reel" ref={reelsRef[1]}></div>
@@ -242,7 +262,7 @@ function Slots({ volumenEfectos, volumenMusica, fichas, setFichas }) {
 			</div>
 			{modalVisible && (
 				<div className="modal-overlay">
-					<div className="modal-content">
+					<div className="modal-content-error">
 						<p>{resultadoFinal}</p>
 						<button
 							className="btn"

@@ -241,6 +241,144 @@
   transform: scale(1.05);
 }
 
+@keyframes lose1 {
+  0% {
+    background: linear-gradient(45deg, #ff0000 0%, #770000 100%);
+    box-shadow: 0 0 40px red;
+  }
+  100% {
+    background: linear-gradient(45deg, grey 0%, lightgrey 100%);
+    box-shadow: -2px 2px 3px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.slots.lose1 {
+  animation: lose1 200ms steps(2, end) infinite;
+}
+
+.floating-result {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.75);
+  padding: 1rem 2rem;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 12px;
+  z-index: 999;
+  animation: floatFade 1s ease-out forwards;
+  pointer-events: none;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+}
+
+@keyframes floatFade {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 0);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, -10px);
+  }
+  80% {
+    opacity: 1;
+    transform: translate(-50%, -30px);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50px);
+  }
+}
+
+.modal-content-error {
+  position: fixed;
+  background: linear-gradient(to bottom right, #3d1a1a, #5d0404);
+  color: #f1f1f1;
+  padding: 2rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6), inset 0 0 8px rgba(255, 255, 255, 0.03);
+  width: 90%;
+  max-width: 420px;
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  backdrop-filter: blur(4px);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  z-index: 999;
+  animation: fadeInModal 0.3s ease-out, shake 1s ease-in-out;
+}
+
+.modal-content-error h2 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  background: linear-gradient(to right, #ff4d4d, #ff1a1a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  text-shadow: 1px 1px 2px #000;
+}
+
+.modal-content-error p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #fceeee;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+}
+
+.modal-content-error .btn {
+  background: linear-gradient(to right, #b91c1c, #dc2626);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  margin-top: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(255, 0, 0, 0.2);
+}
+
+.modal-content-error .btn:hover {
+  background: linear-gradient(to right, #dc2626, #f87171);
+  box-shadow: 0 0 12px rgba(255, 50, 50, 0.6), 0 0 4px rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+}
+
+@keyframes fadeInModal {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeOutModal {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+}
+
+@keyframes shake {
+  0% { transform: translate(-50%, -50%) translateX(0); }
+  20% { transform: translate(-50%, -50%) translateX(-8px); }
+  40% { transform: translate(-50%, -50%) translateX(8px); }
+  60% { transform: translate(-50%, -50%) translateX(-6px); }
+  80% { transform: translate(-50%, -50%) translateX(6px); }
+  100% { transform: translate(-50%, -50%) translateX(0); }
+}
+
+
+
   @media (max-width: 768px) {
   .ajustes-container,
   .blackjack-container,
