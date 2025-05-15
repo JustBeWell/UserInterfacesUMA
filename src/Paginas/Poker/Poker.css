@@ -339,3 +339,54 @@ body {
     width: auto !important;
   }
 }
+
+@media (max-width: 768px) {
+  .poker-container {
+    max-width: 100%;
+    padding: 1rem;
+    overflow-x: hidden;
+  }
+
+  .poker-cartas img,
+  .poker-cartas .carta {
+    width: 60px !important;
+    height: auto !important;
+    max-width: 20vw;
+  }
+
+  .boton-ronda-container {
+    flex-direction: column !important;
+    gap: 0.5rem;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .boton-ronda-container button {
+    width: 90% !important;
+    font-size: 1rem;
+    padding: 0.6rem;
+  }
+
+  .boton-ronda-container input[type="text"],
+  .boton-ronda-container input[type="number"] {
+    width: 90% !important;
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .mensaje-final {
+    font-size: 1.4rem;
+    width: 90%;
+  }
+
+  .mensaje-rival {
+    font-size: 1rem;
+    padding: 0.4rem 0.8rem;
+    top: 4vh;
+  }
+
+  .poker-pagina {
+    overflow-x: hidden !important;
+    padding: 0.5rem;
+  }
+}
