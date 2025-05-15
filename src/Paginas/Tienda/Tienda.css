@@ -159,7 +159,7 @@
   box-shadow: 0 0 20px #fff;
 }
 
-@media (max-width: 768px) {
+  @media (max-width: 768px) {
   .ajustes-container,
   .blackjack-container,
   .home-container,
@@ -169,6 +169,10 @@
     padding: 1rem !important;
     flex-direction: column !important;
     align-items: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    min-height: 100vh !important;
+    overflow-x: hidden !important;
   }
 
   .ajustes-mismaLinea,
@@ -199,7 +203,6 @@
   .btn-top-left,
   .btn-volver,
   .spin-button,
-  .rules-button,
   .btn-buy {
     width: 50% !important;
     font-size: 1rem !important;
@@ -227,15 +230,19 @@
 
   .rules-modal {
     width: 50% !important;
-    height: 50% !important;
+    height: 70% !important;
     right: 3% !important;
-    top: 80px !important;
+    top: 8% !important;
+    position: fixed !important;
   }
 
   .rules-button {
     width: 35% !important;
     font-size: 1rem !important;
-    padding: 0.75rem !important;}
+    padding: 0.75rem !important;
+    position: fixed !important;
+    top: 10px !important;
+  }
 }
 
 @media (max-width: 768px) {
@@ -244,7 +251,7 @@
   .slots-container .btn-top-left,
   .tienda-container .btn-top-left,
   .ajustes-container .btn-top-left,
-  .edad-container .btn-top-left {
+  .edad-container .btn-top-left{
     position: fixed !important;
     top: 10px !important;
     left: 10px !important;
@@ -252,4 +259,3 @@
     width: auto !important;
   }
 }
-
