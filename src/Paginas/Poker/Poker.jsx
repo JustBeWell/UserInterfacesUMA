@@ -70,7 +70,7 @@ function Poker() {
 		if (gameOver) return;
 		setTimeout(() => {
 			if (j <= 0) {
-				setMensajeGO("😢 You los the game");
+				setMensajeGO("😢 You lost the game");
 				setGameOver(true);
 			} else if (r <= 0) {
 				setMensajeGO("🎉 You won the game!");
