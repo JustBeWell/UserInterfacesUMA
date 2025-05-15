@@ -1,6 +1,7 @@
 // Poker.jsx
 
 import { useState, useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import introPoker from "../../imagenes/Poker/introPoker.png";
 
 import MesaPoker from "../../Componentes/MesaPoker/MesaPoker";
