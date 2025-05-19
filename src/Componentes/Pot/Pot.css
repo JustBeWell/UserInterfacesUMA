@@ -17,3 +17,13 @@
 
 /* la ficha conserva su tamaño relativo */
 .pot-ficha{ width:32px; height:auto; }
+
+@media (max-width: 480px) {
+  .pot{
+    top:calc(50% + 6vw);
+    font-size:clamp(0.8rem, 2vw, 1.2rem);
+    gap:4px;  
+
+  }
+  
+}

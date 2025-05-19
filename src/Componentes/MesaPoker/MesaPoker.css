@@ -1,47 +1,84 @@
-/* src/Componentes/MesaPoker/MesaPoker.css */
-/* src/Componentes/MesaPoker/MesaPoker.css */
-.mesa{
-  position:relative;
-  aspect-ratio:1.7/1;
-  width:min(98vw,1200px);     /* antes 92 vw / 980 px */
-  margin-inline:auto;       /* centrada horizontalmente */
-  background:url("../../imagenes/mesa.png") center/contain no-repeat;
-  display:grid;             /* seguimos con las 3 filas que ya tienes */
-  grid-template-rows:auto 1fr auto;
-  place-items:center;
-  transform: scale(1.2);        /* Escala toda la mesa al 110% */
-  transform-origin: center;
-  
+
+.mesa {
+  position: relative;
+  aspect-ratio: 1.7 / 1;
+  width: min(95vw, 1200px);
+  margin-inline: auto;
+  background: url("../../imagenes/mesa.png") center/contain no-repeat;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  place-items: center;
+  padding: 1rem;
+  transition: transform 0.3s ease;
 }
+
+
 @media (max-width: 768px) {
   .mesa {
-    transform: scale(1); /* sin escalado en móvil */
+    width: 90vw;
+    max-height: 75vh;
+    transform: scale(1);
   }
+
+  .botones-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .boton-accion {
+    width: 80%;
+    max-width: 300px;
+  }
+
+
 }
+
+
+.jugador-top { grid-row: 1; }
+.cartas-comunitarias { grid-row: 2; }
+.jugador-bottom { grid-row: 3; }
+
+.carta { z-index: 5; }
+.jugador { z-index: 4; }
+.pot { z-index: 6; }
+
 .jugada-encima {
   position: absolute;
-  top: 92%; /* puedes ajustar esto si se monta sobre las cartas */
+  top: 92%;
   left: 60%;
   transform: translate(-50%, -100%);
-  font-size: 1.2rem;
+  font-size: clamp(0.9rem, 2vw, 1.4rem);
   font-weight: bold;
   color: white;
   text-shadow: 0 0 4px black;
-  z-index: 10; /* mayor que el resto */
+  z-index: 10;
   white-space: nowrap;
   pointer-events: none;
 }
 
 
-/* sin posición absoluta aquí */
-.jugador-top   { grid-row:1; }
-.cartas-comunitarias{ grid-row:2; }
-.jugador-bottom{ grid-row:3; }
 
-/* el Pot sigue absolutamente centrado como antes */
+.botones-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
 
-/* Posiciones relativas dentro de .mesa */
+.boton-accion {
+  background-color: #222;
+  color: white;
+  padding: clamp(0.6rem, 1.5vw, 1rem) clamp(1.2rem, 3vw, 2rem);
+  border: none;
+  border-radius: 8px;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
 
-.carta        { z-index:5; }
-.jugador      { z-index:4; }
-.pot          { z-index:6; }
+.boton-accion:hover {
+  background-color: #333;
+  transform: scale(1.05);
+}
