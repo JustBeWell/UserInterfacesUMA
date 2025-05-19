@@ -26,7 +26,6 @@
   gap: 12px;
   margin-top: 12px;
   justify-content: center;
-  flex-wrap: wrap; /* para móviles o pantallas pequeñas */
 }
 
 /* 💡 Input moderno */
