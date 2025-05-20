@@ -16,9 +16,17 @@ import AudioManager from "./Componentes/Sonido/AudioManager";
 
 function App() {
 	const location = useLocation();
-	const [volumenEfectos, setVolumenEfectos] = useState(0.5);
-	const [volumenMusica, setVolumenMusica] = useState(0.01);
-	const [lectorPantalla, setLectorPantalla] = useState(true);
+	const [volumenEfectos, setVolumenEfectos] = useState(
+		localStorage.getItem("volumenEfectos") || 0.5
+	);
+	const [volumenMusica, setVolumenMusica] = useState(
+		localStorage.getItem("volumenMusica") || 0.01
+	);
+	const [lectorPantalla, setLectorPantalla] = useState(
+		localStorage.getItem("lectorPantalla") == null
+			? true
+			: localStorage.getItem("lectorPantalla")
+	);
 
 	// Estado para controlar si ya hubo un primer click
 	const [primerClick, setPrimerClick] = useState(false);
@@ -59,14 +67,13 @@ function App() {
 
 		localStorage.setItem("usuarios", JSON.stringify(nuevosUsuarios));
 	}, [fichas, dinero]);
-	const { reproducirMusica, reproducirEfecto, pararTodo, speak } = AudioManager({
-		volumenMusica,
-		volumenEfectos,
-		lectorPantalla,
-	});
-	
-
-
+	const { reproducirMusica, reproducirEfecto, pararTodo, speak } = AudioManager(
+		{
+			volumenMusica,
+			volumenEfectos,
+			lectorPantalla,
+		}
+	);
 
 	useEffect(() => {
 		if (!primerClick) return; // Esperar al primer click
@@ -86,8 +93,8 @@ function App() {
 
 	return (
 		<Routes>
-			<Route path="/" element={<Login speak={speak}/>} />
-			<Route path="/home"  element={<Home speak={speak} />} />
+			<Route path="/" element={<Login speak={speak} />} />
+			<Route path="/home" element={<Home speak={speak} />} />
 			<Route
 				path="/blackjack"
 				element={
@@ -127,10 +134,12 @@ function App() {
 			/>
 			<Route
 				path="/poker"
-				element={<Poker reproducirEfecto={reproducirEfecto}
-				fichas={fichas} 
-				setFichas={setFichas}
-				speak={speak}
+				element={
+					<Poker
+						reproducirEfecto={reproducirEfecto}
+						fichas={fichas}
+						setFichas={setFichas}
+						speak={speak}
 					/>
 				}
 			/>

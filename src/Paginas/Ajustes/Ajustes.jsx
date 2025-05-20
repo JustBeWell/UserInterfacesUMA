@@ -11,7 +11,9 @@ function Ajustes({
 	lectorPantalla,
 	speak,
 }) {
-	speak("Welcome to the settings page. You can adjust the volume of effects and music, and enable or disable the screen reader.");
+	speak(
+		"Welcome to the settings page. You can adjust the volume of effects and music, and enable or disable the screen reader."
+	);
 	return (
 		<div className="ajustes-container">
 			<div className="ajustes-header">
@@ -23,7 +25,7 @@ function Ajustes({
 				</p>
 				<input
 					className="ajustes-linea"
-					aria-label= "Volume Effects Slider"
+					aria-label="Volume Effects Slider"
 					type="range"
 					min="0"
 					max="1"
@@ -31,10 +33,13 @@ function Ajustes({
 					onChange={(e) => {
 						setVolumenEfectos(e.target.value);
 						reproducirEfecto("cartaBlackJack");
+						localStorage.setItem("volumenEfectos", e.target.value);
 					}}
 					step={0.01}
-					onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
-					onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}
+					onMouseEnter={(e) =>
+						speak(e.currentTarget.getAttribute("aria-label"))
+					}
+					onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
 				/>
 			</div>
 			<div className="ajustes-mismaLinea">
@@ -43,15 +48,20 @@ function Ajustes({
 				</p>
 				<input
 					className="ajustes-linea"
-					aria-label= "Music Volume Slider"
+					aria-label="Music Volume Slider"
 					type="range"
 					min="0"
 					max="1"
 					value={volumenMusica}
-					onChange={(e) => setVolumenMusica(e.target.value)}
+					onChange={(e) => {
+						setVolumenMusica(e.target.value);
+						localStorage.setItem("volumenMusica", e.target.value);
+					}}
 					step={0.01}
-					onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
-					onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}
+					onMouseEnter={(e) =>
+						speak(e.currentTarget.getAttribute("aria-label"))
+					}
+					onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
 				/>
 			</div>
 			<div className="ajustes-mismaLinea">
@@ -62,25 +72,26 @@ function Ajustes({
 					aria-label="Screen Reader"
 					checked={lectorPantalla}
 					onChange={(e) => {
-						if (e.target.checked) {
-							setLectorPantalla(true);
-						} else {
-							setLectorPantalla(false);
-						}
+						setLectorPantalla(e.target.checked);
+						localStorage.setItem("lectorPantalla", e.target.checked);
 					}}
-					onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
-					onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}
+					onMouseEnter={(e) =>
+						speak(e.currentTarget.getAttribute("aria-label"))
+					}
+					onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
 				/>
 			</div>
 			<Link to="/home">
-				<button 
-				className="btn-top-left"
-				aria-label="Return to Menu"
-				onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
-				onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
+				<button
+					className="btn-top-left"
+					aria-label="Return to Menu"
+					onMouseEnter={(e) =>
+						speak(e.currentTarget.getAttribute("aria-label"))
+					}
+					onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+				>
 					Return to Menu
 				</button>
-				
 			</Link>
 		</div>
 	);
