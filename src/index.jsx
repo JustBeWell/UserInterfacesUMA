@@ -116,7 +116,11 @@ function App() {
 			/>
 			<Route
 				path="/poker"
-				element={<Poker reproducirEfecto={reproducirEfecto} />}
+				element={<Poker reproducirEfecto={reproducirEfecto}
+				fichas={fichas} 
+				setFichas={setFichas}
+					/>
+				}
 			/>
 			<Route
 				path="/tienda"

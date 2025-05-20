@@ -1,3 +1,4 @@
+/* eslint-disable react/react-in-jsx-scope */
 // Poker.jsx
 
 import { useState, useEffect, useRef } from "react";
@@ -30,12 +31,11 @@ export const IA = {
 	SUBIDA_MAX: 150,
 };
 
-function Poker() {
+function Poker({fichas, setFichas}) {
 	/* --- estado local (ejemplo simple) --- */
 	// fichas
-	const INICIAL_JUG = 1000;
+	const INICIAL_JUG = fichas;
 	const INICIAL_RIV = 1500;
-	const [fichasJugador, setFichasJugador] = useState(1000);
 	const [fichasRival, setFichasRival] = useState(1500);
 
 	const [pot, setPot] = useState(0);
@@ -166,8 +166,8 @@ function Poker() {
 				setMensajeFinal(<span>🎉 ¡You win the round</span>);
 				setRondaShowdown(true);
 
-				const nuevoJ = fichasJugador + pot;
-				setFichasJugador(nuevoJ);
+				const nuevoJ = fichas + pot;
+				setFichas(nuevoJ);
 				//   // 👈 añadido
 				setTimeout(() => {
 					checkGameOver(nuevoJ, fichasRival);
@@ -178,7 +178,7 @@ function Poker() {
 
 			if (
 				r < IA.PROB_RAISE &&
-				fichasJugador !== 0 &&
+				fichas !== 0 &&
 				fichasRival - apuestaJugador !== 0
 			) {
 				const subida =
@@ -261,9 +261,9 @@ function Poker() {
 		const nR = manoR.rank;
 
 		if (nJ > nR) {
-			const nuevoJ = fichasJugador + pot;
+			const nuevoJ = fichas + pot;
 
-			setFichasJugador(nuevoJ);
+			setFichas(nuevoJ);
 			setMensajeFinal(`🏆 ¡You win the round with ${manoJ.tipo}!`);
 			setRondaShowdown(true);
 
@@ -273,14 +273,14 @@ function Poker() {
 			setRondaShowdown(true);
 			const nuevoR = fichasRival + pot;
 			setFichasRival(nuevoR);
-			checkGameOver(fichasJugador, nuevoR); // 👈
+			checkGameOver(fichas, nuevoR); // 👈
 		} else {
 			setMensajeFinal(`🤝 ¡Empate! Ambos con ${manoJ.tipo}`);
 			setRondaShowdown(true);
 			const mitad = pot / 2;
-			const nuevoJ = fichasJugador + mitad;
+			const nuevoJ = fichas + mitad;
 			const nuevoR = fichasRival + mitad;
-			setFichasJugador(nuevoJ);
+			setFichas(nuevoJ);
 			setFichasRival(nuevoR);
 			checkGameOver(nuevoJ, nuevoR); // 👈
 		}
@@ -323,7 +323,7 @@ function Poker() {
 	*/
 
 	function reiniciarPartida() {
-		setFichasJugador(INICIAL_JUG);
+		setFichas(INICIAL_JUG);
 		setFichasRival(INICIAL_RIV);
 
 		iniciarNuevaMano();
@@ -405,7 +405,7 @@ function Poker() {
 				//setTurno("ninguno");
 
 				setTimeout(() => {
-					checkGameOver(fichasJugador, nuevoR);
+					checkGameOver(fichas, nuevoR);
 					//if (!gameOver) iniciarNuevaMano();
 				}, 2000);
 
@@ -423,7 +423,7 @@ function Poker() {
 	const estado = {
 		jugador: {
 			nombre: "You",
-			fichas: fichasJugador,
+			fichas: fichas,
 			cartas: cartasJugador,
 			controles: <ControlesJugador onAccion={handleAccion} />,
 		},
@@ -443,10 +443,10 @@ function Poker() {
 	}
 
 	function apostarJugador(cantidad) {
-		if (cantidad > fichasJugador) cantidad = fichasJugador;
-		const resto = fichasJugador - cantidad;
+		if (cantidad > fichas) cantidad = fichas;
+		const resto = fichas - cantidad;
 		if (resto === 0) setAccionJugador("allin"); // NUEVO
-		setFichasJugador(resto);
+		setFichas(resto);
 
 		setApuJ((a) => a + cantidad); //Cómo están tratando con useState, lo que hacen es coger el valor de la variable actual,
 		//en vez de acceder directamente a la variable de estado, en react usar la flecha garantiza que el estado de esa variable es el más actual
