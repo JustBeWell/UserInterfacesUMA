@@ -22,7 +22,7 @@ function GameTable({
 }) {
   useEffect(() => {
     if (isAlive) {
-      speak(`Your actual points are ${playerScore}. Dealers actual points are ${dealerScore}`, 1);
+      speak(`Your actual points are ${playerScore}. Dealers actual points are ${dealerScore}`);
     }
   }, [isAlive, playerScore, dealerScore]);
 
@@ -39,7 +39,7 @@ function GameTable({
       if (lastCard) {
         // Puedes personalizar el formato de la carta según tu estructura de datos
         const carta = lastCard.nombre || lastCard.valor || "carta";
-        speak(`The dealer has taken the card ${carta}. His actual score is ${dealerScore}`, 1);
+        speak(`The dealer has taken the card ${carta}. His actual score is ${dealerScore}`);
       }
     }
     prevDealerCardsLength.current = dealerCards.length;
@@ -49,8 +49,7 @@ function GameTable({
   // Narrar las puntuaciones cuando la partida termina
   if (!isAlive && dealerCards.length > 0 && playerCards.length > 0) {
     speak(
-      `Game over. Your final score is ${playerScore}. Dealer's final score is ${dealerScore}`,
-      1
+      `Game over. Your final score is ${playerScore}. Dealer's final score is ${dealerScore}`
     );
   }
   }, [isAlive, playerScore, dealerScore, dealerCards.length, playerCards.length]);
