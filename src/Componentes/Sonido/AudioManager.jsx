@@ -27,7 +27,7 @@ const audiosEfectos = {
 	sadTrumpet: sadTrumpet,
 };
 
-function AudioManager({ volumenEfectos = 1, volumenMusica }) {
+function AudioManager({ volumenEfectos = 1, volumenMusica, lectorPantalla }) {
 	const audiosEfectosRef = useRef({});
 	const audiosMusicaRef = useRef({});
 
@@ -102,7 +102,18 @@ function AudioManager({ volumenEfectos = 1, volumenMusica }) {
 		});
 	};
 
-	return { reproducirEfecto, reproducirMusica, pararTodo };
+	function speak(text) {
+		if (lectorPantalla && 'speechSynthesis' in window) {
+			const utterance = new window.SpeechSynthesisUtterance(text);
+			window.speechSynthesis.cancel(); // Detiene cualquier lectura previa
+			window.speechSynthesis.speak(utterance);
+		}
+	}
+
+
+	return { reproducirEfecto, reproducirMusica, pararTodo, speak };
 }
+
+
 
 export default AudioManager;

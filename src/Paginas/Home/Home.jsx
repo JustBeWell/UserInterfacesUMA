@@ -6,7 +6,9 @@ import IconoAutorizado from "../../imagenes/iconos/juego-autorizado.png";
 import IconoSeguro from "../../imagenes/iconos/juego-seguro.png";
 import Icono18Plus from "../../imagenes/iconos/plus18.png";
 
-function Home() {
+
+
+function Home({speak}) {
 	return (
 		<main className="home-container">
 			<header className="home-header">
@@ -16,6 +18,8 @@ function Home() {
 							className="icon-btn"
 							aria-label="Open Store"
 							title="Store"
+							onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+							onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}
 						></button>
 					</Link>
 					<Link to="/ajustes">
@@ -23,6 +27,8 @@ function Home() {
 							className="icon-btn settings"
 							aria-label="Settings"
 							title="Settings"
+							onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+							onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}
 						></button>
 					</Link>
 				</nav>
@@ -40,30 +46,44 @@ function Home() {
 					alt="Blackjack"
 					to="/blackjack"
 					label="Play Blackjack"
+					speak={speak}	
 				/>
 				<GameCard
 					image={ImagenPoker}
 					alt="Poker"
 					to="/poker"
 					label="Play Poker"
+					speak={speak}
 				/>
 				<GameCard
 					image={ImagenSlots}
 					alt="Slots"
 					to="/slots"
 					label="Play Slots"
+					speak={speak}
 				/>
 			</section>
 
 			<footer className="home-footer">
 				<div className="footer-icons">
-					<a href="https://www.ordenacionjuego.es/participantes-juego/juego-autorizado">
-						<img src={IconoAutorizado} />
+					<a 
+					href="https://www.ordenacionjuego.es/participantes-juego/juego-autorizado"
+					aria-label="Authorized Game"
+					onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+					onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
+							<img src={IconoAutorizado} />
 					</a>
-					<a href="https://www.ordenacionjuego.es/participantes-juego/juego-seguro">
+					<a
+					href="https://www.ordenacionjuego.es/participantes-juego/juego-seguro"
+					aria-label="Safe Game"
+					onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+					onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
 						<img src={IconoSeguro} />
 					</a>
-					<Link to="/mayoriaDeEdad">
+					<Link to="/mayoriaDeEdad"
+					aria-label="+18"
+					onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+					onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
 						<img src={Icono18Plus} />
 					</Link>
 				</div>

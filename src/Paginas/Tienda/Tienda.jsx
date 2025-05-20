@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./Tienda.css";
 
@@ -6,13 +6,18 @@ import adVideo from "../../Anuncio/anuncio.mp4"; // Path to your ad video
 
 const TOKEN_VALUE = 0.01;      // 100 tokens = 1 €
 
-function Tienda({ reproducirEfecto, dinero, fichas, setFichas, setDinero }) {
+function Tienda({ reproducirEfecto, dinero, fichas, setFichas, setDinero , speak}) {
   const [intercambio, setIntercambio] = useState(0);
-
+  useEffect(() => {speak("Welcome to the store. You can buy or exchange tokens. Right now you have " + dinero + " euros and " + fichas + " tokens.");},[])
   const [showAd, setShowAd]     = useState(false);
   const [canSkip, setCanSkip]   = useState(false);
   const [secondsLeft, setLeft]  = useState(30);
   const videoref = React.useRef(null);
+  useEffect(() => {
+    if (showAd && canSkip) {
+      speak("You can skip the ad now.");
+    }
+  }, [canSkip, showAd]);
   function openAd() {
     setShowAd(true);
     setCanSkip(false);
@@ -62,10 +67,17 @@ function Tienda({ reproducirEfecto, dinero, fichas, setFichas, setDinero }) {
     <div className="tienda-container">
       <header className="tienda-header">
         <Link to="/home">
-          <button className="btn-top-left">Return to Menu</button>
+          <button className="btn-top-left"
+          aria-label="Return to Menu"
+          onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+					onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
+          Return to Menu</button>
         </Link>
 
-        <button className="btn-top-right" onClick={openAd}>
+        <button className="btn-top-right" onClick={openAd}
+          aria-label="Watch ad for 1000 tokens"
+          onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+          onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
           ▶️ Watch Ad<br />+1000 tokens
         </button>
 
@@ -82,15 +94,27 @@ function Tienda({ reproducirEfecto, dinero, fichas, setFichas, setDinero }) {
           <div className="item-list">
             <div className="item">
               <p>Buy 100 tokens (1 €)</p>
-              <button className="btn-buy" onClick={() => handleBuy(100)}>Buy</button>
+              <button className="btn-buy" onClick={() => handleBuy(100)}
+                aria-label="Buy 100 tokens for 1 euro"
+                onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+                onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
+                Buy</button>
             </div>
             <div className="item">
               <p>Buy 250 tokens (2.50 €)</p>
-              <button className="btn-buy" onClick={() => handleBuy(250)}>Buy</button>
+              <button className="btn-buy" onClick={() => handleBuy(250)}
+                aria-label="Buy 250 tokens for 2.5 euro"
+                onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+                onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
+                Buy</button>
             </div>
             <div className="item">
               <p>Buy 1000 tokens (10 €)</p>
-              <button className="btn-buy" onClick={() => handleBuy(1000)}>Buy</button>
+              <button className="btn-buy" onClick={() => handleBuy(1000)}
+                aria-label="Buy 1000 tokens for 10 euro"
+                onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+                onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
+                Buy</button>
             </div>
           </div>
         </div>
@@ -109,10 +133,21 @@ function Tienda({ reproducirEfecto, dinero, fichas, setFichas, setDinero }) {
             min="0"
             max={fichas}
             value={intercambio}
-            onChange={e => setIntercambio(e.target.value)}
+            onChange={e => {
+              setIntercambio(e.target.value);
+              speak(`${e.target.value} tokens selected, that means ${e.target.value * 0.01} euros`);
+            }}
+            aria-label="Select number of tokens to exchange"
+            onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+            onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}
+            
           />
 
-          <button className="btn-buy" onClick={handleExchange}>Exchange</button>
+          <button className="btn-buy" onClick={handleExchange}
+          aria-label="Exchange tokens for money"
+          onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+          onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
+          Exchange</button>
         </div>
       </div>
 
@@ -130,6 +165,9 @@ function Tienda({ reproducirEfecto, dinero, fichas, setFichas, setDinero }) {
             className="skip-btn"
             onClick={closeAdAndReward}
             disabled={!canSkip}
+            aria-label="Skip ad"
+            onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+            onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}
           >
             {canSkip ? "Skip Ad" : `Skip in ${secondsLeft}s`}
           </button>

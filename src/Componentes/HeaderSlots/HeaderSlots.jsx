@@ -1,11 +1,17 @@
 import { Link } from "react-router-dom";
 import "./HeaderSlots.css"; 
 
-function HeaderSlots() {
+function HeaderSlots({speak}) {
   return (
     <header className="header-slots">
       <Link to="/home">
-        <button className="btn-top-left">Return to Menu</button>
+        <button 
+        className="btn-top-left"
+        aria-label="Return to menu"
+        onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+        onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
+          Return to Menu
+        </button>
       </Link>
       
       <section className="instructions">

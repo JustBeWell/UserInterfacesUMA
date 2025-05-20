@@ -18,6 +18,7 @@ function App() {
 	const location = useLocation();
 	const [volumenEfectos, setVolumenEfectos] = useState(0.5);
 	const [volumenMusica, setVolumenMusica] = useState(0.01);
+	const [lectorPantalla, setLectorPantalla] = useState(true);
 
 	// Estado para controlar si ya hubo un primer click
 	const [primerClick, setPrimerClick] = useState(false);
@@ -58,10 +59,15 @@ function App() {
 
 		localStorage.setItem("usuarios", JSON.stringify(nuevosUsuarios));
 	}, [fichas, dinero]);
-	const { reproducirMusica, reproducirEfecto, pararTodo } = AudioManager({
+	const { reproducirMusica, reproducirEfecto, pararTodo, speak } = AudioManager({
 		volumenMusica,
 		volumenEfectos,
+		lectorPantalla,
 	});
+	
+
+
+
 	useEffect(() => {
 		if (!primerClick) return; // Esperar al primer click
 		const rutaAMusica = {
@@ -80,8 +86,8 @@ function App() {
 
 	return (
 		<Routes>
-			<Route path="/" element={<Login />} />
-			<Route path="/home" element={<Home />} />
+			<Route path="/" element={<Login speak={speak}/>} />
+			<Route path="/home"  element={<Home speak={speak} />} />
 			<Route
 				path="/blackjack"
 				element={
@@ -89,6 +95,7 @@ function App() {
 						reproducirEfecto={reproducirEfecto}
 						fichas={fichas}
 						setFichas={setFichas}
+						speak={speak}
 					/>
 				}
 			/>
@@ -99,6 +106,7 @@ function App() {
 						reproducirEfecto={reproducirEfecto}
 						fichas={fichas}
 						setFichas={setFichas}
+						speak={speak}
 					/>
 				}
 			/>
@@ -111,6 +119,9 @@ function App() {
 						reproducirEfecto={reproducirEfecto}
 						setVolumenEfectos={setVolumenEfectos}
 						setVolumenMusica={setVolumenMusica}
+						speak={speak}
+						setLectorPantalla={setLectorPantalla}
+						lectorPantalla={lectorPantalla}
 					/>
 				}
 			/>
@@ -119,6 +130,7 @@ function App() {
 				element={<Poker reproducirEfecto={reproducirEfecto}
 				fichas={fichas} 
 				setFichas={setFichas}
+				speak={speak}
 					/>
 				}
 			/>
@@ -131,6 +143,7 @@ function App() {
 						dinero={dinero}
 						setDinero={setDinero}
 						setFichas={setFichas}
+						speak={speak}
 					/>
 				}
 			/>

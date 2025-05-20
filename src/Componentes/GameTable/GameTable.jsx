@@ -1,5 +1,6 @@
 import { Mano } from "..";
 import "./GameTable.css";
+import { useEffect, useRef } from "react";
 function GameTable({
   dealerCards,
   fichas,
@@ -16,8 +17,44 @@ function GameTable({
   calcularPuntuacionVisible,
   resetGame,
   setBetAmount,
-  setBetInput
+  setBetInput,
+  speak
 }) {
+  useEffect(() => {
+    if (isAlive) {
+      speak(`Your actual points are ${playerScore}. Dealers actual points are ${dealerScore}`, 1);
+    }
+  }, [isAlive, playerScore, dealerScore]);
+
+  const prevDealerCardsLength = useRef(dealerCards.length);
+
+  useEffect(() => {
+    // Solo narrar si la partida está activa y el dealer ha cogido una carta nueva
+    if (
+      isAlive &&
+      dealerCards.length > prevDealerCardsLength.current
+      && dealerCards.length > 1
+    ) {
+      const lastCard = dealerCards[dealerCards.length - 1];
+      if (lastCard) {
+        // Puedes personalizar el formato de la carta según tu estructura de datos
+        const carta = lastCard.nombre || lastCard.valor || "carta";
+        speak(`The dealer has taken the card ${carta}. His actual score is ${dealerScore}`, 1);
+      }
+    }
+    prevDealerCardsLength.current = dealerCards.length;
+  }, [dealerCards, dealerScore, isAlive]);
+
+  useEffect(() => {
+  // Narrar las puntuaciones cuando la partida termina
+  if (!isAlive && dealerCards.length > 0 && playerCards.length > 0) {
+    speak(
+      `Game over. Your final score is ${playerScore}. Dealer's final score is ${dealerScore}`,
+      1
+    );
+  }
+  }, [isAlive, playerScore, dealerScore, dealerCards.length, playerCards.length]);
+
   return (
     <div className="game-table">
       <div className="mesa-juego">
@@ -44,6 +81,9 @@ function GameTable({
               type="text"
               id="betAmount"
               className="bet-input"
+              aria-label="Enter your bet amount"
+              onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+              onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}
               placeholder="Enter amount"
               value={betInput}
               onChange={(e) => {
@@ -51,18 +91,33 @@ function GameTable({
                 if (/^\d*$/.test(value)) {
                   setBetInput(value);
                   setBetAmount(value === "" ? 0 : Number(value));
+                  speak(value);
+                }else{
+                  speak("Invalid input, please enter a number");
                 }
               }}
             />
             <span className="available-chips">
               Available: <strong>{fichas}</strong> tokens
             </span>
-            <button className="btn" onClick={iniciarJuego}>START GAME</button>
+            <button className="btn" onClick={iniciarJuego}
+             aria-label="Start Game"
+             onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+             onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>           
+             START GAME</button>
           </div>
         ) : (
           <>
-            <button className="btn" onClick={newCard}>HIT</button>
-            <button className="btn" onClick={plantarse}>STAND</button>
+            <button className="btn" onClick={newCard}
+            aria-label="Hit"
+            onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+            onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
+            HIT</button>
+            <button className="btn" onClick={plantarse}
+            aria-label="Stand"
+            onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+            onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
+            STAND</button>
           </>
         )}
       </div>

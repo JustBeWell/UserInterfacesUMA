@@ -63,6 +63,16 @@
     
 }
 
+.ajustes-checkbox {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #00c97c;
+    border: 2px solid #fff;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+} 
+
 .ajustes-texto {
     font-size: 1.8rem;
     font-weight: bold;

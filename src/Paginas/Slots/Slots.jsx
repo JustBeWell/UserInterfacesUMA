@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import "./Slots.css";
 import HeaderSlots from "../../Componentes/HeaderSlots/HeaderSlots";
 
-function Slots({ reproducirEfecto, fichas, setFichas }) {
+function Slots({ reproducirEfecto, fichas, setFichas, speak }) {
+	speak("Welcome to the slots game. You can bet your tokens and try to win more. Right now you have " + fichas + " tokens.");
 	const reelsRef = [useRef(), useRef(), useRef()];
 	const iconHeight = 79;
 	const iconWidth = 79;
@@ -50,6 +51,7 @@ function Slots({ reproducirEfecto, fichas, setFichas }) {
 		if (apuesta > fichas || apuesta <= 0) {
 			setResultadoFinal("Invalid bet. Make sure it's within your tokens.");
 			setModalVisible(true);
+			speak("Invalid bet. Make sure it's within your tokens.");
 			return;
 		}
 		reproducirEfecto("girandoSlots");
@@ -70,10 +72,12 @@ function Slots({ reproducirEfecto, fichas, setFichas }) {
 			setWinClass("win1");
 			reproducirEfecto("jackpot");
 			setFloatingResult(`🎉 You won! x${resultado}`);
+			speak(`You won ${resultado} times your bet!`);
 		} else {
 			setWinClass("lose1");
 			reproducirEfecto("sadTrumpet");
 			setFloatingResult(`💀 You lost!`);
+			speak("You lost!, ${fichas}");
 		}
 
 		setTimeout(() => setWinClass(""), 2000);
@@ -82,9 +86,9 @@ function Slots({ reproducirEfecto, fichas, setFichas }) {
 			setWinClass("");
 			setFloatingResult(null);
 		}, 1000);
-		setFichas(
-			fichas - betAmount + betAmount * calcularPuntuacion(indexes.current)
-		);
+		let aux = fichas - betAmount + betAmount * calcularPuntuacion(indexes.current)
+		setFichas(aux);
+		speak('Your current balance is ' + aux);
 		setIsSpinning(false);
 	};
 
@@ -188,10 +192,13 @@ function Slots({ reproducirEfecto, fichas, setFichas }) {
 					</ul>
 				</div>
 			)}
-			<button className="rules-button" onClick={() => rules(showRules)}>
+			<button className="rules-button" onClick={() => rules(showRules)}
+				aria-label="Show rules"
+				onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+				onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
 				More Info ℹ️
 			</button>
-			<HeaderSlots />
+			<HeaderSlots speak={speak} />
 			{floatingResult && (
 				<div className="floating-result">{floatingResult}</div>
 			)}
@@ -200,7 +207,10 @@ function Slots({ reproducirEfecto, fichas, setFichas }) {
 				<div className="reel" ref={reelsRef[1]}></div>
 				<div className="reel" ref={reelsRef[2]}></div>
 			</div>
-			<button className="spin-button" onClick={rollAll} disabled={isSpinning}>
+			<button className="spin-button" onClick={rollAll} disabled={isSpinning}
+				aria-label="Spin the reels"
+				onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+				onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
 				Spin
 			</button>
 			<div className="bet-input-group">
@@ -211,10 +221,16 @@ function Slots({ reproducirEfecto, fichas, setFichas }) {
 					placeholder="Enter amount"
 					className="bet-input"
 					value={betAmount}
+					aria-label="Bet amount input"
+					onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}	
+					onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}
 					onChange={(e) => {
 						const value = e.target.value;
 						if (/^\d*$/.test(value)) {
 							setBetAmount(value);
+							speak(value)
+						}else{
+							speak("Invalid input, please enter a number")
 						}
 					}}
 				/>
@@ -228,6 +244,9 @@ function Slots({ reproducirEfecto, fichas, setFichas }) {
 						<p>{resultadoFinal}</p>
 						<button
 							className="btn"
+							aria-label="Close Popup"
+							onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+							onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}
 							onClick={() => {
 								setModalVisible(false);
 								setTimeout(() => setResultadoFinal(""), 300);

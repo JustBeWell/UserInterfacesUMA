@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import "./BlackJack.css";
 import { HeaderBlackjack, GameTable } from "../../Componentes";
 
@@ -19,7 +19,8 @@ const valores = [
 	{ valor: "K", valorNumerico: 10 },
 ];
 
-function BlackJack({ reproducirEfecto, fichas, setFichas }) {
+function BlackJack({ reproducirEfecto, fichas, setFichas, speak }) {
+	useEffect(() => {speak("Welcome to Blackjack. You can place your bets and play against the dealer. Good luck!. Right now you have " + fichas + " tokens.");},[])
 	const [baraja, setBaraja] = useState([]);
 	const [cards, setCards] = useState([]);
 	const [cartasCrupier, setCartasCrupier] = useState([]);
@@ -34,6 +35,7 @@ function BlackJack({ reproducirEfecto, fichas, setFichas }) {
 	const [resultadoFinal, setResultadoFinal] = useState("");
 	const [modalVisible, setModalVisible] = useState(false);
 	const [showRules, setShowRules] = useState(false);
+	useEffect(() => {if(showRules) speak("Reach 21 without going over.Step 1: Enter your bet using the input below.Step 2: Press Start Game to receive your cards.Step 3: Choose Hit to take another card, or Stand to finish.");},[showRules])
 
 	function crearBaraja() {
 		const mazo = [];
@@ -161,7 +163,13 @@ function BlackJack({ reproducirEfecto, fichas, setFichas }) {
 			setResultadoFinal(mensajePopup);
 			setModalVisible(true);
 		}, 1000);
+
+		setTimeout(() => {
+			speak(mensajePopup);
+		}, 6000);
+
 		setFichas((prev) => prev + ganancia);
+		speak("Your current balance is " + (fichas + ganancia));
 		setIsAlive(false);
 	}
 
@@ -206,10 +214,13 @@ function BlackJack({ reproducirEfecto, fichas, setFichas }) {
 					<h6>Blackjack only counts if you have two cards in your hand</h6>
 				</div>
 			)}
-			<button className="rules-button" onClick={() => rules(showRules)}>
+			<button className="rules-button" onClick={() => rules(showRules)}
+			aria-label="More Info"
+          	onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+			onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
 				More Info ℹ️
 			</button>
-			<HeaderBlackjack chips={fichas} betAmount={betAmount} mensaje={mensaje} />
+			<HeaderBlackjack chips={fichas} betAmount={betAmount} mensaje={mensaje} speak={speak} />
 			<GameTable
 				dealerCards={cartasCrupier}
 				playerCards={cards}
@@ -226,6 +237,7 @@ function BlackJack({ reproducirEfecto, fichas, setFichas }) {
 				setBetInput={setBetInput}
 				setBetAmount={setBetAmount}
 				resetGame={resetGame}
+				speak={speak}
 			/>
 
 			{resultadoFinal && (
@@ -248,6 +260,9 @@ function BlackJack({ reproducirEfecto, fichas, setFichas }) {
 								setTimeout(() => setResultadoFinal(""), 400);
 								resetGame();
 							}}
+							aria-label="Close popup"
+							onMouseEnter={(e) =>speak(e.currentTarget.getAttribute("aria-label"))}
+							onFocus={(e) =>speak(e.currentTarget.getAttribute("aria-label"))}
 						>
 							OK
 						</button>

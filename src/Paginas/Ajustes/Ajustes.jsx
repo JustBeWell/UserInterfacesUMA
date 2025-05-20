@@ -7,7 +7,11 @@ function Ajustes({
 	reproducirEfecto,
 	setVolumenEfectos,
 	setVolumenMusica,
+	setLectorPantalla,
+	lectorPantalla,
+	speak,
 }) {
+	speak("Welcome to the settings page. You can adjust the volume of effects and music, and enable or disable the screen reader.");
 	return (
 		<div className="ajustes-container">
 			<div className="ajustes-header">
@@ -19,6 +23,7 @@ function Ajustes({
 				</p>
 				<input
 					className="ajustes-linea"
+					aria-label= "Volume Effects Slider"
 					type="range"
 					min="0"
 					max="1"
@@ -28,6 +33,8 @@ function Ajustes({
 						reproducirEfecto("cartaBlackJack");
 					}}
 					step={0.01}
+					onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+					onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}
 				/>
 			</div>
 			<div className="ajustes-mismaLinea">
@@ -36,16 +43,44 @@ function Ajustes({
 				</p>
 				<input
 					className="ajustes-linea"
+					aria-label= "Music Volume Slider"
 					type="range"
 					min="0"
 					max="1"
 					value={volumenMusica}
 					onChange={(e) => setVolumenMusica(e.target.value)}
 					step={0.01}
+					onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+					onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}
+				/>
+			</div>
+			<div className="ajustes-mismaLinea">
+				<p className="ajustes-texto">Screen Reader:</p>
+				<input
+					className="ajustes-checkbox"
+					type="checkbox"
+					aria-label="Screen Reader"
+					checked={lectorPantalla}
+					onChange={(e) => {
+						if (e.target.checked) {
+							setLectorPantalla(true);
+						} else {
+							setLectorPantalla(false);
+						}
+					}}
+					onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+					onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}
 				/>
 			</div>
 			<Link to="/home">
-				<button className="btn-top-left">Return to Menu</button>
+				<button 
+				className="btn-top-left"
+				aria-label="Return to Menu"
+				onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+				onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
+					Return to Menu
+				</button>
+				
 			</Link>
 		</div>
 	);

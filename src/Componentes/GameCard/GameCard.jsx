@@ -2,12 +2,16 @@
 import { Link } from "react-router-dom";
 import "./GameCard.css"; // o usa Tailwind si prefieres
 
-function GameCard({ image, alt, to, label }) {
+function GameCard({ image, alt, to, label , speak}) {
   return (
     <div className="game-card">
       <img src={image} alt={alt} />
       <Link to={to}>
-        <button className="btn">{label}</button>
+        <button className="btn"
+        aria-label={label}
+				onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+				onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}
+        >{label}</button>
       </Link>
     </div>
   );

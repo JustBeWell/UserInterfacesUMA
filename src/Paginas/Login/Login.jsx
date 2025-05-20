@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Login.css";
 
-function Login() {
+function Login({speak}) {
   const [isLogin, setIsLogin] = useState(true);
   const [fadeOut, setFadeOut] = useState(false);
   const [username, setUsername] = useState("");
@@ -32,10 +32,12 @@ function Login() {
         setUsername("");
         setPassword("");
         setError("Invalid username or password.");
+        speak("Invalid username or password.");
       }
     } else {
       if (usuariosGuardados[username]) {
         setError("This username is already taken.");
+        speak("This username is already taken.");
         return;
       }
       usuariosGuardados[username] = {
@@ -62,19 +64,29 @@ function Login() {
           <input
             type="text"
             placeholder="Username"
+            aria-label="enter your Username"
             required
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            onMouseEnter={e => speak(e.target.value.length>0 ? `Your username is ${e.target.value}` : e.currentTarget.getAttribute('aria-label'))}
+            onFocus={e => speak(e.target.value.length>0 ? `Your username is ${e.target.value}` : e.currentTarget.getAttribute('aria-label'))}
           />
           <input
             type="password"
             placeholder="Password"
+            aria-label="enter your Password"
+            onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+            onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           {error && <p style={{ color: "#f88", marginTop: "0.5rem" }}>{error}</p>}
-          <button type="submit">{isLogin ? "Login" : "Register"}</button>
+          <button type="submit"
+          aria-label="Login"
+          onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+          onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}
+          >{isLogin ? "Login" : "Register"}</button>
         </form>
         <div className="toggle" onClick={toggleForm}>
           {isLogin ? "Don't have an account? Register" : "Already have an account? Login"}
