@@ -17,7 +17,7 @@ import AudioManager from "./Componentes/Sonido/AudioManager";
 function App() {
 	const location = useLocation();
 	const [volumenEfectos, setVolumenEfectos] = useState(0.5);
-	const [volumenMusica, setVolumenMusica] = useState(0.5);
+	const [volumenMusica, setVolumenMusica] = useState(0.01);
 
 	// Estado para controlar si ya hubo un primer click
 	const [primerClick, setPrimerClick] = useState(false);
