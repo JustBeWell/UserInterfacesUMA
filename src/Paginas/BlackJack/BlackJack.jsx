@@ -1,7 +1,7 @@
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import "./BlackJack.css";
 import { HeaderBlackjack, GameTable } from "../../Componentes";
-
+import { Link } from "react-router-dom";
 const palos = ["corazones", "diamantes", "tréboles", "picas"];
 const valores = [
 	{ valor: "A", valorNumerico: 11 },
@@ -220,9 +220,25 @@ function BlackJack({ reproducirEfecto, fichas, setFichas, speak }) {
 			onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
 				More Info ℹ️
 			</button>
+
+			
+
 			<header>
 			<HeaderBlackjack chips={fichas} betAmount={betAmount} mensaje={mensaje} speak={speak} />
 			</header>
+
+			<Link to="/home">
+				<button
+					className="btn-top-left"
+					aria-label="Return to Menu"
+					onMouseEnter={(e) =>
+						speak(e.currentTarget.getAttribute("aria-label"))
+					}
+					onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+				>
+					Return to Menu
+				</button>
+			</Link>
 
 			<GameTable
 				dealerCards={cartasCrupier}

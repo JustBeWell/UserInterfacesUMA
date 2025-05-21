@@ -300,7 +300,7 @@ body {
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 650x) {
   .poker-container {
     max-width: 100%;
     padding: 1rem;

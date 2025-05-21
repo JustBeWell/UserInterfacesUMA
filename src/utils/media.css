@@ -38,7 +38,6 @@
     width: 100% !important;
   }
 
-  .btn,
   .btn-top-left,
   .btn-volver,
   .spin-button,
@@ -108,7 +107,7 @@
 
     .rules-modal {
       width: 50% !important;
-      height: 70% !important;
+      height: 60% !important;
       right: 3% !important;
       top: 8% !important;
       position: fixed !important;
@@ -117,13 +116,11 @@
   .rules-button {
     width: 35% !important;
     font-size: 1rem !important;
-    padding: 0.75rem !important;
+    padding: 0.5rem !important;
     position: fixed !important;
     top: 10px !important;
   }
-}
 
-@media (max-width: 768px) {
   body:not(.home-container) .btn-top-left,
   .blackjack-container .btn-top-left,
   .slots-container .btn-top-left,
@@ -135,5 +132,19 @@
     left: 10px !important;
     z-index: 999 !important;
     width: auto !important;
+    padding: 0.5rem !important;
   }
+
+  .blackjack-container > header {
+    display: none !important;
+  }
+
+  .mano-crupier {
+    margin-top: 40px !important;
+  }
+
+  .mano-jugador {
+    margin-bottom: 30px !important;
+  }
+
 }

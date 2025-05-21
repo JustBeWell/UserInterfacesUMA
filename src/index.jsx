@@ -24,7 +24,7 @@ function App() {
 	);
 	const [lectorPantalla, setLectorPantalla] = useState(
 		localStorage.getItem("lectorPantalla") == null
-			? true
+			? false
 			: localStorage.getItem("lectorPantalla")
 	);
 
