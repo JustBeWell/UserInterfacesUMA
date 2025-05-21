@@ -183,9 +183,14 @@ function Poker({ fichas, setFichas, speak }) {
 				// 10 % fold
 
 				setMensajeRival("Rival folds");
+				speak('Rival folds');
 
 				setMensajeFinal(<span>🎉 ¡You win the round</span>);
-				speak('You win the round');
+				const manoActual = [...cartasJugador, ...cartasMesa];
+				const evaluacion = evaluarMano(manoActual);
+				setTimeout(() => {
+					speak('You win the round with the combination ' + evaluacion.tipo);
+				},2000);
 				setRondaShowdown(true);
 
 				const nuevoJ = fichas + pot;
@@ -208,12 +213,15 @@ function Poker({ fichas, setFichas, speak }) {
 					Math.floor(Math.random() * (IA.SUBIDA_MAX - IA.SUBIDA_MIN));
 				setApuesta((a) => a + subida);
 				apostarRival(apuestaJugador + subida, "raise");
+				speak("Rival raises " + subida + " chips");
 			} else {
 				const tipoAccion = necesitaIgualar > 0 ? "call" : "check";
 				if (tipoAccion === "call") {
 					apostarRival(apuestaJugador, "call"); // ✅ hay algo que igualar
+					speak("Rival calls the bet");
 				} else {
 					apostarRival(0, "check"); // ✅ sin apuesta = check
+					speak("Rival checks");
 				}
 			}
 			//Es aquí donde estamos gestionando el cambio de ronda
@@ -383,8 +391,9 @@ function Poker({ fichas, setFichas, speak }) {
         const evaluation = evaluarMano(currentHand);
 		setTimeout(() => {
        	speak(`New card on the table: ${cardText}. Your current combination is ${evaluation.tipo}`);
-
+		   prevCartasMesaRef.current = cartasMesa.length;
 		}, 3000);
+		
 	}
 	}, [cartasMesa, ronda, cartasJugador]);
 

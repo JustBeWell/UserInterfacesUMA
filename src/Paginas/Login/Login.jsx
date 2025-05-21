@@ -52,6 +52,7 @@ function Login({ speak }) {
 			setUsername("");
 			setPassword("");
 			navigate("/");
+			speak("Account created successfully. You can now log in.");
 		}
 	};
 
@@ -101,7 +102,9 @@ function Login({ speak }) {
 						)}
 						<button
 							type="submit"
-							aria-label="Login"
+							aria-label={
+								isLogin ? "Login" : "Register"
+							}
 							onMouseEnter={(e) =>
 								speak(e.currentTarget.getAttribute("aria-label"))
 							}
@@ -110,7 +113,30 @@ function Login({ speak }) {
 							{isLogin ? "Login" : "Register"}
 						</button>
 					</form>
-					<div className="toggle" onClick={toggleForm}>
+					<div
+						className="toggle"
+						onClick={toggleForm}
+						tabIndex="0"
+						aria-label={
+							isLogin
+								? "Don't have an account? Register"
+								: "Already have an account? Login"
+						}
+						onMouseEnter={(e) =>
+							speak(e.currentTarget.getAttribute("aria-label"))
+						}
+						onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+						onKeyDown={(e) => {
+							if (e.key === "Enter" || e.key === " ") {
+								toggleForm();
+								if (isLogin) {
+									speak("Create a new account")
+								} else {
+									speak("Login to your account")
+								}
+							}
+						}}
+					>
 						{isLogin
 							? "Don't have an account? Register"
 							: "Already have an account? Login"}
