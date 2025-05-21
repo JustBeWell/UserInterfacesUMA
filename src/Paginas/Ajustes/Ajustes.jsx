@@ -81,7 +81,7 @@ function Ajustes({
 					onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
 				/>
 			</div>
-			<Link to="/home">
+			<Link to="/home" tabIndex={-1}>
 				<button
 					className="btn-top-left"
 					aria-label="Return to Menu"

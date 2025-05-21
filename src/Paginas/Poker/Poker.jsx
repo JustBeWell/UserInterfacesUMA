@@ -31,7 +31,7 @@ export const IA = {
 	SUBIDA_MAX: 150,
 };
 
-function Poker({fichas, setFichas, speak}) {
+function Poker({ fichas, setFichas, speak }) {
 	/* --- estado local (ejemplo simple) --- */
 	// fichas
 	const INICIAL_JUG = fichas;
@@ -567,12 +567,16 @@ function Poker({fichas, setFichas, speak}) {
 					showdown={rondaShowdown}
 				/>
 				<div className="boton-menu-container">
-					<Link to="/home">
+					<Link to="/home" tabIndex={-1}>
 						<button
-						aria-label="Return to Menu"
-						onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
-						onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
-						Return to Menu</button>
+							aria-label="Return to Menu"
+							onMouseEnter={(e) =>
+								speak(e.currentTarget.getAttribute("aria-label"))
+							}
+							onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+						>
+							Return to Menu
+						</button>
 					</Link>
 				</div>
 			</div>
