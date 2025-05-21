@@ -71,6 +71,7 @@ function Home({ speak }) {
 					<a
 						href="https://www.ordenacionjuego.es/participantes-juego/juego-autorizado"
 						aria-label="Authorized Game"
+						alt="Authorized Game"
 						onMouseEnter={(e) =>
 							speak(e.currentTarget.getAttribute("aria-label"))
 						}
@@ -81,6 +82,7 @@ function Home({ speak }) {
 					<a
 						href="https://www.ordenacionjuego.es/participantes-juego/juego-seguro"
 						aria-label="Safe Game"
+						alt="Safe Game"
 						onMouseEnter={(e) =>
 							speak(e.currentTarget.getAttribute("aria-label"))
 						}
@@ -91,6 +93,7 @@ function Home({ speak }) {
 					<Link
 						to="/mayoriaDeEdad"
 						aria-label="+18"
+						alt="+18"
 						onMouseEnter={(e) =>
 							speak(e.currentTarget.getAttribute("aria-label"))
 						}
