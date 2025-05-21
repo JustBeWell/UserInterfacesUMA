@@ -220,7 +220,10 @@ function BlackJack({ reproducirEfecto, fichas, setFichas, speak }) {
 			onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
 				More Info ℹ️
 			</button>
+			<header>
 			<HeaderBlackjack chips={fichas} betAmount={betAmount} mensaje={mensaje} speak={speak} />
+			</header>
+
 			<GameTable
 				dealerCards={cartasCrupier}
 				playerCards={cards}

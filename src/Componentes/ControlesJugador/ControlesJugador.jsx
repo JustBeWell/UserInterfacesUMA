@@ -18,6 +18,7 @@ function ControlesJugador({ onAccion }) {
         step={10}
         onChange={handleChange}
         className="input-apuesta"
+        aria-label="Cantidad a apostar"
       />
 
       {/* Aclaración sobre la sintaxis onClick={function}
