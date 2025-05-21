@@ -6,29 +6,31 @@ import IconoAutorizado from "../../imagenes/iconos/juego-autorizado.png";
 import IconoSeguro from "../../imagenes/iconos/juego-seguro.png";
 import Icono18Plus from "../../imagenes/iconos/plus18.png";
 
-
-
-function Home({speak}) {
+function Home({ speak }) {
 	return (
 		<main className="home-container">
 			<header className="home-header">
 				<nav className="top-nav">
-					<Link to="/tienda">
+					<Link to="/tienda" tabIndex={-1}>
 						<button
 							className="icon-btn"
 							aria-label="Open Store"
 							title="Store"
-							onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
-							onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}
+							onMouseEnter={(e) =>
+								speak(e.currentTarget.getAttribute("aria-label"))
+							}
+							onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
 						></button>
 					</Link>
-					<Link to="/ajustes">
+					<Link to="/ajustes" tabIndex={-1}>
 						<button
 							className="icon-btn settings"
 							aria-label="Settings"
 							title="Settings"
-							onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
-							onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}
+							onMouseEnter={(e) =>
+								speak(e.currentTarget.getAttribute("aria-label"))
+							}
+							onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
 						></button>
 					</Link>
 				</nav>
@@ -46,7 +48,7 @@ function Home({speak}) {
 					alt="Blackjack"
 					to="/blackjack"
 					label="Play Blackjack"
-					speak={speak}	
+					speak={speak}
 				/>
 				<GameCard
 					image={ImagenPoker}
@@ -66,24 +68,34 @@ function Home({speak}) {
 
 			<footer className="home-footer">
 				<div className="footer-icons">
-					<a 
-					href="https://www.ordenacionjuego.es/participantes-juego/juego-autorizado"
-					aria-label="Authorized Game"
-					onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
-					onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
-							<img src={IconoAutorizado} />
+					<a
+						href="https://www.ordenacionjuego.es/participantes-juego/juego-autorizado"
+						aria-label="Authorized Game"
+						onMouseEnter={(e) =>
+							speak(e.currentTarget.getAttribute("aria-label"))
+						}
+						onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+					>
+						<img src={IconoAutorizado} />
 					</a>
 					<a
-					href="https://www.ordenacionjuego.es/participantes-juego/juego-seguro"
-					aria-label="Safe Game"
-					onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
-					onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
+						href="https://www.ordenacionjuego.es/participantes-juego/juego-seguro"
+						aria-label="Safe Game"
+						onMouseEnter={(e) =>
+							speak(e.currentTarget.getAttribute("aria-label"))
+						}
+						onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+					>
 						<img src={IconoSeguro} />
 					</a>
-					<Link to="/mayoriaDeEdad"
-					aria-label="+18"
-					onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
-					onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
+					<Link
+						to="/mayoriaDeEdad"
+						aria-label="+18"
+						onMouseEnter={(e) =>
+							speak(e.currentTarget.getAttribute("aria-label"))
+						}
+						onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+					>
 						<img src={Icono18Plus} />
 					</Link>
 				</div>
