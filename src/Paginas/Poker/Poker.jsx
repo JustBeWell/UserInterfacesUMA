@@ -425,7 +425,7 @@ function Poker({ fichas, setFichas, speak }) {
 			nombre: "You",
 			fichas: fichas,
 			cartas: cartasJugador,
-			controles: <ControlesJugador onAccion={handleAccion} />,
+			controles: <ControlesJugador onAccion={handleAccion} speak={speak} />,
 		},
 		rival: {
 			nombre: "Villain",
@@ -550,9 +550,17 @@ function Poker({ fichas, setFichas, speak }) {
 				//Lo que hacemos aquí es cargar este componente si y solo si, gameOver está en true
 				<div className="overlay-go">
 					<h2>{mensajeGO}</h2>
-					<button onClick={reiniciarPartida}>Jugar otra vez</button>
+					<button onClick={reiniciarPartida}
+					aria-label="Play Again"
+					onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+					onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
+					Jugar otra vez</button>
 					<Link to="/home">
-						<button>Menú principal</button>
+						<button
+						aria-label="Return to Menu"
+						onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+						onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
+						Menú principal</button>
 					</Link>
 				</div>
 			)}

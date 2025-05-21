@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ControlesJugador.css";
 
-function ControlesJugador({ onAccion }) {
+function ControlesJugador({ onAccion , speak}) {
   const [cantidad, setCantidad] = useState(100);
 
   const handleChange = (e) => {
@@ -35,10 +35,26 @@ function ControlesJugador({ onAccion }) {
       Es un callBack, ya que la función internamente se va a quedar esperando al evento y cuando ocurra ejecutará la función que le hayamos pasado como parámetro
       
       */}
-      <button onClick={() => onAccion("check")}>CHECK</button>
-      <button onClick={() => onAccion("call")}>CALL</button>
-      <button onClick={() => onAccion("raise", cantidad)}>RAISE</button>
-      <button onClick={() => onAccion("fold")}>FOLD</button>
+      <button onClick={() => onAccion("check")}
+        aria-label="check"
+        onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+				onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
+        CHECK</button>
+      <button onClick={() => onAccion("call")}
+      aria-label="Call"
+        onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+				onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
+          CALL</button>
+      <button onClick={() => onAccion("raise", cantidad)}
+      aria-label="Raise"
+        onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+				onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
+      RAISE</button>
+      <button onClick={() => onAccion("fold")}
+      aria-label="Fold"
+        onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
+				onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
+      FOLD</button>
     </div>
   );
 }

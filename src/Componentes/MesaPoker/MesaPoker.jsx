@@ -13,8 +13,8 @@ function MesaPoker({ jugador, rival, comunitarias, pot, fase, turno, jugadaActua
     )}
       <Pot cantidad={pot} />
 
-      <Jugador posicion="top" {...rival} fase={fase} turno={turno === "rival"} showdown={showdown}   />
-      <Jugador posicion="bottom" {...jugador} fase={fase}  turno={turno === "jugador"} />
+      <Jugador posicion="top" {...rival} fase={fase} turno={turno === "rival"} showdown={showdown}  />
+      <Jugador posicion="bottom" {...jugador} fase={fase}  turno={turno === "jugador"}  />
      
 
       <CartasComunitarias cartas={comunitarias} fase={fase} />
