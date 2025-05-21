@@ -239,106 +239,64 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-  @media (max-width: 768px) {
-  .ajustes-container,
-  .blackjack-container,
-  .home-container,
-  .edad-container,
-  .slots-container,
-  .tienda-container {
-    padding: 1rem !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    min-height: 100vh !important;
-    overflow-x: hidden !important;
-  }
 
-  .ajustes-mismaLinea,
-  .mensaje-header,
-  .store-section,
-  .edad-card {
-    width: 90% !important;
-    padding: 1rem !important;
-    flex-direction: column !important;
-    gap: 1rem !important;
-  }
+.rotate-overlay {
+  position: fixed;
+  inset: 0;
+  background: black;                        /* ← fondo negro sólido */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  text-align: center;
+  font-family: "Segoe UI", sans-serif;
+}
 
-  .ajustes-texto,
-  .ajustes-header h1,
-  .home-title,
-  .tienda-header h1 {
-    font-size: 2rem !important;
-    text-align: center !important;
-  }
+.rotate-overlay--visible {
+  opacity: 1;
+  pointer-events: auto;
+}
 
-  .ajustes-linea,
-  .range,
-  .bet-input {
-    width: 100% !important;
-  }
-
-  .btn,
-  .btn-top-left,
-  .btn-volver,
-  .spin-button,
-  .btn-buy {
-    width: 50% !important;
-    font-size: 1rem !important;
-    padding: 0.75rem !important;
-  }
-
-  .icon-btn {
-    width: 40px !important;
-    height: 40px !important;
-  }
-
-  .games-section {
-    flex-direction: column !important;
-    align-items: center !important;
-  }
-
-  .home-banner {
-    margin: 1rem auto !important;
-    padding: 1rem !important;
-  }
-
-  .modal-content {
-    width: 95% !important;
-  }
-
-  .rules-modal {
-    width: 50% !important;
-    height: 70% !important;
-    right: 3% !important;
-    top: 8% !important;
-    position: fixed !important;
-  }
-
-  .rules-button {
-    width: 35% !important;
-    font-size: 1rem !important;
-    padding: 0.75rem !important;
-    position: fixed !important;
-    top: 10px !important;
+@media (orientation: portrait) {
+  body.lock-portrait {
+    overflow: hidden;
   }
 }
 
-@media (max-width: 768px) {
-  body:not(.home-container) .btn-top-left,
-  .blackjack-container .btn-top-left,
-  .slots-container .btn-top-left,
-  .tienda-container .btn-top-left,
-  .ajustes-container .btn-top-left,
-  .edad-container .btn-top-left{
-    position: fixed !important;
-    top: 10px !important;
-    left: 10px !important;
-    z-index: 999 !important;
-    width: auto !important;
-  }
+.rotate-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  opacity: 0;
+  animation: fadeIn 0.8s forwards;
+  animation-delay: 0.2s;
 }
+
+.flecha {
+  font-size: 4rem;
+  animation: rotar 4s linear infinite;
+  display: inline-block;
+}
+
+@keyframes rotar {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(180deg); }
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.rotate-icon p {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
 
 @media (max-width: 768px) {
   .poker-container {

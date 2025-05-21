@@ -10,6 +10,7 @@ function Home({ speak }) {
 	return (
 		<main className="home-container">
 			<header className="home-header">
+
 				<nav className="top-nav">
 					<Link to="/tienda" tabIndex={-1}>
 						<button

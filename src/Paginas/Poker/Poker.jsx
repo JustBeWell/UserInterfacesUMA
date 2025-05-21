@@ -66,6 +66,27 @@ function Poker({ fichas, setFichas, speak }) {
 	const [accionJugador, setAccionJugador] = useState(null); // 'check', 'bet', 'call', 'raise'
 	const [accionRival, setAccionRival] = useState(null);
 
+	useEffect(() => {
+	const overlay = document.querySelector(".rotate-overlay");
+
+	function updateOrientationState() {
+		const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+
+		document.body.classList.toggle("lock-portrait", isPortrait);
+
+		if (overlay) {
+		overlay.classList.toggle("rotate-overlay--visible", isPortrait);
+		}
+	}
+
+	updateOrientationState();
+	window.addEventListener("resize", updateOrientationState); 
+
+	return () => {
+		window.removeEventListener("resize", updateOrientationState);
+	};
+	}, []);
+
 	function checkGameOver(j, r) {
 		if (gameOver) return;
 		setTimeout(() => {
@@ -527,13 +548,18 @@ function Poker({ fichas, setFichas, speak }) {
 
 	return (
 		<div className="poker-pagina">
-			{fase === "inicio" || fase === "saliendo" ? (
-				<div
-					className={`intro-overlay ${fase === "saliendo" ? "fade-out" : ""}`}
-				>
-					<img src={introPoker} alt="Intro Poker" />
+			<div className="rotate-overlay">
+				<div className="rotate-icon">
+					<div className="flecha">↻</div>
+					<p>Gira tu dispositivo para disfrutar de una mejor experiencia</p>
 				</div>
-			) : null}
+			</div>
+
+			{fase==="inicio" || fase==="saliendo" ? (
+				<div className={`intro-overlay ${fase==="saliendo" ? "fade-out":""}`}>
+				<img src={introPoker} alt="Intro Poker" />
+				</div>
+			):null}
 
 			{mensajeFinal && <div className="mensaje-final">{mensajeFinal}</div>}
 			{/*Aclarción sobre la sintaxis {condition && html}
