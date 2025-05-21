@@ -73,8 +73,8 @@
 }
 
 .login-card button {
-  background-color: var(--primary);
-  color: var(--white);
+  background-color: #e6c972;
+  color: #000000;
   border: none;
   padding: 1rem;
   border-radius: 10px;
@@ -85,7 +85,7 @@
 }
 
 .login-card button:hover {
-  background-color: #0056b3;
+  background-color: #dfe225;
   transform: scale(1.03);
 }
 
