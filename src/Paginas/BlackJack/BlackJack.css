@@ -1,11 +1,11 @@
+@import '../../utils/media.css';
+@import '../../utils/core.css';
+
 .blackjack-container {
+  position: relative;
   max-width: 100vw;
   min-height: 100vh;
-  background: linear-gradient(135deg, 
-    #103b2f 0%,
-		#0a3e2f 50%,
-		#032b1f 100%
-  );  
+  background: linear-gradient(135deg, #103b2f 0%, #0a3e2f 50%, #032b1f 100%);
   background-size: 100% 200%;
   animation: moverFondo 5s linear infinite;
   background-position: center;
@@ -14,28 +14,25 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 20px;
+  padding: clamp(1rem, 4vw, 2rem);
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   letter-spacing: 0.5px;
   font-weight: 400;
+  gap: 2rem;
 }
 
 @keyframes moverFondo {
-  0% {
-    background-position: 0 0; 
-  }
-  25% {
-    background-position: 100% 0; 
-  }
-  50% {
-    background-position: 100% 100%; 
-  }
-  75% {
-    background-position: 0 100%;
-  }
-  100% {
-    background-position: 0 0; 
-  }
+  0% { background-position: 0 0; }
+  25% { background-position: 100% 0; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0 100%; }
+  100% { background-position: 0 0; }
+}
+
+
+@keyframes fadeInHeader {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 #controls {
@@ -46,23 +43,23 @@
   gap: 1.5rem;
 }
 
-.btn {
-  background: #111;
+#controls .btn {
+  padding: 12px 24px;
+  font-size: 1rem;
+  border-radius: 12px;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+  background: linear-gradient(135deg, #065f46, #0f766e);
   color: #fff;
-  border-radius: 8px;
-  font-weight: bold;
   border: none;
   cursor: pointer;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
-  transition: 0.3s;
+  transition: all 0.3s ease-in-out;
 }
 
-.btn:hover {
-  background-color: #222;
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
-  transform: scale(1.05);
+#controls .btn:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 0 20px #00ffaa;
 }
-
 
 .bet-input-group {
   flex-wrap: wrap;
@@ -81,28 +78,14 @@
   text-align: center;
 }
 
-
-
 @keyframes fadeInModal {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 @keyframes fadeOutModal {
-  from {
-    opacity: 1;
-    transform: scale(1);
-  }
-  to {
-    opacity: 0;
-    transform: scale(0.95);
-  }
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.95); }
 }
 
 .modal-overlay {
@@ -136,6 +119,12 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(4px);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  animation: fadeInModal 0.4s ease-out, scaleUp 0.4s ease-out;
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.95); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
 }
 
 .modal-content h2 {
@@ -186,19 +175,15 @@
   animation: shake 1s ease-in-out alternate;
 }
 
-.modal-content.modal-push{
+.modal-content.modal-push {
   background: linear-gradient(to bottom right, #373d1a, #2f045d);
   box-shadow: 0 0 25px #373d1a, 0 0 50px rgba(50, 50, 255, 0.3);
   animation: pulsoGanador 1s ease-in-out infinite alternate;
 }
 
 @keyframes pulsoGanador {
-  from {
-    transform: scale(0.95);
-  }
-  to {
-    transform: scale(1.05);
-  }
+  from { transform: scale(0.95); }
+  to { transform: scale(1.05); }
 }
 
 @keyframes shake {
@@ -209,143 +194,3 @@
   100% { transform: translateX(0px); }
 }
 
-
-  @media (max-width: 768px) {
-  .ajustes-container,
-  .blackjack-container,
-  .home-container,
-  .edad-container,
-  .slots-container,
-  .tienda-container {
-    padding: 1rem !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    width: 100% !important;
-    box-sizing: border-box !important;
-    min-height: 100vh !important;
-    overflow-x: hidden !important;
-  }
-
-  .ajustes-mismaLinea,
-  .mensaje-header,
-  .store-section,
-  .edad-card {
-    width: 90% !important;
-    padding: 1rem !important;
-    flex-direction: column !important;
-    gap: 1rem !important;
-  }
-
-  .ajustes-texto,
-  .ajustes-header h1,
-  .home-title,
-  .tienda-header h1 {
-    font-size: 2rem !important;
-    text-align: center !important;
-  }
-
-  .ajustes-linea,
-  .range,
-  .bet-input {
-    width: 100% !important;
-  }
-
-  .btn,
-  .btn-top-left,
-  .btn-volver,
-  .spin-button,
-  .btn-buy {
-    width: 50% !important;
-    font-size: 1rem !important;
-    padding: 0.75rem !important;
-  }
-
-  .icon-btn {
-    width: 40px !important;
-    height: 40px !important;
-  }
-
-  .games-section {
-    flex-direction: column !important;
-    align-items: center !important;
-  }
-
-  .home-banner {
-    margin: 1rem auto !important;
-    padding: 1rem !important;
-  }
-
-  .modal-overlay {
-  padding: 1rem;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  box-sizing: border-box;
-  }
-
-  .modal-content {
-    width: 95% !important;
-    max-width: 95% !important;
-    font-size: 1rem !important;
-    padding: 1.5rem 1rem !important;
-    border-radius: 12px !important;
-    text-align: center;
-  }
-
-  .modal-content h2 {
-    font-size: 1.4rem !important;
-    margin-bottom: 1rem;
-  }
-
-  .modal-content p {
-    font-size: 1rem !important;
-    line-height: 1.5;
-  }
-
-  .modal-content .btn {
-    width: 90% !important;
-    padding: 0.6rem 1rem !important;
-    font-size: 1rem !important;
-    margin-top: 1rem;
-  }
-
-  .modal-content-error {
-    width: 85% !important;
-    max-width: 95% !important;
-    font-size: 1rem !important;
-    padding: 1.5rem 1rem !important;
-    border-radius: 12px !important;
-    text-align: center;
-  }
-
-    .rules-modal {
-      width: 50% !important;
-      height: 70% !important;
-      right: 3% !important;
-      top: 8% !important;
-      position: fixed !important;
-  }
-
-  .rules-button {
-    width: 35% !important;
-    font-size: 1rem !important;
-    padding: 0.75rem !important;
-    position: fixed !important;
-    top: 10px !important;
-  }
-}
-
-@media (max-width: 768px) {
-  body:not(.home-container) .btn-top-left,
-  .blackjack-container .btn-top-left,
-  .slots-container .btn-top-left,
-  .tienda-container .btn-top-left,
-  .ajustes-container .btn-top-left,
-  .edad-container .btn-top-left{
-    position: fixed !important;
-    top: 10px !important;
-    left: 10px !important;
-    z-index: 999 !important;
-    width: auto !important;
-  }
-}

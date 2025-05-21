@@ -1,0 +1,19 @@
+.btn-top-left {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  background: #111;
+  color: #fff;
+  padding: 14px 22px; 
+  border-radius: 8px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+  transition: 0.3s;
+}
+
+.btn-top-left:hover {
+  background: #222;
+  box-shadow: 0 0 20px #fff;
+}
