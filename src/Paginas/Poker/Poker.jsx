@@ -185,6 +185,7 @@ function Poker({ fichas, setFichas, speak }) {
 				setMensajeRival("Rival folds");
 
 				setMensajeFinal(<span>🎉 ¡You win the round</span>);
+				speak('You win the round');
 				setRondaShowdown(true);
 
 				const nuevoJ = fichas + pot;
@@ -286,6 +287,7 @@ function Poker({ fichas, setFichas, speak }) {
 
 			setFichas(nuevoJ);
 			setMensajeFinal(`🏆 ¡You win the round with ${manoJ.tipo}!`);
+			speak('You win the round with ' + manoJ.tipo);
 			setRondaShowdown(true);
 
 			checkGameOver(nuevoJ, fichasRival);
@@ -342,6 +344,49 @@ function Poker({ fichas, setFichas, speak }) {
 		return () => clearTimeout(delay);
 	}, [fichasJugador, fichasRival, ronda, gameOver]);
 	*/
+	//Este useEffect se lanza cuando se inicia la partida y cuando se reinicia
+	useEffect(() => {
+    if (cartasJugador.length === 2 && cartasMesa.length === 0 && fase === "juego") {
+        const mano = cartasJugador.map(
+            c => `${c.valor} de ${c.palo}`
+        ).join(" y ");
+		const manoActual = [...cartasJugador, ...cartasMesa];
+		const evaluacion = evaluarMano(manoActual);
+        speak(`A new round has started and your starting hand is ${mano}. Your current combination is ${evaluacion.tipo}`);
+    }
+	}, [cartasJugador, cartasMesa, fase]);
+
+	//Este useEffect se lanza cuando se enseñan las 3 primeras cartas de la mesa
+	useEffect(() => {
+    // Cuando se muestran las 3 primeras cartas comunitarias (FLOP)
+    if (cartasMesa.length === 3 && (ronda === RONDA.FLOP || ronda === "flop")) {
+        const flop = cartasMesa
+            .map(c => `${c.valor} de ${c.palo}`)
+            .join(", ");
+		const manoActual = [...cartasJugador, ...cartasMesa];
+		const evaluacion = evaluarMano(manoActual);
+        speak(`The three cards on the table are: ${flop}. Your current combination is ${evaluacion.tipo}`);	
+    }
+	}, [cartasMesa, ronda]);
+
+	//Este useEffect se lanza cuando se enseña una carta comunitaria nueva a la mesa
+	const prevCartasMesaRef = useRef(cartasMesa.length);
+	useEffect(() => {
+
+    if (
+        cartasMesa.length > 3 && cartasMesa.length > prevCartasMesaRef.current &&
+        (ronda === RONDA.TURN || ronda === RONDA.RIVER)
+    ) {
+        const newCard = cartasMesa[cartasMesa.length - 1];
+        const cardText = `${newCard.valor} of ${newCard.palo}`;
+        const currentHand = [...cartasJugador, ...cartasMesa];
+        const evaluation = evaluarMano(currentHand);
+		setTimeout(() => {
+       	speak(`New card on the table: ${cardText}. Your current combination is ${evaluation.tipo}`);
+
+		}, 3000);
+	}
+	}, [cartasMesa, ronda, cartasJugador]);
 
 	function reiniciarPartida() {
 		setFichas(INICIAL_JUG);
@@ -379,9 +424,13 @@ function Poker({ fichas, setFichas, speak }) {
 					// If the player checks and has matched the current bet
 					setAccionJugador("check");
 					setTurno("rival");
+					speak('You checked the bet with ' + apuestaJugador + ' tokens');
 				} else {
 					setMensajeFinal(
 						"You cannot check, Either Call the bet 💰, Raise☝️ or Fold 🃏"
+					);
+					speak(
+						"You cannot check, Either Call the bet , Raise or Fold "
 					);
 					setTimeout(() => {
 						setMensajeFinal("");
@@ -394,10 +443,14 @@ function Poker({ fichas, setFichas, speak }) {
 				if (apuestaActual > apuestaJugador && apuestaActual != 0) {
 					setAccionJugador("call");
 					apostarJugador(apuestaActual - apuestaJugador);
+					speak('You called the bet with ' + (apuestaActual - apuestaJugador) + ' tokens');
 				} else {
 					setMensajeFinal(
 						"There is no bet to call. Use Check ✔️, Raise☝️ or Fold 🃏"
 					);
+					speak(
+						"There is no bet to call. Use Check, Raise or Fold "
+					)
 					setTimeout(() => setMensajeFinal(""), 2000);
 					return; // evita pasar turno
 				} //Hacer call tiene sentido de esta manera cuando el rival haya apostado, por lo que hay que mejorar la gestión de paso de ronda
@@ -409,12 +462,15 @@ function Poker({ fichas, setFichas, speak }) {
 				setAccionJugador("raise");
 				apostarJugador(apuestaActual - apuestaJugador + subida);
 
+				speak('You raised the bet with ' + (apuestaActual - apuestaJugador + subida) + ' tokens');
+
 				//El raise funciona bien
 				break;
 
 			case "fold":
 				// rival gana el bote
-				setMensajeFinal("🏳️ El rival gana la ronda"); //Esto hace que se muestre en pantalla
+				setMensajeFinal("🏳️ The opponent wins the round"); //Esto hace que se muestre en pantalla
+				speak('The opponent wins the round');
 				setRondaShowdown(true); //Muestro las cartas del rival
 				const nuevoR = fichasRival + pot; //Actualizo las fichas del rival
 				setFichasRival(nuevoR); //Solo hay que ajustar las fichas del rival, las apuestas y el pot se actualizan en iniciarNuevaMano() y

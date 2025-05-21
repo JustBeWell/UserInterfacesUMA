@@ -16,9 +16,23 @@ function ControlesJugador({ onAccion , speak}) {
         value={cantidad}
         min={1}
         step={10}
-        onChange={handleChange}
         className="input-apuesta"
-        aria-label="Cantidad a apostar"
+        aria-label="Amount to bet"
+        onMouseEnter={e => 
+          speak(e.currentTarget.getAttribute('aria-label'))
+        }
+        onFocus={e => 
+          speak(e.currentTarget.getAttribute('aria-label'))
+        }
+        onChange={(e) => {
+          const valor = parseInt(e.target.value);
+            setCantidad(valor);
+            if(!isNaN(valor)){
+            speak(valor);
+            }else{
+              speak("Empty field")
+            }
+        }}
       />
 
       {/* Aclaración sobre la sintaxis onClick={function}

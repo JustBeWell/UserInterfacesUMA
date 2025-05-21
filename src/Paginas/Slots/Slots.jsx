@@ -1,9 +1,9 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, use } from "react";
 import "./Slots.css";
 import HeaderSlots from "../../Componentes/HeaderSlots/HeaderSlots";
 
 function Slots({ reproducirEfecto, fichas, setFichas, speak }) {
-	speak("Welcome to the slots game. You can bet your tokens and try to win more. Right now you have " + fichas + " tokens.");
+	useEffect(() => {speak("Welcome to the slots game. You can bet your tokens and try to win more. Right now you have " + fichas + " tokens.");},[])
 	const reelsRef = [useRef(), useRef(), useRef()];
 	const iconHeight = 79;
 	const iconWidth = 79;
@@ -88,7 +88,9 @@ function Slots({ reproducirEfecto, fichas, setFichas, speak }) {
 		}, 1000);
 		let aux = fichas - betAmount + betAmount * calcularPuntuacion(indexes.current)
 		setFichas(aux);
+		setTimeout(() => {
 		speak('Your current balance is ' + aux);
+		}, 3000);
 		setIsSpinning(false);
 	};
 
