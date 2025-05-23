@@ -13,6 +13,7 @@ function Slots({ reproducirEfecto, fichas, setFichas, speak }) {
 	const [betAmount, setBetAmount] = useState("100");
 	const [winClass, setWinClass] = useState(""); // para animación
 
+
 	const [isSpinning, setIsSpinning] = useState(false);
 
 	const [showRules, setShowRules] = useState(false);
@@ -20,6 +21,91 @@ function Slots({ reproducirEfecto, fichas, setFichas, speak }) {
 	const [modalVisible, setModalVisible] = useState(false);
 
 	const [floatingResult, setFloatingResult] = useState(null);
+
+	const [showTutorial, setShowTutorial] = useState(false);
+    const [tutorialStep, setTutorialStep] = useState(0);
+	const [spinUsedInTutorial, setSpinUsedInTutorial] = useState(false);
+
+	useEffect(() => {
+        // Enseñar el tutorial si no se ha mostrado antes
+        const usuario = localStorage.getItem("usuario");
+		if (usuario && sessionStorage.getItem(`slotsTutorialShown_${usuario}`) !== "true") {
+    		setShowTutorial(true);
+		}
+    }, []);
+
+	
+
+	const tutorialDialogs = [
+		{ 
+			text: "Welcome to Slots! Here you can bet your tokens and try your luck.",
+			style: { top: "-20px", left: "0px" }
+		},
+		{ 
+			text: "Lets go with a Tutorial!",
+			style: { top: "-20px", left: "0px" }
+		},
+		{ 
+			text: "This is the slot machine. Where you can see the reels spinning.",
+			style: { top: "360px", left: "350px" }
+		},
+		{ 
+			text: "This is the bet input. You have 1000 tokens. Please enter an amount of tokens to bet.",
+			style: { top: "610px", left: "430px" }
+		},
+		{ 
+			text: "And now press the Spin button to play!",
+			style: { top: "525px", left: "400px" }
+		},
+		{ 
+			text: "See your results here.",
+			style: { top: "360px", left: "350px" }
+		},
+		{ 
+			text: "You can check the rules by clicking the info button.",
+			style: { top: "-20px", left: "0px" }
+		},
+		{ 
+			text: "Good luck! Have fun!",
+			style: { top: "-20px", left: "0px" }
+		}
+	];
+
+	useEffect(() => {
+    if (showTutorial) {
+        if (tutorialStep === 4) {
+            speak(tutorialDialogs[tutorialStep].text);
+        } else if(tutorialStep === 7){
+            speak(tutorialDialogs[tutorialStep].text + " Press Finish to continue.");
+        }else{
+            speak(tutorialDialogs[tutorialStep].text + " Press Next to continue.");
+        }
+    }
+	}, [tutorialStep, showTutorial]);
+
+    const handleNextTutorial = () => {
+        if (tutorialStep < tutorialDialogs.length - 1) {
+            setTutorialStep(tutorialStep + 1);
+
+			 if (tutorialStep === 4) setSpinUsedInTutorial(false);
+        } else {
+			const usuario = localStorage.getItem("usuario");
+            setShowTutorial(false);
+			setSpinUsedInTutorial(false);
+            if (usuario) {
+            	sessionStorage.setItem(`slotsTutorialShown_${usuario}`, "true");
+        	}
+        }
+    };
+
+	function isButtonEnabled(button) {
+        if (!showTutorial) return true;
+        if (button === "return") return true;
+        if (button === "bet" && tutorialStep === 3) return true;
+        if (button === "spin" && tutorialStep === 4 && !spinUsedInTutorial) return true;
+        if (button === "info" && tutorialStep === 6) return true;
+        return false;
+    }
 
 	const roll = (reel, offset) => {
 		const alfa = (offset + 2) * numIcons + Math.round(Math.random() * numIcons);
@@ -161,13 +247,13 @@ function Slots({ reproducirEfecto, fichas, setFichas, speak }) {
 		) {
 			return 2;
 		} else if (
-			FRUTAS.includes(col1) &&
-			FRUTAS.includes(col2) &&
-			FRUTAS.includes(col3)
+			col1 === col2 && col2 === col3
 		) {
-			return 1.5;
-		} else if (col1 === col2 && col2 === col3) {
 			return 10;
+		} else if (FRUTAS.includes(col1) &&
+			FRUTAS.includes(col2) &&
+			FRUTAS.includes(col3)){
+			return 1.5;
 		} else {
 			return Number(0);
 		}
@@ -179,6 +265,25 @@ function Slots({ reproducirEfecto, fichas, setFichas, speak }) {
 
 	return (
 		<div className="slots-container">
+			{showTutorial && (
+				<div
+					className="slots-tutorial"
+					style={tutorialDialogs[tutorialStep].style}
+				>
+					<p>{tutorialDialogs[tutorialStep].text}</p>
+					{tutorialStep !== 4 && (
+					<button 
+					className="btn" 
+					onClick={handleNextTutorial}
+					onMouseEnter={e => speak(e.currentTarget.innerText)}
+        			onFocus={e => speak(e.currentTarget.innerText)}>
+					
+						{tutorialStep === tutorialDialogs.length - 1 ? "Finish" : "Next"}
+					</button>
+        )}
+				</div>
+			)}
+
 			{showRules && (
 				<div className="rules-modal">
 					<h2>Winning Combinations</h2>
@@ -194,7 +299,10 @@ function Slots({ reproducirEfecto, fichas, setFichas, speak }) {
 					</ul>
 				</div>
 			)}
-			<button className="rules-button" onClick={() => rules(showRules)}
+			<button className={`rules-button${showTutorial && tutorialStep === 6 ? " highlight-border" : ""}`} 
+				onClick={() => {
+        		if (!showTutorial) rules(showRules);}}
+    			disabled={showTutorial}
 				aria-label="Show rules"
 				onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
 				onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
@@ -204,12 +312,21 @@ function Slots({ reproducirEfecto, fichas, setFichas, speak }) {
 			{floatingResult && (
 				<div className="floating-result">{floatingResult}</div>
 			)}
-			<div className={`slots ${winClass}`}>
+			<div className={`slots ${winClass} ${(showTutorial && (tutorialStep === 2 || tutorialStep === 5)) ? "highlight-border" : ""} `}>
 				<div className="reel" ref={reelsRef[0]}></div>
 				<div className="reel" ref={reelsRef[1]}></div>
 				<div className="reel" ref={reelsRef[2]}></div>
 			</div>
-			<button className="spin-button" onClick={rollAll} disabled={isSpinning}
+			<button className={`spin-button${showTutorial && tutorialStep === 4 ? " highlight-border" : ""}`} 
+                    onClick={() => {
+						rollAll();
+						if (showTutorial && tutorialStep === 4) {
+							setSpinUsedInTutorial(true);
+							setTutorialStep(tutorialStep + 1); // Avanza al siguiente mensaje
+						}
+					
+                }}
+				disabled={!isButtonEnabled("spin") || isSpinning}
 				aria-label="Spin the reels"
 				onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
 				onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
@@ -221,9 +338,10 @@ function Slots({ reproducirEfecto, fichas, setFichas, speak }) {
 					type="text"
 					id="betAmount"
 					placeholder="Enter amount"
-					className="bet-input"
+					className={`bet-input${showTutorial && tutorialStep === 3 ? " highlight-border" : ""}`}
 					value={betAmount}
 					aria-label="Bet amount input"
+					disabled={!isButtonEnabled("bet")}
 					onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}	
 					onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}
 					onChange={(e) => {

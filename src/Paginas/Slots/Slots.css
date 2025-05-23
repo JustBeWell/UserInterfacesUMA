@@ -381,6 +381,139 @@
   100% { transform: translate(-50%, -50%) translateX(0); }
 }
 
+/*
+
+.slots-tutorial {
+  position: relative;
+  z-index: 1002;
+  min-width: 200px;
+  max-width: 300px;
+  padding: 1rem 1.2rem;
+  background: rgba(0, 0, 0, 0.85); 
+  color: #fff;
+  border: 2px solid #00ffb3;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  font-size: 1rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  pointer-events: auto;
+  transition: all 0.2s ease;
+}
+.slots-tutorial p {
+  margin: 0 0 0.7em 0;
+  font-weight: 500;
+}
+.slots-tutorial .btn {
+  margin-top: 0.2em;
+  font-size: 0.95em;
+  padding: 0.4em 1.2em;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #0a3e2f 60%, #1e9e6a 100%);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.slots-tutorial .btn:hover {
+  background: linear-gradient(135deg, #1e9e6a 60%, #0a3e2f 100%);
+}
+*/
+
+.slots-tutorial {
+position: relative;
+z-index: 1002;
+max-width: 320px;
+padding: 1rem 1.2rem;
+background: rgba(0, 0, 0, 0.85);
+color: #fff;
+border: 2px solid #00ffb3;
+border-radius: 12px;
+box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+font-size: 1rem;
+font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+text-align: center;
+pointer-events: auto;
+transition: all 0.2s ease;
+}
+
+@media (max-width: 768px) {
+.slots-tutorial {
+font-size: 0.95rem;
+padding: 0.8rem 1rem;
+}
+
+.slots-tutorial .btn {
+font-size: 0.9rem;
+padding: 0.4em 1em;
+}
+}
+
+@media (max-width: 480px) {
+.slots-tutorial {
+font-size: 0.9rem;
+padding: 0.7rem 0.8rem;
+max-width: 90vw;
+}
+
+.slots-tutorial .btn {
+font-size: 0.85rem;
+padding: 0.3em 0.8em;
+}
+}
+
+.slots-tutorial p {
+margin: 0 0 0.7em 0;
+font-weight: 500;
+}
+
+.slots-tutorial .btn {
+margin-top: 0.2em;
+font-size: 0.95em;
+padding: 0.4em 1.2em;
+border-radius: 8px;
+background: linear-gradient(135deg, #0a3e2f 60%, #1e9e6a 100%);
+color: #fff;
+border: none;
+cursor: pointer;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.slots-tutorial .btn:hover {
+background: linear-gradient(135deg, #1e9e6a 60%, #0a3e2f 100%);
+}
+
+@media (max-width: 1175px) {
+  .slots-tutorial {
+    top: -20px !important;
+    left: 0px !important;
+    right: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+  }
+}
+
+@keyframes glow-border {
+  0% {
+    box-shadow: 0 0 0 4px #00ffb3, 0 0 24px 8px #00ffb3;
+    border-color: #00ffb3;
+  }
+  50% {
+    box-shadow: 0 0 0 1px #00ffb3, 0 0 2px 2px #00ffb3;
+    border-color: #00ffb3;
+  }
+  100% {
+    box-shadow: 0 0 0 4px #00ffb3, 0 0 24px 8px #00ffb3;
+    border-color: #00ffb3;
+  }
+}
+
+.highlight-border {
+  border: 3px solid #00ffb3 !important;
+  animation: glow-border 1.2s infinite ease-in-out;
+  transition: box-shadow 0.3s, border 0.3s;
+  z-index: 1003;
+}
 
 
   
