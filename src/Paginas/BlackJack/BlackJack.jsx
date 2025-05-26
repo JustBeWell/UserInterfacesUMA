@@ -20,7 +20,13 @@ const valores = [
 ];
 
 function BlackJack({ reproducirEfecto, fichas, setFichas, speak }) {
-	useEffect(() => {speak("Welcome to Blackjack. You can place your bets and play against the dealer. Good luck!. Right now you have " + fichas + " tokens.");},[])
+	useEffect(() => {
+		speak(
+			"Welcome to Blackjack. You can place your bets and play against the dealer. Good luck!. Right now you have " +
+				fichas +
+				" tokens."
+		);
+	}, []);
 	const [baraja, setBaraja] = useState([]);
 	const [cards, setCards] = useState([]);
 	const [cartasCrupier, setCartasCrupier] = useState([]);
@@ -29,13 +35,94 @@ function BlackJack({ reproducirEfecto, fichas, setFichas, speak }) {
 	const [isAlive, setIsAlive] = useState(false);
 	const [hasBlackJack, setHasBlackJack] = useState(false);
 	const [mensaje, setMensaje] = useState("Welcome to Blackjack!");
-	const [betInput, setBetInput] = useState("");
-	const [betAmount, setBetAmount] = useState(0);
+	const [betInput, setBetInput] = useState("10");
+	const [betAmount, setBetAmount] = useState(10);
 	const [apuestaActual, setApuestaActual] = useState(0);
 	const [resultadoFinal, setResultadoFinal] = useState("");
 	const [modalVisible, setModalVisible] = useState(false);
 	const [showRules, setShowRules] = useState(false);
-	useEffect(() => {if(showRules) speak("Reach 21 without going over.Step 1: Enter your bet using the input below.Step 2: Press Start Game to receive your cards.Step 3: Choose Hit to take another card, or Stand to finish.");},[showRules])
+	const [showTutorial, setShowTutorial] = useState(false);
+	const [tutorialStep, setTutorialStep] = useState(0);
+
+	useEffect(() => {
+		if (showRules)
+			speak(
+				"Reach 21 without going over.Step 1: Enter your bet using the input below.Step 2: Press Start Game to receive your cards.Step 3: Choose Hit to take another card, or Stand to finish."
+			);
+	}, [showRules]);
+
+	useEffect(() => {
+		const usuario = localStorage.getItem("usuario");
+		if (
+			usuario &&
+			sessionStorage.getItem(`blackjackTutorialShown_${usuario}`) !== "true"
+		) {
+			setShowTutorial(true);
+		}
+	}, []);
+
+	const tutorialDialogs = [
+		{
+			text: "Welcome to Blackjack! Here you can bet your chips and play against the dealer.",
+			style: { top: "20px", left: "0px" },
+		},
+		{
+			text: "Let's go through a tutorial!",
+			style: { top: "20px", left: "0px" },
+		},
+		{
+			text: "This is the table area where you will see your cards and the dealer's cards.",
+			style: { top: "320px", left: "350px" },
+		},
+		{
+			text: "Here you can enter your bet. Type the amount of chips you want to bet.",
+			style: { top: "570px", left: "430px" },
+		},
+		{
+			text: "Now press the Start Game button to receive your cards.",
+			style: { top: "500px", left: "400px" },
+		},
+		{
+			text: "Use the Hit button to draw a card, or Stand to hold your hand.",
+			style: { top: "500px", left: "400px" },
+		},
+		{
+			text: "You can check the rules by pressing the information button.",
+			style: { top: "20px", left: "0px" },
+		},
+		{
+			text: "Good luck! Have fun!",
+			style: { top: "20px", left: "0px" },
+		},
+	];
+
+	useEffect(() => {
+		if (showTutorial) {
+			if (tutorialStep === 4 || tutorialStep === 5) {
+				speak(tutorialDialogs[tutorialStep].text);
+			} else if (tutorialStep === 7) {
+				speak(
+					tutorialDialogs[tutorialStep].text + " Pulsa Finish para continuar."
+				);
+			} else {
+				speak(
+					tutorialDialogs[tutorialStep].text + " Pulsa Next para continuar."
+				);
+			}
+		}
+	}, [tutorialStep, showTutorial]);
+
+	const handleNextTutorial = () => {
+		if (tutorialStep < tutorialDialogs.length - 1) {
+			setTutorialStep(tutorialStep + 1);
+		} else {
+			const usuario = localStorage.getItem("usuario");
+			setShowTutorial(false);
+			if (usuario) {
+				sessionStorage.setItem(`blackjackTutorialShown_${usuario}`, "true");
+			}
+		}
+	};
 
 	function crearBaraja() {
 		const mazo = [];
@@ -198,6 +285,17 @@ function BlackJack({ reproducirEfecto, fichas, setFichas, speak }) {
 		setShowRules(!showRules);
 	}
 
+	function isButtonEnabled(button) {
+		if (!showTutorial) return true;
+		if (button === "return") return true;
+		if (button === "bet" && tutorialStep === 3) return true;
+		if (button === "start" && tutorialStep === 4) return true;
+		if ((button === "hit" || button === "stand") && tutorialStep === 5)
+			return true;
+		if (button === "info" && tutorialStep === 6) return true;
+		return false;
+	}
+
 	return (
 		<div className="blackjack-container">
 			{showRules && (
@@ -214,17 +312,50 @@ function BlackJack({ reproducirEfecto, fichas, setFichas, speak }) {
 					<h6>Blackjack only counts if you have two cards in your hand</h6>
 				</div>
 			)}
-			<button className="rules-button" onClick={() => rules(showRules)}
-			aria-label="More Info"
-          	onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
-			onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
+			<button
+				className={`rules-button${
+					showTutorial && tutorialStep === 6 ? " highlight-border" : ""
+				}`}
+				onClick={() => {
+					if (!showTutorial) rules(showRules);
+				}}
+				disabled={showTutorial}
+				aria-label="More Info"
+				onMouseEnter={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+				onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+			>
 				More Info ℹ️
 			</button>
 
-			
+			{showTutorial && (
+				<div className="tutorial-modal">
+					<div
+						className="tutorial-dialog"
+						style={tutorialDialogs[tutorialStep].style}
+					>
+						<p>{tutorialDialogs[tutorialStep].text}</p>
+						<button
+							className="btn"
+							onClick={handleNextTutorial}
+							aria-label="Next tutorial step"
+							onMouseEnter={(e) =>
+								speak(e.currentTarget.getAttribute("aria-label"))
+							}
+							onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+						>
+							{tutorialStep === 7 ? "Finish" : "Next"}
+						</button>
+					</div>
+				</div>
+			)}
 
 			<header>
-			<HeaderBlackjack chips={fichas} betAmount={betAmount} mensaje={mensaje} speak={speak} />
+				<HeaderBlackjack
+					chips={fichas}
+					betAmount={betAmount}
+					mensaje={mensaje}
+					speak={speak}
+				/>
 			</header>
 
 			<Link to="/home">
@@ -235,6 +366,7 @@ function BlackJack({ reproducirEfecto, fichas, setFichas, speak }) {
 						speak(e.currentTarget.getAttribute("aria-label"))
 					}
 					onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+					disabled={!isButtonEnabled("return")}
 				>
 					Return to Menu
 				</button>
@@ -257,6 +389,9 @@ function BlackJack({ reproducirEfecto, fichas, setFichas, speak }) {
 				setBetAmount={setBetAmount}
 				resetGame={resetGame}
 				speak={speak}
+				showTutorial={showTutorial}
+				tutorialStep={tutorialStep}
+				isButtonEnabled={isButtonEnabled}
 			/>
 
 			{resultadoFinal && (
@@ -280,8 +415,10 @@ function BlackJack({ reproducirEfecto, fichas, setFichas, speak }) {
 								resetGame();
 							}}
 							aria-label="Close popup"
-							onMouseEnter={(e) =>speak(e.currentTarget.getAttribute("aria-label"))}
-							onFocus={(e) =>speak(e.currentTarget.getAttribute("aria-label"))}
+							onMouseEnter={(e) =>
+								speak(e.currentTarget.getAttribute("aria-label"))
+							}
+							onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
 						>
 							OK
 						</button>
