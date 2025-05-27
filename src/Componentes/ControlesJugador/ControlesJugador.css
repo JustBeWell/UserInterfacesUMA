@@ -47,23 +47,31 @@
   box-shadow: 0 0 10px #2196f3;
 }
 
-@media (max-width: 480px) {
-
-
-  .controles-jugador button {
-    width: 100vw;
-    max-width: 100%;
+@media (max-width: 1000px){          /* iPhone SE-Plus y similares */
+  .controles-jugador{
+    position:absolute;              /* se apoya en .mesa {position:relative;} */
+    right:20%;                        /* pegado al borde interior de la mesa   */
+    top:50%;                        /* centrado vertical                      */
+    transform:translate(115%,-50%); /* empuja la columna FUERA de la mesa     */
+    flex-direction:column;          /* apila verticalmente                    */
+    align-items:stretch;            /* ► mismo ancho para todos               */
+    width:clamp(90px,22vw,130px);   /* ancho adaptativo–máx≈130 px            */
+    gap:.6rem;
+    padding-left:.5rem;             /* un pelín de separación de la mesa      */
   }
 
-  .input-apuesta {
-    width: 100%;
-    font-size: 1.1rem;
-    padding: 10px;
+  /*  Botones e input idénticos, rellenan todo el ancho  */
+  .controles-jugador button,
+  .controles-jugador .input-apuesta{
+    width:100%;
+    font-size:clamp(.85rem,4vw,1.05rem);
+    padding:.55rem 0;
+    box-sizing:border-box;
+    text-align:center;
   }
 
-  .controles-jugador {
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+  /* (opcional) input arriba de la columna */
+  .controles-jugador .input-apuesta{
+    order:-1;
   }
 }

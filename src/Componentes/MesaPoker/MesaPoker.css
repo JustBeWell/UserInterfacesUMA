@@ -13,10 +13,21 @@
 }
 
 
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
+  
   .mesa {
+    position: relative;
+    aspect-ratio: 1.7 / 1;
+
+    margin-inline: auto;
+    background: url("../../imagenes/mesa.png") center/contain no-repeat;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    place-items: center;
+    padding: 1rem;
+    transition: transform 0.3s ease;
     width: 90vw;
-    max-height: 75vh;
+
     transform: scale(1);
   }
 
@@ -29,6 +40,19 @@
     width: 80%;
     max-width: 300px;
   }
+  .jugada-encima {
+    position: absolute;
+    top: 93% !important;
+    left: 64% !important;
+    transform: translate(-50%, -100%);
+    font-size: clamp(0.9rem, 2vw, 1.4rem);
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 4px black;
+    z-index: 10;
+    white-space: nowrap;
+    pointer-events: none;
+}
 
 
 }
@@ -44,8 +68,8 @@
 
 .jugada-encima {
   position: absolute;
-  top: 92%;
-  left: 60%;
+  top: 90%;
+  left: 64%;
   transform: translate(-50%, -100%);
   font-size: clamp(0.9rem, 2vw, 1.4rem);
   font-weight: bold;
