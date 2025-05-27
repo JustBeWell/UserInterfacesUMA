@@ -31,13 +31,16 @@ body {
 }
 
 .poker-pagina {
-  min-height: 100vh;
+  min-height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding-block: 2rem;
-  
+  justify-content: center; /* Centra verticalmente la mesa */
+  padding: 0; /* Elimina cualquier padding adicional */
+  margin: 0; /* Elimina márgenes */
+  overflow: hidden; /* Evita el scroll inicial */
 }
+
 /* Poker.css */
 .overlay-go{
   position:fixed; inset:0; background:rgba(0,0,0,.8);
@@ -201,12 +204,14 @@ body {
     transform: translate(-50%, -50%) scale(1);
   }
 }
+
 .boton-menu-container {
-  position: absolute;
+  position: fixed; /* Fija el botón en la parte superior izquierda */
   top: 1rem;
   left: 1rem;
   z-index: 3000;
 }
+
 
 .boton-menu-container button {
   font-size: 0.95rem;
@@ -307,6 +312,7 @@ body {
     padding: 1rem;
     overflow-x: hidden;
   }
+
 
   .poker-cartas img,
   .poker-cartas .carta {

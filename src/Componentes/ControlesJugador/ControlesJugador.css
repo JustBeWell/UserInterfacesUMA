@@ -50,7 +50,7 @@
 @media (max-width: 1000px){          /* iPhone SE-Plus y similares */
   .controles-jugador{
     position:absolute;              /* se apoya en .mesa {position:relative;} */
-    right:20%;                        /* pegado al borde interior de la mesa   */
+    right:30%;                        /* pegado al borde interior de la mesa   */
     top:50%;                        /* centrado vertical                      */
     transform:translate(115%,-50%); /* empuja la columna FUERA de la mesa     */
     flex-direction:column;          /* apila verticalmente                    */
