@@ -2,10 +2,10 @@
 /* src/Componentes/Pot/Pot.css */
 .pot{
   position:absolute;
-  top:calc(50% + 4.5vw);   /* 4.5 vw ≈ 40 px en desktop, proporcional en móvil */
+  top:calc(50% + 3vw);   /* 4.5 vw ≈ 40 px en desktop, proporcional en móvil */
   left:50%;
   transform:translate(-50%,-50%);  /* -50% sólo en Y para anclar centro‑vertical */
-  display:flex;
+  display :flex;
   align-items:center;
   gap:6px;
   font-weight:700;

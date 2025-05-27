@@ -1,9 +1,13 @@
 /* Posicionamiento y distribución dentro de la mesa */
+/* Ajusta la posición de las cartas comunitarias */
 .cartas-comunitarias {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-  }
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  transform: translateY(-2vh); /* Mueve las cartas un poco hacia arriba */
+  margin-bottom: 1rem; /* Añade espacio adicional abajo */
+}
+
   
   
   /* Opcional — cuando todavía no hay cartas, reserva espacio */

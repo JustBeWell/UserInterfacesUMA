@@ -102,50 +102,51 @@ export const VAL = {
     const straightFlushHigh = flushSuit ? findStraight(flushSuit) : null;
   
     // 3. Decidir mano ganadora
-    let tipo, rank;
-  
-    if (straightFlushHigh) {
-      tipo = `Escalera de color (alta en ${fmt(straightFlushHigh)})`;
-      rank = [BASE.STRAIGHTFLUSH, straightFlushHigh];
-    } else if (quad) {
-      const kicker = vals.find((v) => v !== quad);
-      tipo = `Póker de ${fmt(quad)}`;
-      rank = [BASE.QUADS, quad, kicker];
-    } else if (triples.length >= 2) {
-      // ej. 6-6-6-9-9-9-K ⇒ escoger los dos tríos más altos
-      const [t1, t2] = triples;
-      tipo = `Full (${fmt(t1)} sobre ${fmt(t2)})`;
-      rank = [BASE.FULL, t1, t2];
-    } else if (triples.length === 1 && pairs.length) {
-      tipo = `Full (${fmt(triples[0])} sobre ${fmt(pairs[0])})`;
-      rank = [BASE.FULL, triples[0], pairs[0]];
-    } else if (flushSuit) {
-      const top5 = flushSuit.slice(0, 5);
-      tipo = `Color (${top5.map(fmt).join("-")})`;
-      rank = [BASE.FLUSH, ...top5];
-    } else if (highestStraight) {
-      tipo = `Escalera (alta en ${fmt(highestStraight)})`;
-      rank = [BASE.STRAIGHT, highestStraight];
-    } else if (triples.length) {
-      const triple = triples[0];
-      const kickers = vals.filter((v) => v !== triple).slice(0, 2);
-      tipo = `Trío de ${fmt(triple)}`;
-      rank = [BASE.SET, triple, ...kickers];
-    } else if (pairs.length >= 2) {
-      const [p1, p2] = pairs; // ya ordenadas desc
-      const kicker = vals.find((v) => v !== p1 && v !== p2);
-      tipo = `Dobles parejas (${fmt(p1)} y ${fmt(p2)})`;
-      rank = [BASE.TWOPAIRS, p1, p2, kicker];
-    } else if (pairs.length === 1) {
-      const pair = pairs[0];
-      const kickers = vals.filter((v) => v !== pair).slice(0, 3);
-      tipo = `Pareja de ${fmt(pair)}`;
-      rank = [BASE.PAIR, pair, ...kickers];
-    } else {
-      const top5 = vals.slice(0, 5);
-      tipo = `Carta alta (${fmt(top5[0])})`;
-      rank = [BASE.HIGH, ...top5];
-    }
+// 3. Decidir mano ganadora
+  let tipo, rank;
+
+  if (straightFlushHigh) {
+    tipo = "Straight Flush";
+    rank = [BASE.STRAIGHTFLUSH, straightFlushHigh];
+  } else if (quad) {
+    const kicker = vals.find((v) => v !== quad);
+    tipo = "Four of a Kind";
+    rank = [BASE.QUADS, quad, kicker];
+  } else if (triples.length >= 2) {
+    const [t1, t2] = triples;
+    tipo = "Full House";
+    rank = [BASE.FULL, t1, t2];
+  } else if (triples.length === 1 && pairs.length) {
+    tipo = "Full House";
+    rank = [BASE.FULL, triples[0], pairs[0]];
+  } else if (flushSuit) {
+    const top5 = flushSuit.slice(0, 5);
+    tipo = "Flush";
+    rank = [BASE.FLUSH, ...top5];
+  } else if (highestStraight) {
+    tipo = "Straight";
+    rank = [BASE.STRAIGHT, highestStraight];
+  } else if (triples.length) {
+    const triple = triples[0];
+    const kickers = vals.filter((v) => v !== triple).slice(0, 2);
+    tipo = "Three of a Kind";
+    rank = [BASE.SET, triple, ...kickers];
+  } else if (pairs.length >= 2) {
+    const [p1, p2] = pairs;
+    const kicker = vals.find((v) => v !== p1 && v !== p2);
+    tipo = "Two Pair";
+    rank = [BASE.TWOPAIRS, p1, p2, kicker];
+  } else if (pairs.length === 1) {
+    const pair = pairs[0];
+    const kickers = vals.filter((v) => v !== pair).slice(0, 3);
+    tipo = "One Pair";
+    rank = [BASE.PAIR, pair, ...kickers];
+  } else {
+    const top5 = vals.slice(0, 5);
+    tipo = "High Card";
+    rank = [BASE.HIGH, ...top5];
+  }
+
   
     return { tipo, rank };
   }
