@@ -156,7 +156,7 @@ function App() {
 					/>
 				}
 			/>
-			<Route path="/mayoriaDeEdad" element={<MayoriaDeEdad />} />
+			<Route path="/mayoriaDeEdad" element={<MayoriaDeEdad speak={speak} />} />
 		</Routes>
 	);
 }
