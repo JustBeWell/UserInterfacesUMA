@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 import { obtenerImagenCarta } from "../../imagenes";
 import "./carta.css";
-function Carta({ rotada, naipe, valor, inclinacion, nueva, girarSolo }) {
+function Carta({
+	rotada,
+	naipe,
+	valor,
+	inclinacion,
+	nueva,
+	girarSolo,
+	cartasAlternativas,
+}) {
 	const [mostrarCarta, setMostrarCarta] = useState(
 		rotada || nueva || girarSolo
 	);
@@ -24,8 +32,8 @@ function Carta({ rotada, naipe, valor, inclinacion, nueva, girarSolo }) {
 	const valorCorregido = valor === "As" ? "A" : valor;
 
 	const imagen = mostrarCarta
-		? obtenerImagenCarta(null, null)
-		: obtenerImagenCarta(naipe, valorCorregido);
+		? obtenerImagenCarta(null, null, cartasAlternativas)
+		: obtenerImagenCarta(naipe, valorCorregido, cartasAlternativas);
 
 	return (
 		<div

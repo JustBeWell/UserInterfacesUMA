@@ -27,6 +27,11 @@ function App() {
 			? false
 			: localStorage.getItem("lectorPantalla")
 	);
+	const [cartasAlternativas, setCartasAlternativas] = useState(
+		localStorage.getItem("cartasAlternativas") == null
+			? false
+			: localStorage.getItem("cartasAlternativas")
+	);
 
 	// Estado para controlar si ya hubo un primer click
 	const [primerClick, setPrimerClick] = useState(false);
@@ -103,6 +108,7 @@ function App() {
 						fichas={fichas}
 						setFichas={setFichas}
 						speak={speak}
+						cartasAlternativas={cartasAlternativas}
 					/>
 				}
 			/>
@@ -129,6 +135,8 @@ function App() {
 						speak={speak}
 						setLectorPantalla={setLectorPantalla}
 						lectorPantalla={lectorPantalla}
+						cartasAlternativas={cartasAlternativas}
+						setCartasAlternativas={setCartasAlternativas}
 					/>
 				}
 			/>
@@ -140,6 +148,7 @@ function App() {
 						fichas={fichas}
 						setFichas={setFichas}
 						speak={speak}
+						cartasAlternativas={cartasAlternativas}
 					/>
 				}
 			/>

@@ -19,7 +19,13 @@ const valores = [
 	{ valor: "K", valorNumerico: 10 },
 ];
 
-function BlackJack({ reproducirEfecto, fichas, setFichas, speak }) {
+function BlackJack({
+	reproducirEfecto,
+	fichas,
+	setFichas,
+	speak,
+	cartasAlternativas,
+}) {
 	useEffect(() => {
 		speak(
 			"Welcome to Blackjack. You can place your bets and play against the dealer. Good luck!. Right now you have " +
@@ -392,6 +398,7 @@ function BlackJack({ reproducirEfecto, fichas, setFichas, speak }) {
 				showTutorial={showTutorial}
 				tutorialStep={tutorialStep}
 				isButtonEnabled={isButtonEnabled}
+				cartasAlternativas={cartasAlternativas}
 			/>
 
 			{resultadoFinal && (

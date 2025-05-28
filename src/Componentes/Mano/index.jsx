@@ -11,7 +11,13 @@ import "./mano.css";
  * @param {Number} props.puntuacion - Puntuación total de la mano
  * @param {String} props.mensaje - Mensaje opcional para mostrar con la mano
  */
-function Mano({ cartas = [], tipo = "jugador", puntuacion = 0, mensaje = "" }) {
+function Mano({
+	cartas = [],
+	tipo = "jugador",
+	puntuacion = 0,
+	mensaje = "",
+	cartasAlternativas,
+}) {
 	// Estado para controlar qué carta está en hover
 	const [hoveredCardIndex, setHoveredCardIndex] = useState(null);
 
@@ -110,15 +116,15 @@ function Mano({ cartas = [], tipo = "jugador", puntuacion = 0, mensaje = "" }) {
 							onMouseEnter={() => setHoveredCardIndex(index)}
 							onMouseLeave={() => setHoveredCardIndex(null)}
 						>
-						<Carta
-							naipe={carta.naipe || "diamante"}
-							valor={carta.valor || "A"}
-							rotada={carta.rotada || false}
-							inclinacion={angulo}
-							nueva={carta.nueva || false}
-							girarSolo={tipo === "crupier" && index === 1 && carta.girarSolo}
-						/>
-
+							<Carta
+								naipe={carta.naipe || "diamante"}
+								valor={carta.valor || "A"}
+								rotada={carta.rotada || false}
+								inclinacion={angulo}
+								nueva={carta.nueva || false}
+								girarSolo={tipo === "crupier" && index === 1 && carta.girarSolo}
+								cartasAlternativas={cartasAlternativas}
+							/>
 						</div>
 					);
 				})}

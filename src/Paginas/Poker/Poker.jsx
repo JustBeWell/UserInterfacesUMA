@@ -31,7 +31,7 @@ export const IA = {
 	SUBIDA_MAX: 150,
 };
 
-function Poker({ fichas, setFichas, speak }) {
+function Poker({ fichas, setFichas, speak, cartasAlternativas }) {
 	/* --- estado local (ejemplo simple) --- */
 	// fichas
 	const INICIAL_JUG = fichas;
@@ -67,24 +67,24 @@ function Poker({ fichas, setFichas, speak }) {
 	const [accionRival, setAccionRival] = useState(null);
 
 	useEffect(() => {
-	const overlay = document.querySelector(".rotate-overlay");
+		const overlay = document.querySelector(".rotate-overlay");
 
-	function updateOrientationState() {
-		const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+		function updateOrientationState() {
+			const isPortrait = window.matchMedia("(orientation: portrait)").matches;
 
-		document.body.classList.toggle("lock-portrait", isPortrait);
+			document.body.classList.toggle("lock-portrait", isPortrait);
 
-		if (overlay) {
-		overlay.classList.toggle("rotate-overlay--visible", isPortrait);
+			if (overlay) {
+				overlay.classList.toggle("rotate-overlay--visible", isPortrait);
+			}
 		}
-	}
 
-	updateOrientationState();
-	window.addEventListener("resize", updateOrientationState); 
+		updateOrientationState();
+		window.addEventListener("resize", updateOrientationState);
 
-	return () => {
-		window.removeEventListener("resize", updateOrientationState);
-	};
+		return () => {
+			window.removeEventListener("resize", updateOrientationState);
+		};
 	}, []);
 
 	function checkGameOver(j, r) {
@@ -183,14 +183,14 @@ function Poker({ fichas, setFichas, speak }) {
 				// 10 % fold
 
 				setMensajeRival("Rival folds");
-				speak('Rival folds');
+				speak("Rival folds");
 
 				setMensajeFinal(<span>🎉 ¡You win the round</span>);
 				const manoActual = [...cartasJugador, ...cartasMesa];
 				const evaluacion = evaluarMano(manoActual);
 				setTimeout(() => {
-					speak('You win the round with the combination ' + evaluacion.tipo);
-				},2000);
+					speak("You win the round with the combination " + evaluacion.tipo);
+				}, 2000);
 				setRondaShowdown(true);
 
 				const nuevoJ = fichas + pot;
@@ -295,7 +295,7 @@ function Poker({ fichas, setFichas, speak }) {
 
 			setFichas(nuevoJ);
 			setMensajeFinal(`🏆 ¡You win the round with ${manoJ.tipo}!`);
-			speak('You win the round with ' + manoJ.tipo);
+			speak("You win the round with " + manoJ.tipo);
 			setRondaShowdown(true);
 
 			checkGameOver(nuevoJ, fichasRival);
@@ -354,47 +354,54 @@ function Poker({ fichas, setFichas, speak }) {
 	*/
 	//Este useEffect se lanza cuando se inicia la partida y cuando se reinicia
 	useEffect(() => {
-    if (cartasJugador.length === 2 && cartasMesa.length === 0 && fase === "juego") {
-        const mano = cartasJugador.map(
-            c => `${c.valor} de ${c.palo}`
-        ).join(" y ");
-		const manoActual = [...cartasJugador, ...cartasMesa];
-		const evaluacion = evaluarMano(manoActual);
-        speak(`A new round has started and your starting hand is ${mano}. Your current combination is ${evaluacion.tipo}`);
-    }
+		if (
+			cartasJugador.length === 2 &&
+			cartasMesa.length === 0 &&
+			fase === "juego"
+		) {
+			const mano = cartasJugador
+				.map((c) => `${c.valor} de ${c.palo}`)
+				.join(" y ");
+			const manoActual = [...cartasJugador, ...cartasMesa];
+			const evaluacion = evaluarMano(manoActual);
+			speak(
+				`A new round has started and your starting hand is ${mano}. Your current combination is ${evaluacion.tipo}`
+			);
+		}
 	}, [cartasJugador, cartasMesa, fase]);
 
 	//Este useEffect se lanza cuando se enseñan las 3 primeras cartas de la mesa
 	useEffect(() => {
-    // Cuando se muestran las 3 primeras cartas comunitarias (FLOP)
-    if (cartasMesa.length === 3 && (ronda === RONDA.FLOP || ronda === "flop")) {
-        const flop = cartasMesa
-            .map(c => `${c.valor} de ${c.palo}`)
-            .join(", ");
-		const manoActual = [...cartasJugador, ...cartasMesa];
-		const evaluacion = evaluarMano(manoActual);
-        speak(`The three cards on the table are: ${flop}. Your current combination is ${evaluacion.tipo}`);	
-    }
+		// Cuando se muestran las 3 primeras cartas comunitarias (FLOP)
+		if (cartasMesa.length === 3 && (ronda === RONDA.FLOP || ronda === "flop")) {
+			const flop = cartasMesa.map((c) => `${c.valor} de ${c.palo}`).join(", ");
+			const manoActual = [...cartasJugador, ...cartasMesa];
+			const evaluacion = evaluarMano(manoActual);
+			speak(
+				`The three cards on the table are: ${flop}. Your current combination is ${evaluacion.tipo}`
+			);
+		}
 	}, [cartasMesa, ronda]);
 
 	//Este useEffect se lanza cuando se enseña una carta comunitaria nueva a la mesa
 	const prevCartasMesaRef = useRef(cartasMesa.length);
 	useEffect(() => {
-
-    if (
-        cartasMesa.length > 3 && cartasMesa.length > prevCartasMesaRef.current &&
-        (ronda === RONDA.TURN || ronda === RONDA.RIVER)
-    ) {
-        const newCard = cartasMesa[cartasMesa.length - 1];
-        const cardText = `${newCard.valor} of ${newCard.palo}`;
-        const currentHand = [...cartasJugador, ...cartasMesa];
-        const evaluation = evaluarMano(currentHand);
-		setTimeout(() => {
-       	speak(`New card on the table: ${cardText}. Your current combination is ${evaluation.tipo}`);
-		   prevCartasMesaRef.current = cartasMesa.length;
-		}, 3000);
-		
-	}
+		if (
+			cartasMesa.length > 3 &&
+			cartasMesa.length > prevCartasMesaRef.current &&
+			(ronda === RONDA.TURN || ronda === RONDA.RIVER)
+		) {
+			const newCard = cartasMesa[cartasMesa.length - 1];
+			const cardText = `${newCard.valor} of ${newCard.palo}`;
+			const currentHand = [...cartasJugador, ...cartasMesa];
+			const evaluation = evaluarMano(currentHand);
+			setTimeout(() => {
+				speak(
+					`New card on the table: ${cardText}. Your current combination is ${evaluation.tipo}`
+				);
+				prevCartasMesaRef.current = cartasMesa.length;
+			}, 3000);
+		}
 	}, [cartasMesa, ronda, cartasJugador]);
 
 	function reiniciarPartida() {
@@ -433,14 +440,12 @@ function Poker({ fichas, setFichas, speak }) {
 					// If the player checks and has matched the current bet
 					setAccionJugador("check");
 					setTurno("rival");
-					speak('You checked the bet with ' + apuestaJugador + ' tokens');
+					speak("You checked the bet with " + apuestaJugador + " tokens");
 				} else {
 					setMensajeFinal(
 						"You cannot check, Either Call the bet 💰, Raise☝️ or Fold 🃏"
 					);
-					speak(
-						"You cannot check, Either Call the bet , Raise or Fold "
-					);
+					speak("You cannot check, Either Call the bet , Raise or Fold ");
 					setTimeout(() => {
 						setMensajeFinal("");
 					}, 2000);
@@ -452,14 +457,16 @@ function Poker({ fichas, setFichas, speak }) {
 				if (apuestaActual > apuestaJugador && apuestaActual != 0) {
 					setAccionJugador("call");
 					apostarJugador(apuestaActual - apuestaJugador);
-					speak('You called the bet with ' + (apuestaActual - apuestaJugador) + ' tokens');
+					speak(
+						"You called the bet with " +
+							(apuestaActual - apuestaJugador) +
+							" tokens"
+					);
 				} else {
 					setMensajeFinal(
 						"There is no bet to call. Use Check ✔️, Raise☝️ or Fold 🃏"
 					);
-					speak(
-						"There is no bet to call. Use Check, Raise or Fold "
-					)
+					speak("There is no bet to call. Use Check, Raise or Fold ");
 					setTimeout(() => setMensajeFinal(""), 2000);
 					return; // evita pasar turno
 				} //Hacer call tiene sentido de esta manera cuando el rival haya apostado, por lo que hay que mejorar la gestión de paso de ronda
@@ -471,7 +478,11 @@ function Poker({ fichas, setFichas, speak }) {
 				setAccionJugador("raise");
 				apostarJugador(apuestaActual - apuestaJugador + subida);
 
-				speak('You raised the bet with ' + (apuestaActual - apuestaJugador + subida) + ' tokens');
+				speak(
+					"You raised the bet with " +
+						(apuestaActual - apuestaJugador + subida) +
+						" tokens"
+				);
 
 				//El raise funciona bien
 				break;
@@ -479,7 +490,7 @@ function Poker({ fichas, setFichas, speak }) {
 			case "fold":
 				// rival gana el bote
 				setMensajeFinal("🏳️ The opponent wins the round"); //Esto hace que se muestre en pantalla
-				speak('The opponent wins the round');
+				speak("The opponent wins the round");
 				setRondaShowdown(true); //Muestro las cartas del rival
 				const nuevoR = fichasRival + pot; //Actualizo las fichas del rival
 				setFichasRival(nuevoR); //Solo hay que ajustar las fichas del rival, las apuestas y el pot se actualizan en iniciarNuevaMano() y
@@ -620,11 +631,13 @@ function Poker({ fichas, setFichas, speak }) {
 				</div>
 			</div>
 
-			{fase==="inicio" || fase==="saliendo" ? (
-				<div className={`intro-overlay ${fase==="saliendo" ? "fade-out":""}`}>
-				<img src={introPoker} alt="Intro Poker" />
+			{fase === "inicio" || fase === "saliendo" ? (
+				<div
+					className={`intro-overlay ${fase === "saliendo" ? "fade-out" : ""}`}
+				>
+					<img src={introPoker} alt="Intro Poker" />
 				</div>
-			):null}
+			) : null}
 
 			{mensajeFinal && <div className="mensaje-final">{mensajeFinal}</div>}
 			{/*Aclarción sobre la sintaxis {condition && html}
@@ -641,17 +654,26 @@ function Poker({ fichas, setFichas, speak }) {
 				//Lo que hacemos aquí es cargar este componente si y solo si, gameOver está en true
 				<div className="overlay-go">
 					<h2>{mensajeGO}</h2>
-					<button onClick={reiniciarPartida}
-					aria-label="Play Again"
-					onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
-					onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
-					Jugar otra vez</button>
+					<button
+						onClick={reiniciarPartida}
+						aria-label="Play Again"
+						onMouseEnter={(e) =>
+							speak(e.currentTarget.getAttribute("aria-label"))
+						}
+						onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+					>
+						Jugar otra vez
+					</button>
 					<Link to="/home">
 						<button
-						aria-label="Return to Menu"
-						onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
-						onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
-						Menú principal</button>
+							aria-label="Return to Menu"
+							onMouseEnter={(e) =>
+								speak(e.currentTarget.getAttribute("aria-label"))
+							}
+							onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+						>
+							Menú principal
+						</button>
 					</Link>
 				</div>
 			)}
@@ -664,6 +686,7 @@ function Poker({ fichas, setFichas, speak }) {
 					turno={turno}
 					jugadaActualJugador={jugadaActualJugador}
 					showdown={rondaShowdown}
+					cartasAlternativas={cartasAlternativas}
 				/>
 				<div className="boton-menu-container">
 					<Link to="/home" tabIndex={-1}>

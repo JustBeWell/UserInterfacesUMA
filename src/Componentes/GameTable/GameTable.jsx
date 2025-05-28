@@ -22,6 +22,7 @@ function GameTable({
 	showTutorial = false,
 	tutorialStep = 0,
 	isButtonEnabled = () => true,
+	cartasAlternativas,
 }) {
 	useEffect(() => {
 		if (isAlive) {
@@ -76,13 +77,21 @@ function GameTable({
 						{dealerCards.some((card) => card.rotada) ? "--" : dealerScore}
 					</span>
 				</div>
-				<Mano cartas={dealerCards} tipo="crupier" />
+				<Mano
+					cartas={dealerCards}
+					tipo="crupier"
+					cartasAlternativas={cartasAlternativas}
+				/>
 
 				<div className="score-bar">
 					<span className="score-label">You</span>
 					<span className="score-value">{playerScore}</span>
 				</div>
-				<Mano cartas={playerCards} tipo="jugador" />
+				<Mano
+					cartas={playerCards}
+					tipo="jugador"
+					cartasAlternativas={cartasAlternativas}
+				/>
 			</div>
 
 			<div id="controls">

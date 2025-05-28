@@ -10,6 +10,8 @@ function Ajustes({
 	setLectorPantalla,
 	lectorPantalla,
 	speak,
+	cartasAlternativas,
+	setCartasAlternativas,
 }) {
 	speak(
 		"Welcome to the settings page. You can adjust the volume of effects and music, and enable or disable the screen reader."
@@ -74,6 +76,23 @@ function Ajustes({
 					onChange={(e) => {
 						setLectorPantalla(e.target.checked);
 						localStorage.setItem("lectorPantalla", e.target.checked);
+					}}
+					onMouseEnter={(e) =>
+						speak(e.currentTarget.getAttribute("aria-label"))
+					}
+					onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+				/>
+			</div>
+			<div className="ajustes-mismaLinea">
+				<p className="ajustes-texto">Cartas accesibles:</p>
+				<input
+					className="ajustes-checkbox"
+					type="checkbox"
+					aria-label="Accessible Cards"
+					checked={cartasAlternativas}
+					onChange={(e) => {
+						setCartasAlternativas(e.target.checked);
+						localStorage.setItem("cartasAlternativas", e.target.checked);
 					}}
 					onMouseEnter={(e) =>
 						speak(e.currentTarget.getAttribute("aria-label"))
