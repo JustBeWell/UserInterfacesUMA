@@ -76,6 +76,11 @@ function Ajustes({
 					onChange={(e) => {
 						setLectorPantalla(e.target.checked);
 						localStorage.setItem("lectorPantalla", e.target.checked);
+						if (e.target.checked) {
+							speak("Screen reader enabled");
+						} else {
+							speak("Screen reader disabled");
+						}
 					}}
 					onMouseEnter={(e) =>
 						speak(e.currentTarget.getAttribute("aria-label"))
@@ -93,6 +98,11 @@ function Ajustes({
 					onChange={(e) => {
 						setCartasAlternativas(e.target.checked);
 						localStorage.setItem("cartasAlternativas", e.target.checked);
+						if (e.target.checked) {
+							speak("Accessible cards enabled");
+						} else {
+							speak("Accessible cards disabled");
+						}
 					}}
 					onMouseEnter={(e) =>
 						speak(e.currentTarget.getAttribute("aria-label"))
