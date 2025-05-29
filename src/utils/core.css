@@ -1,5 +1,5 @@
 .btn-top-left {
-  position: absolute;
+  /*position: absolute;
   top: 10%;
   left: 10%;
   background: #111;
@@ -10,10 +10,29 @@
   border: none;
   cursor: pointer;
   box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
-  transition: 0.3s;
+  transition: 0.3s;*/
+
+  padding: 12px 24px;
+	font-size: 1rem;
+	border-radius: 12px;
+	letter-spacing: 1px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+	background: linear-gradient(135deg, #065f46, #0f766e);
+	color: #fff;
+	border: none;
+	cursor: pointer;
+	transition: all 0.3s ease-in-out;
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1000; 
 }
 
 .btn-top-left:hover {
-  background: #222;
-  box-shadow: 0 0 20px #fff;
+  /*background: #222;
+  box-shadow: 0 0 20px #fff;*/
+
+  transform: translateY(-2px) scale(1.03);
+	box-shadow: 0 0 20px #00ffaa;
+
 }

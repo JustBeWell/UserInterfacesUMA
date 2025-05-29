@@ -688,9 +688,9 @@ function Poker({ fichas, setFichas, speak, cartasAlternativas }) {
 					showdown={rondaShowdown}
 					cartasAlternativas={cartasAlternativas}
 				/>
-				<div className="boton-menu-container">
 					<Link to="/home" tabIndex={-1}>
 						<button
+							className="btn-top-left"
 							aria-label="Return to Menu"
 							onMouseEnter={(e) =>
 								speak(e.currentTarget.getAttribute("aria-label"))
@@ -700,7 +700,6 @@ function Poker({ fichas, setFichas, speak, cartasAlternativas }) {
 							Return to Menu
 						</button>
 					</Link>
-				</div>
 			</div>
 			<div className="boton-ronda-container"></div>
 		</div>

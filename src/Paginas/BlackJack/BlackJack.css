@@ -53,27 +53,33 @@
 #controls {
 	margin-top: 2rem;
 	display: flex;
-	flex-direction: column;
 	align-items: center;
+	justify-content: center;
 	gap: 1.5rem;
 }
 
 #controls .btn {
-	padding: 12px 24px;
-	font-size: 1rem;
-	border-radius: 12px;
-	letter-spacing: 1px;
-	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-	background: linear-gradient(135deg, #065f46, #0f766e);
-	color: #fff;
+	padding: 10px 20px;
 	border: none;
+	border-radius: 8px;
+	background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+	box-shadow: 0 4px 0 #999;
+	font-weight: bold;
+	font-size: 0.95rem;
+	color: #333;
 	cursor: pointer;
-	transition: all 0.3s ease-in-out;
+	transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 #controls .btn:hover {
-	transform: translateY(-2px) scale(1.03);
-	box-shadow: 0 0 20px #00ffaa;
+	background: linear-gradient(to bottom, #f9f9f9, #d0d0d0);
+	transform: translateY(-2px);
+	box-shadow: 0 6px 8px rgba(0, 0, 0, 0.25);
+}
+
+#controls .btn:active {
+    transform: translateY(1px);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .bet-input-group {

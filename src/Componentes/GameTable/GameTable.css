@@ -35,5 +35,17 @@
     color: #ccc;
     font-size: 0.9rem;
   }
+
+
+  @media (max-width: 600px) {
+    .score-bar {
+      width: 100%;
+      padding: 8px;
+      font-size: 12px;
+    }
   
+    .score-label, .score-value, .bet-label, .available-chips {
+      font-size: 0.9rem;
+    }
   
+  }

@@ -103,27 +103,3 @@
     cursor: pointer;
     box-shadow: 0 0 5px rgba(0,0,0,0.4);
 }
-
-
-.btn-top-left {
-    font-size: 0.9rem;
-    top: 2%;
-    left: 1%;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    border: none;
-    background: linear-gradient(to right, #ddd, #fefefe);
-    color: #000;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-    font-weight: bold;
-    cursor: pointer;
-    transition: all 0.3s ease;    
-    width: 150px;
-    height: 35px;
-    font-size: 15px;
-}
-
-.btn-top-left:hover {
-    background: linear-gradient(to right, #ccc, #f0f0f0);
-    transform: scale(1.05);
-}
