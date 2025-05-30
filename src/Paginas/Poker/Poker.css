@@ -1,342 +1,374 @@
-
-
 body {
-  margin: 0;
-  background: linear-gradient(135deg, 
-    #103b2f 0%,
-		#0a3e2f 50%,
-		#032b1f 100%
-  );   
-  background-size: 100% 200%;
-  animation: moverFondo 5s linear infinite;  background-attachment: fixed;
-  font-family: "Segoe UI", sans-serif;
+	margin: 0;
+	background: linear-gradient(135deg, #103b2f 0%, #0a3e2f 50%, #032b1f 100%);
+	background-size: 100% 200%;
+	animation: moverFondo 5s linear infinite;
+	background-attachment: fixed;
+	font-family: "Segoe UI", sans-serif;
 }
 
 @keyframes moverFondo {
-  0% {
-    background-position: 0 0; 
-  }
-  25% {
-    background-position: 100% 0; 
-  }
-  50% {
-    background-position: 100% 100%; 
-  }
-  75% {
-    background-position: 0 100%;
-  }
-  100% {
-    background-position: 0 0; 
-  }
+	0% {
+		background-position: 0 0;
+	}
+	25% {
+		background-position: 100% 0;
+	}
+	50% {
+		background-position: 100% 100%;
+	}
+	75% {
+		background-position: 0 100%;
+	}
+	100% {
+		background-position: 0 0;
+	}
 }
 
 .poker-pagina {
-  min-height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; /* Centra verticalmente la mesa */
-  padding: 0; /* Elimina cualquier padding adicional */
-  margin: 0; /* Elimina márgenes */
-  overflow: hidden; /* Evita el scroll inicial */
+	min-height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center; /* Centra verticalmente la mesa */
+	padding: 0; /* Elimina cualquier padding adicional */
+	margin: 0; /* Elimina márgenes */
+	overflow: hidden; /* Evita el scroll inicial */
 }
 
 /* Poker.css */
-.overlay-go{
-  position:fixed; inset:0; background:rgba(0,0,0,.8);
-  display:flex; flex-direction:column; gap:1rem;
-  align-items:center; justify-content:center;
-  color:#fff; z-index:5000; text-align:center;
+.overlay-go {
+	position: fixed;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.8);
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	align-items: center;
+	justify-content: center;
+	color: #fff;
+	z-index: 5000;
+	text-align: center;
 }
-.overlay-go button{
-  padding:.7rem 1.6rem; font-weight:bold; cursor:pointer;
-  border:none; border-radius:10px;
+.overlay-go button {
+	padding: 0.7rem 1.6rem;
+	font-weight: bold;
+	cursor: pointer;
+	border: none;
+	border-radius: 10px;
 }
 
 .boton-ronda-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 1.5rem;
-  z-index: 2000;
+	display: flex;
+	justify-content: center;
+	margin-top: 1.5rem;
+	z-index: 2000;
 }
 .boton-ronda-container button {
-  font-size: 1rem;
-  padding: 0.6rem 1.2rem;
-  background-color: white;
-  border: 2px solid black;
-  border-radius: 6px;
-  cursor: pointer;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-  transition: background 0.3s;
+	font-size: 1rem;
+	padding: 0.6rem 1.2rem;
+	background-color: white;
+	border: 2px solid black;
+	border-radius: 6px;
+	cursor: pointer;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+	transition: background 0.3s;
 }
 .boton-ronda-container button:hover {
-  background-color: #eee;
+	background-color: #eee;
 }
 
-
 .poker-container {
-    padding: 2rem;
-    text-align: center;
-  }
-  
-  .poker-title {
-    margin-bottom: 2rem;
-    font-size: 2rem;
-    font-weight: bold;
-  }
-  
-  .poker-cartas {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    flex-wrap: wrap;
-    padding: 1rem 0;
-  }
+	padding: 2rem;
+	text-align: center;
+}
+
+.poker-title {
+	margin-bottom: 2rem;
+	font-size: 2rem;
+	font-weight: bold;
+}
+
+.poker-cartas {
+	display: flex;
+	justify-content: center;
+	gap: 1rem;
+	flex-wrap: wrap;
+	padding: 1rem 0;
+}
 /* Fondo negro con opacidad para fundido suave */
 .intro-overlay {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-  background: rgba(255, 255, 255, 0.6);
-  opacity: 1;
-  transition: opacity 0.6s ease-out;
+	position: absolute;
+	inset: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 999;
+	background: rgba(255, 255, 255, 0.6);
+	opacity: 1;
+	transition: opacity 0.6s ease-out;
 }
 
 .intro-overlay.fade-out {
-  opacity: 0;
-  pointer-events: none;
+	opacity: 0;
+	pointer-events: none;
 }
-
 
 /* Imagen de introducción */
 .intro-overlay img {
-  max-width: 80vmin;
-  aspect-ratio: 1 / 1;
-  border-radius: 16px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
-  animation: fadeInImage 1.5s ease-in-out;
-  object-fit: cover;
+	max-width: 80vmin;
+	aspect-ratio: 1 / 1;
+	border-radius: 16px;
+	box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+	animation: fadeInImage 1.5s ease-in-out;
+	object-fit: cover;
 }
 
 /* Animación de entrada de la imagen */
 @keyframes fadeInImage {
-  from { opacity: 0; transform: scale(0.9); }
-  to   { opacity: 1; transform: scale(1); }
+	from {
+		opacity: 0;
+		transform: scale(0.9);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
 }
 
 /* Desvanecimiento del overlay completo */
 @keyframes fadeOutOverlay {
-  to { opacity: 0; visibility: hidden; }
+	to {
+		opacity: 0;
+		visibility: hidden;
+	}
 }
 .poker-blur {
-  filter: blur(12px);
-  transition: filter 0.6s ease-in-out;
-  pointer-events: none; /* evita clics durante la intro */
+	filter: blur(12px);
+	transition: filter 0.6s ease-in-out;
+	pointer-events: none; /* evita clics durante la intro */
 }
 .mensaje-rival {
-  position: absolute;
-  top: 6vh;
-  left: 50%;
-  transform: translateX(-50%);
-  width: max-content;
+	position: absolute;
+	top: 6vh;
+	left: 50%;
+	transform: translateX(-50%);
+	width: max-content;
 
-  padding: 0.6rem 1.2rem;
-  font-size: 1.1rem;
-  font-weight: 600;
+	padding: 0.6rem 1.2rem;
+	font-size: 1.1rem;
+	font-weight: 600;
 
-  color: #fff;
-  background: linear-gradient(to right, #333, #222);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.6);
+	color: #fff;
+	background: linear-gradient(to right, #333, #222);
+	border-radius: 12px;
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
 
-  z-index: 999;
-  animation: fadeInUp 0.4s ease-out;
+	z-index: 999;
+	animation: fadeInUp 0.4s ease-out;
 }
 .mensaje-final {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); /* ya centrado desde el principio */
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #fff;
-  background: linear-gradient(to right, #444, #222);
-  padding: 1rem 2rem;
-  border-radius: 16px;
-  text-align: center;
-  z-index: 999;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
-  animation: aparecerSuave 0.4s ease-out;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%); /* ya centrado desde el principio */
+	font-size: 1.8rem;
+	font-weight: bold;
+	color: #fff;
+	background: linear-gradient(to right, #444, #222);
+	padding: 1rem 2rem;
+	border-radius: 16px;
+	text-align: center;
+	z-index: 999;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+	animation: aparecerSuave 0.4s ease-out;
 }
 
 @keyframes aparecerSuave {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -50%) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
-  }
+	from {
+		opacity: 0;
+		transform: translate(-50%, -50%) scale(0.95);
+	}
+	to {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1);
+	}
 }
 
 .boton-menu-container {
-  position: fixed; /* Fija el botón en la parte superior izquierda */
-  top: 1rem;
-  left: 1rem;
-  z-index: 3000;
+	position: fixed; /* Fija el botón en la parte superior izquierda */
+	top: 1rem;
+	left: 1rem;
+	z-index: 3000;
 }
 
-
 .boton-menu-container button {
-  font-size: 0.95rem;
-  padding: 0.5rem 1rem;
-  border-radius: 10px;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  background: linear-gradient(to bottom, #f9f9f9, #e0e0e0);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
+	font-size: 0.95rem;
+	padding: 0.5rem 1rem;
+	border-radius: 10px;
+	border: none;
+	font-weight: bold;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	background: linear-gradient(to bottom, #f9f9f9, #e0e0e0);
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.7);
 }
 
 .boton-menu-container button:hover {
-  background: linear-gradient(to bottom, #e6e6e6, #cccccc);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+	background: linear-gradient(to bottom, #e6e6e6, #cccccc);
+	transform: translateY(-2px);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
 }
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translate(-50%, -10px);
-  }
-  to {
-    opacity: 1;
-    transform: translate(-50%, 0);
-  }
+	from {
+		opacity: 0;
+		transform: translate(-50%, -10px);
+	}
+	to {
+		opacity: 1;
+		transform: translate(-50%, 0);
+	}
 }
 
 @keyframes aparecer {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+	from {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
-
 .rotate-overlay {
-  position: fixed;
-  inset: 0;
-  background: black;                        /* ← fondo negro sólido */
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.5s ease;
-  text-align: center;
-  font-family: "Segoe UI", sans-serif;
+	position: fixed;
+	inset: 0;
+	background: black; /* ← fondo negro sólido */
+	color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 9999;
+	opacity: 0;
+	pointer-events: none;
+	transition: opacity 0.5s ease;
+	text-align: center;
+	font-family: "Segoe UI", sans-serif;
 }
 
 .rotate-overlay--visible {
-  opacity: 1;
-  pointer-events: auto;
+	opacity: 1;
+	pointer-events: auto;
 }
 
 @media (orientation: portrait) {
-  body.lock-portrait {
-    overflow: hidden;
-  }
+	body.lock-portrait {
+		overflow: hidden;
+	}
 }
 
 .rotate-icon {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  opacity: 0;
-  animation: fadeIn 0.8s forwards;
-  animation-delay: 0.2s;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 1rem;
+	opacity: 0;
+	animation: fadeIn 0.8s forwards;
+	animation-delay: 0.2s;
 }
 
 .flecha {
-  font-size: 4rem;
-  animation: rotar 4s linear infinite;
-  display: inline-block;
+	font-size: 4rem;
+	animation: rotar 4s linear infinite;
+	display: inline-block;
 }
 
 @keyframes rotar {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(180deg); }
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(180deg);
+	}
 }
 
 @keyframes fadeIn {
-  to { opacity: 1; }
+	to {
+		opacity: 1;
+	}
 }
 
 .rotate-icon p {
-  font-size: 1.2rem;
-  margin: 0;
+	font-size: 1.2rem;
+	margin: 0;
 }
 
-
 @media (max-width: 1000px) {
-  .poker-container {
-    max-width: 100%;
-    padding: 1rem;
-    overflow-x: hidden;
-  }
+	.poker-container {
+		max-width: 100%;
+		padding: 1rem;
+		overflow-x: hidden;
+	}
 
+	.poker-cartas img,
+	.poker-cartas .carta {
+		width: 300px !important;
+		height: auto !important;
+		max-width: 20vw;
+	}
 
-  .poker-cartas img,
-  .poker-cartas .carta {
-    width: 300px !important;
-    height: auto !important;
-    max-width: 20vw;
-  }
+	.boton-ronda-container {
+		flex-direction: column !important;
+		gap: 0.5rem;
+		width: 100%;
+		margin-top: 1rem;
+	}
 
-  .boton-ronda-container {
-    flex-direction: column !important;
-    gap: 0.5rem;
-    width: 100%;
-    margin-top: 1rem;
-  }
+	.boton-ronda-container button {
+		width: 90% !important;
+		font-size: 1rem;
+		padding: 0.6rem;
+	}
 
-  .boton-ronda-container button {
-    width: 90% !important;
-    font-size: 1rem;
-    padding: 0.6rem;
-  }
+	.boton-ronda-container input[type="text"],
+	.boton-ronda-container input[type="number"] {
+		width: 90% !important;
+		font-size: 1rem;
+		text-align: center;
+	}
 
-  .boton-ronda-container input[type="text"],
-  .boton-ronda-container input[type="number"] {
-    width: 90% !important;
-    font-size: 1rem;
-    text-align: center;
-  }
+	.mensaje-final {
+		font-size: 1.4rem;
+		width: 90%;
+		top: 50%;
+		left: 50%;
+	}
 
-  .mensaje-final {
-    font-size: 1.4rem;
-    width: 90%;
-    top: 50%;
-    left: 50%;
-  }
+	.mensaje-rival {
+		position: absolute;
+		font-size: 1rem;
+		padding: 0.4rem 0.8rem;
+		top: 20vh;
+	}
 
-  .mensaje-rival {
-    position:absolute;
-    font-size: 1rem;
-    padding: 0.4rem 0.8rem;
-    top:20vh;
+	.poker-pagina {
+		min-height: 100vh !important;
+		display: flex !important;
+		align-items: center !important;
+	}
+}
 
-  }
-
-  .poker-pagina {
-    min-height: 100vh !important;
-    display: flex !important;
-    align-items: center !important;
-  }
+button:disabled,
+.overlay-go button:disabled,
+.boton-ronda-container button:disabled,
+.boton-menu-container button:disabled {
+	background-color: white !important;
+	color: #222 !important;
+	opacity: 1 !important;
+	filter: none !important;
+	cursor: not-allowed;
+	border: inherit !important;
+	box-shadow: inherit !important;
 }

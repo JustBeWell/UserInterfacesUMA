@@ -662,13 +662,16 @@ function Poker({
 					<h2>{mensajeGO}</h2>
 					<button
 						onClick={reiniciarPartida}
-						aria-label="Play Again"
+						disabled={fichas === 0}
+						aria-label={
+							fichas == 0 ? "Buy chips to continue playing poker" : "Play Again"
+						}
 						onMouseEnter={(e) =>
 							speak(e.currentTarget.getAttribute("aria-label"))
 						}
 						onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
 					>
-						Jugar otra vez
+						{fichas == 0 ? "Buy chips to continue playing poker" : "Play Again"}
 					</button>
 					<Link to="/home">
 						<button
@@ -678,7 +681,7 @@ function Poker({
 							}
 							onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
 						>
-							Menú principal
+							Main menu
 						</button>
 					</Link>
 				</div>

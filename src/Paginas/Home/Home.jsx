@@ -6,11 +6,10 @@ import IconoAutorizado from "../../imagenes/iconos/juego-autorizado.png";
 import IconoSeguro from "../../imagenes/iconos/juego-seguro.png";
 import Icono18Plus from "../../imagenes/iconos/plus18.png";
 
-function Home({ speak }) {
+function Home({ speak, fichas }) {
 	return (
 		<main className="home-container">
 			<header className="home-header">
-
 				<nav className="top-nav">
 					<Link to="/tienda" tabIndex={-1}>
 						<button
@@ -50,6 +49,7 @@ function Home({ speak }) {
 					to="/blackjack"
 					label="Play Blackjack"
 					speak={speak}
+					fichas={fichas}
 				/>
 				<GameCard
 					image={ImagenPoker}
@@ -57,6 +57,7 @@ function Home({ speak }) {
 					to="/poker"
 					label="Play Poker"
 					speak={speak}
+					fichas={fichas}
 				/>
 				<GameCard
 					image={ImagenSlots}
@@ -64,6 +65,7 @@ function Home({ speak }) {
 					to="/slots"
 					label="Play Slots"
 					speak={speak}
+					fichas={fichas}
 				/>
 			</section>
 

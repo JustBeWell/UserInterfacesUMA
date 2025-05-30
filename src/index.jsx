@@ -100,7 +100,7 @@ function App() {
 	return (
 		<Routes>
 			<Route path="/" element={<Login speak={speak} />} />
-			<Route path="/home" element={<Home speak={speak} />} />
+			<Route path="/home" element={<Home speak={speak} fichas={fichas} />} />
 			<Route
 				path="/blackjack"
 				element={
