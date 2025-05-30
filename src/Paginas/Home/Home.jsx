@@ -5,8 +5,21 @@ import { Link } from "react-router-dom";
 import IconoAutorizado from "../../imagenes/iconos/juego-autorizado.png";
 import IconoSeguro from "../../imagenes/iconos/juego-seguro.png";
 import Icono18Plus from "../../imagenes/iconos/plus18.png";
+import { useState } from "react";
 
 function Home({ speak, fichas }) {
+	const [modalVisible, setModalVisible] = useState(false);
+	const [resultadoFinal, setResultadoFinal] = useState("");
+
+	function handleClick(e) {
+		if (fichas === 0) {
+			e.preventDefault();
+			setResultadoFinal("You need chips to play. Go to the store to buy more.");
+			setModalVisible(true);
+			speak("You need chips to play. Go to the store to buy more.");
+		}
+	}
+
 	return (
 		<main className="home-container">
 			<header className="home-header">
@@ -49,7 +62,7 @@ function Home({ speak, fichas }) {
 					to="/blackjack"
 					label="Play Blackjack"
 					speak={speak}
-					fichas={fichas}
+					handleClick={handleClick}
 				/>
 				<GameCard
 					image={ImagenPoker}
@@ -57,7 +70,7 @@ function Home({ speak, fichas }) {
 					to="/poker"
 					label="Play Poker"
 					speak={speak}
-					fichas={fichas}
+					handleClick={handleClick}
 				/>
 				<GameCard
 					image={ImagenSlots}
@@ -65,9 +78,31 @@ function Home({ speak, fichas }) {
 					to="/slots"
 					label="Play Slots"
 					speak={speak}
-					fichas={fichas}
+					handleClick={handleClick}
 				/>
 			</section>
+
+			{resultadoFinal && (
+				<div className={`modal-overlay ${!modalVisible ? "fade-out" : ""}`}>
+					<div className="modal-content modal-lose">
+						<p>{resultadoFinal}</p>
+						<button
+							className="btn"
+							onClick={() => {
+								setModalVisible(false);
+								setTimeout(() => setResultadoFinal(""), 400);
+							}}
+							aria-label="Close popup"
+							onMouseEnter={(e) =>
+								speak(e.currentTarget.getAttribute("aria-label"))
+							}
+							onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+						>
+							OK
+						</button>
+					</div>
+				</div>
+			)}
 
 			<footer className="home-footer">
 				<div className="footer-icons">

@@ -2,15 +2,11 @@
 import { Link } from "react-router-dom";
 import "./GameCard.css"; // o usa Tailwind si prefieres
 
-function GameCard({ image, alt, to, label, speak, fichas }) {
-	if (to === "/poker" && fichas == 0) {
-		to = "/tienda";
-		label = "You need chips";
-	}
+function GameCard({ image, alt, to, label, speak, handleClick }) {
 	return (
 		<div className="game-card">
 			<img src={image} alt={alt} />
-			<Link to={to} tabIndex={-1}>
+			<Link to={to} tabIndex={-1} onClick={handleClick}>
 				<button
 					className="btn"
 					aria-label={label}
