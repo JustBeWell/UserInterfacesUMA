@@ -13,6 +13,7 @@ function Jugador({
 	showdown,
 	speak,
 	cartasAlternativas,
+	reproducirEfecto,
 }) {
 	return (
 		<div className={`jugador jugador-${posicion}`}>
@@ -26,6 +27,7 @@ function Jugador({
 						nueva={false}
 						showdown={showdown}
 						cartasAlternativas={cartasAlternativas}
+						reproducirEfecto={reproducirEfecto}
 					/>
 				))}
 			</div>

@@ -22,9 +22,7 @@ function App() {
 	const [volumenMusica, setVolumenMusica] = useState(
 		localStorage.getItem("volumenMusica") || 0.01
 	);
-	const [lectorPantalla, setLectorPantalla] = useState(
-		false
-	);
+	const [lectorPantalla, setLectorPantalla] = useState(false);
 	const [cartasAlternativas, setCartasAlternativas] = useState(
 		localStorage.getItem("cartasAlternativas") == null
 			? false
@@ -86,6 +84,7 @@ function App() {
 			"/slots": "slots",
 			"/ajustes": "ajustes",
 			"/tienda": "tienda",
+			"/poker": "poker",
 		};
 		const pista = rutaAMusica[location.pathname];
 		if (pista) reproducirMusica(pista);

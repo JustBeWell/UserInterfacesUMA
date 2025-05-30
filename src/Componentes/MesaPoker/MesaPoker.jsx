@@ -13,6 +13,7 @@ function MesaPoker({
 	jugadaActualJugador,
 	showdown,
 	cartasAlternativas,
+	reproducirEfecto,
 }) {
 	return (
 		<div className="mesa">
@@ -28,6 +29,7 @@ function MesaPoker({
 				turno={turno === "rival"}
 				showdown={showdown}
 				cartasAlternativas={cartasAlternativas}
+				reproducirEfecto={reproducirEfecto}
 			/>
 			<Jugador
 				posicion="bottom"
@@ -35,12 +37,14 @@ function MesaPoker({
 				fase={fase}
 				turno={turno === "jugador"}
 				cartasAlternativas={cartasAlternativas}
+				reproducirEfecto={reproducirEfecto}
 			/>
 
 			<CartasComunitarias
 				cartas={comunitarias}
 				fase={fase}
 				cartasAlternativas={cartasAlternativas}
+				reproducirEfecto={reproducirEfecto}
 			/>
 		</div>
 	);

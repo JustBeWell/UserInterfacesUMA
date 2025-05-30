@@ -31,7 +31,13 @@ export const IA = {
 	SUBIDA_MAX: 150,
 };
 
-function Poker({ fichas, setFichas, speak, cartasAlternativas }) {
+function Poker({
+	reproducirEfecto,
+	fichas,
+	setFichas,
+	speak,
+	cartasAlternativas,
+}) {
 	/* --- estado local (ejemplo simple) --- */
 	// fichas
 	const INICIAL_JUG = fichas;
@@ -687,19 +693,20 @@ function Poker({ fichas, setFichas, speak, cartasAlternativas }) {
 					jugadaActualJugador={jugadaActualJugador}
 					showdown={rondaShowdown}
 					cartasAlternativas={cartasAlternativas}
+					reproducirEfecto={reproducirEfecto}
 				/>
-					<Link to="/home" tabIndex={-1}>
-						<button
-							className="btn-top-left"
-							aria-label="Return to Menu"
-							onMouseEnter={(e) =>
-								speak(e.currentTarget.getAttribute("aria-label"))
-							}
-							onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
-						>
-							Return to Menu
-						</button>
-					</Link>
+				<Link to="/home" tabIndex={-1}>
+					<button
+						className="btn-top-left"
+						aria-label="Return to Menu"
+						onMouseEnter={(e) =>
+							speak(e.currentTarget.getAttribute("aria-label"))
+						}
+						onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+					>
+						Return to Menu
+					</button>
+				</Link>
 			</div>
 			<div className="boton-ronda-container"></div>
 		</div>

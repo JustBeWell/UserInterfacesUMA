@@ -16,6 +16,7 @@ const audiosMusica = {
 	ajustes: Ajustes,
 	blackjack: BlackjackMusica,
 	slots: SlotsMusica,
+	poker: SlotsMusica,
 	tienda: TiendaMusica,
 	menu: menuPrincipal,
 };
@@ -103,17 +104,14 @@ function AudioManager({ volumenEfectos = 1, volumenMusica, lectorPantalla }) {
 	};
 
 	function speak(text) {
-		if (lectorPantalla && 'speechSynthesis' in window) {
+		if (lectorPantalla && "speechSynthesis" in window) {
 			const utterance = new window.SpeechSynthesisUtterance(text);
 			window.speechSynthesis.cancel(); // Detiene cualquier lectura previa
 			window.speechSynthesis.speak(utterance);
 		}
 	}
 
-
 	return { reproducirEfecto, reproducirMusica, pararTodo, speak };
 }
-
-
 
 export default AudioManager;

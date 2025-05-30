@@ -6,7 +6,12 @@ import "./CartasComunitarias.css";
  *  Muestra de 0‑5 cartas comunitarias centradas.
  *  ▸ props.cartas  →  array con objetos { valor, palo }  (o { valor:"back" } si va boca abajo)
  */
-function CartasComunitarias({ cartas = [], fase, cartasAlternativas }) {
+function CartasComunitarias({
+	reproducirEfecto,
+	cartas = [],
+	fase,
+	cartasAlternativas,
+}) {
 	return (
 		<div className="cartas-comunitarias">
 			{cartas.map((carta, index) => (
@@ -17,6 +22,7 @@ function CartasComunitarias({ cartas = [], fase, cartasAlternativas }) {
 					nueva={false}
 					girarSolo={fase === "juego"} /* ya han “llegado” a la mesa */
 					cartasAlternativas={cartasAlternativas}
+					reproducirEfecto={reproducirEfecto}
 				/>
 			))}
 		</div>

@@ -11,6 +11,7 @@ function CartaPoker({
 	villain = false,
 	showdown = false,
 	cartasAlternativas,
+	reproducirEfecto,
 }) {
 	// 1. Estado inicial
 	const [mostrarCarta, setMostrarCarta] = useState(false); // siempre empieza boca abajo
@@ -28,17 +29,26 @@ function CartaPoker({
 
 	useEffect(() => {
 		if (girarSolo && montado && !villain) {
-			const timer = setTimeout(() => setMostrarCarta(true), 1000); // o el tiempo que prefieras
+			const timer = setTimeout(() => {
+				setMostrarCarta(true);
+				reproducirEfecto("cartaBlackJack");
+			}, 1000); // o el tiempo que prefieras
 			return () => clearTimeout(timer);
 		}
 	}, [girarSolo, montado, villain]);
 
 	useEffect(() => {
 		if (showdown) {
-			const timer = setTimeout(() => setMostrarCarta(true), 1000); // o el tiempo que prefieras
+			const timer = setTimeout(() => {
+				setMostrarCarta(true);
+				reproducirEfecto("cartaBlackJack");
+			}, 1000); // o el tiempo que prefieras
 			return () => clearTimeout(timer);
 		} else {
-			const timer = setTimeout(() => setMostrarCarta(false), 0); // o el tiempo que prefieras
+			const timer = setTimeout(() => {
+				setMostrarCarta(false);
+				reproducirEfecto("cartaBlackJack");
+			}, 0); // o el tiempo que prefieras
 			return () => clearTimeout(timer);
 		}
 	}, [showdown]);
