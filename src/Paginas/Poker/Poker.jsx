@@ -16,8 +16,6 @@ import {
 } from "../../utils/Poker/evaluador.js";
 import { generarMazo, barajar } from "../../utils/Poker/mazo.js";
 
-
-
 // ─── FASES DE RONDA (lógica de póker) ───────────────────────────────
 export const RONDA = {
 	PREFLOP: "preflop",
@@ -77,7 +75,7 @@ function Poker({
 	const [showRules, setShowRules] = useState(false);
 
 	function rules() {
-	setShowRules((prev) => !prev);
+		setShowRules((prev) => !prev);
 	}
 
 	const [showTutorial, setShowTutorial] = useState(false);
@@ -90,7 +88,7 @@ function Poker({
 		{ text: "Then use Check because the wanted bet is 0" },
 		{ text: "The opponent have placed bet, so call it" },
 		{ text: "You can also fold if you believe that you have a bad hand" },
-		{ text: "That's it! Good luck and have fun playing Poker!" }
+		{ text: "That's it! Good luck and have fun playing Poker!" },
 	];
 
 	useEffect(() => {
@@ -651,16 +649,13 @@ function Poker({
 
 	return (
 		<div className="poker-pagina">
-			
 			<div className="rotate-overlay">
 				<div className="rotate-icon">
 					<div className="flecha">↻</div>
 					<p>Gira tu dispositivo para disfrutar de una mejor experiencia</p>
 				</div>
 			</div>
-			
-			
-			
+
 			{fase === "inicio" || fase === "saliendo" ? (
 				<div
 					className={`intro-overlay ${fase === "saliendo" ? "fade-out" : ""}`}
@@ -679,7 +674,7 @@ function Poker({
 
 			{/* ✅ Mensaje que flota sobre la mesa */}
 			{mensajeRival && <div className="mensaje-rival">{mensajeRival}</div>}
-			
+
 			{gameOver && (
 				//Lo que hacemos aquí es cargar este componente si y solo si, gameOver está en true
 				<div className="overlay-go">
@@ -697,7 +692,7 @@ function Poker({
 					>
 						{fichas == 0 ? "Buy chips to continue playing poker" : "Play Again"}
 					</button>
-					
+
 					<Link to="/home">
 						<button
 							aria-label="Return to Menu"
@@ -723,7 +718,6 @@ function Poker({
 					cartasAlternativas={cartasAlternativas}
 					reproducirEfecto={reproducirEfecto}
 				/>
-<<<<<<< Updated upstream
 				<Link to="/home" tabIndex={-1}>
 					<button
 						className="btn-top-left"
@@ -736,47 +730,59 @@ function Poker({
 						Return to Menu
 					</button>
 				</Link>
-=======
-					<Link to="/home" tabIndex={-1}>
-						<button
-							className="btn-top-left"
-							aria-label="Return to Menu"
-							onMouseEnter={(e) =>
-								speak(e.currentTarget.getAttribute("aria-label"))
-							}
-							onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
-						>
-							Return to Menu
-						</button>
-					</Link>
-					<button className={"rules-button"} 
-						onClick={() => {rules(showRules);}}
-
-						aria-label="Show rules"
-						onMouseEnter={e => speak(e.currentTarget.getAttribute('aria-label'))}
-						onFocus={e => speak(e.currentTarget.getAttribute('aria-label'))}>
-						More Info ℹ️
-					</button>
-					{showRules && (
-						<div className="rules-modal">
-							<div className="rules-content">
+				<button
+					className={"rules-button"}
+					onClick={() => {
+						rules(showRules);
+					}}
+					aria-label="Show rules"
+					onMouseEnter={(e) =>
+						speak(e.currentTarget.getAttribute("aria-label"))
+					}
+					onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+				>
+					More Info ℹ️
+				</button>
+				{showRules && (
+					<div className="rules-modal">
+						<div className="rules-content">
 							<h2>Poker Rules</h2>
 							<p>
-								In Poker, your goal is to form the best possible five-card hand using your two private cards and the five community cards on the table.
+								In Poker, your goal is to form the best possible five-card hand
+								using your two private cards and the five community cards on the
+								table.
 							</p>
 							<h3>How a Round Works</h3>
 							<ul>
 								<li>Both you and your opponent receive two private cards.</li>
-								<li>Five community cards are revealed in three stages: Flop (3 cards), Turn (1 card), and River (1 card).</li>
-								<li>After each stage, you can bet, check, raise, call, or fold.</li>
-								<li>The player with the best hand at the end wins the pot. If someone folds, the other player wins automatically.</li>
+								<li>
+									Five community cards are revealed in three stages: Flop (3
+									cards), Turn (1 card), and River (1 card).
+								</li>
+								<li>
+									After each stage, you can bet, check, raise, call, or fold.
+								</li>
+								<li>
+									The player with the best hand at the end wins the pot. If
+									someone folds, the other player wins automatically.
+								</li>
 							</ul>
 							<h3>Button Guide</h3>
 							<ul>
-								<li><b>CHECK</b>: Pass the turn without betting if no one has bet yet.</li>
-								<li><b>CALL</b>: Match the current bet made by your opponent.</li>
-								<li><b>RAISE</b>: Increase the current bet. You must bet more than the previous bet.</li>
-								<li><b>FOLD</b>: Give up the round. Your opponent wins the pot.</li>
+								<li>
+									<b>CHECK</b>: Pass the turn without betting if no one has bet
+									yet.
+								</li>
+								<li>
+									<b>CALL</b>: Match the current bet made by your opponent.
+								</li>
+								<li>
+									<b>RAISE</b>: Increase the current bet. You must bet more than
+									the previous bet.
+								</li>
+								<li>
+									<b>FOLD</b>: Give up the round. Your opponent wins the pot.
+								</li>
 							</ul>
 							<h3>Winning Hands (from highest to lowest)</h3>
 							<ul>
@@ -791,13 +797,15 @@ function Poker({
 								<li>One Pair</li>
 								<li>High Card</li>
 							</ul>
-							<h6>Tip: Try to read your opponent and manage your chips wisely!</h6>
-							<button className="btn" onClick={rules}>Close</button>
-							</div>
+							<h6>
+								Tip: Try to read your opponent and manage your chips wisely!
+							</h6>
+							<button className="btn" onClick={rules}>
+								Close
+							</button>
 						</div>
-					)}
-					
->>>>>>> Stashed changes
+					</div>
+				)}
 			</div>
 			<div className="boton-ronda-container"></div>
 		</div>
