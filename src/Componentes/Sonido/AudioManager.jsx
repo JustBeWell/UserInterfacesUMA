@@ -28,6 +28,12 @@ const audiosEfectos = {
 	sadTrumpet: sadTrumpet,
 };
 
+function volumenLogaritmico(valor) {
+	// Evita el silencio absoluto para evitar problemas en algunos navegadores
+	if (valor <= 0) return 0;
+	return Math.pow(valor, 2); // Puedes ajustar la curva si lo deseas
+}
+
 function AudioManager({ volumenEfectos = 1, volumenMusica, lectorPantalla }) {
 	const audiosEfectosRef = useRef({});
 	const audiosMusicaRef = useRef({});
@@ -47,7 +53,8 @@ function AudioManager({ volumenEfectos = 1, volumenMusica, lectorPantalla }) {
 			if (nombre === "girandoSlots") {
 				audiosEfectosRef.current[nombre].playbackRate = 0.75;
 			}
-			audiosEfectosRef.current[nombre].volume = volumenEfectos;
+			audiosEfectosRef.current[nombre].volume =
+				volumenLogaritmico(volumenEfectos);
 		}
 		audiosEfectosRef.current[nombre].play().catch((error) => {
 			console.error(`Error reproduciendo efecto de audio "${nombre}":`, error);
@@ -64,7 +71,8 @@ function AudioManager({ volumenEfectos = 1, volumenMusica, lectorPantalla }) {
 			audiosMusicaRef.current[nombre].currentTime = 0;
 		} else {
 			audiosMusicaRef.current[nombre] = new window.Audio(audiosMusica[nombre]);
-			audiosMusicaRef.current[nombre].volume = volumenMusica;
+			audiosMusicaRef.current[nombre].volume =
+				volumenLogaritmico(volumenMusica);
 			audiosMusicaRef.current[nombre].loop = true;
 		}
 		audiosMusicaRef.current[nombre].play().catch((error) => {
@@ -76,14 +84,14 @@ function AudioManager({ volumenEfectos = 1, volumenMusica, lectorPantalla }) {
 	React.useEffect(() => {
 		Object.values(audiosEfectosRef.current).forEach((audio) => {
 			if (audio) {
-				audio.volume = volumenEfectos;
+				audio.volume = volumenLogaritmico(volumenEfectos);
 			}
 		});
 	}, [volumenEfectos]);
 	React.useEffect(() => {
 		Object.values(audiosMusicaRef.current).forEach((audio) => {
 			if (audio) {
-				audio.volume = volumenMusica;
+				audio.volume = volumenLogaritmico(volumenMusica);
 			}
 		});
 	}, [volumenMusica]);
