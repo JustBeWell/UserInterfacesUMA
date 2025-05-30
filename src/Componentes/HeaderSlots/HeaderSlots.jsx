@@ -16,8 +16,9 @@ function HeaderSlots({ speak }) {
 					Return to Menu
 				</button>
 			</Link>
-
+			
 			<section className="instructions">
+				
 				<p className="instruction">
 					<strong> Objective:</strong> Match symbols to win tokens!
 				</p>
@@ -27,7 +28,9 @@ function HeaderSlots({ speak }) {
 				<p className="instruction">
 					<strong> Step 2:</strong> Win multipliers based on the result!
 				</p>
+				
 			</section>
+			
 		</header>
 	);
 }
