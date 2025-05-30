@@ -22,11 +22,15 @@ function App() {
 	const [volumenMusica, setVolumenMusica] = useState(
 		localStorage.getItem("volumenMusica") || 0.01
 	);
-	const [lectorPantalla, setLectorPantalla] = useState(false);
-	const [cartasAlternativas, setCartasAlternativas] = useState(
-		localStorage.getItem("cartasAlternativas") == null
+	const [lectorPantalla, setLectorPantalla] = useState(
+		localStorage.getItem("lectorPantalla") === null
 			? false
-			: localStorage.getItem("cartasAlternativas")
+			: localStorage.getItem("lectorPantalla") === "true"
+	);
+	const [cartasAlternativas, setCartasAlternativas] = useState(
+		localStorage.getItem("cartasAlternativas") === null
+			? false
+			: localStorage.getItem("cartasAlternativas") === "true"
 	);
 
 	// Estado para controlar si ya hubo un primer click
