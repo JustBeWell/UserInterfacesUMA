@@ -284,7 +284,7 @@ body {
 }
 
 
-@media (max-width: 1000x) {
+@media (max-width: 1000px) {
   .poker-container {
     max-width: 100%;
     padding: 1rem;
@@ -294,7 +294,7 @@ body {
 
   .poker-cartas img,
   .poker-cartas .carta {
-    width: 60px !important;
+    width: 300px !important;
     height: auto !important;
     max-width: 20vw;
   }
@@ -322,12 +322,16 @@ body {
   .mensaje-final {
     font-size: 1.4rem;
     width: 90%;
+    top: 50%;
+    left: 50%;
   }
 
   .mensaje-rival {
+    position:absolute;
     font-size: 1rem;
     padding: 0.4rem 0.8rem;
-    top: 4vh;
+    top:20vh;
+
   }
 
   .poker-pagina {
