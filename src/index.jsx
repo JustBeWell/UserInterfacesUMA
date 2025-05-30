@@ -23,9 +23,7 @@ function App() {
 		localStorage.getItem("volumenMusica") || 0.01
 	);
 	const [lectorPantalla, setLectorPantalla] = useState(
-		localStorage.getItem("lectorPantalla") == null
-			? false
-			: localStorage.getItem("lectorPantalla")
+		false
 	);
 	const [cartasAlternativas, setCartasAlternativas] = useState(
 		localStorage.getItem("cartasAlternativas") == null
