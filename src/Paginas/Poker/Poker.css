@@ -375,85 +375,113 @@ button:disabled,
 
 /* Panel lateral derecho estilo Slots */
 .rules-modal {
-  position: absolute;
-  top: 70px;
-  right: 20px;
-  width: 320px;
-  background: linear-gradient(135deg, 
-    #134739 0%, 
-    #0e2b15 30%, 
-    #072e23 60%, 
-    #0a3e2f 100% 
-  );  
-  background-size: 100% 200%;
-  animation: moverFondo 5s linear infinite;
-  color: #fffbe6;
-  padding: 1.5rem;
-  border-radius: 14px;
-  z-index: 2000;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.5), inset 0 0 8px rgba(255,255,255,0.02);
-  font-family: 'Segoe UI', sans-serif;
-  border: 1px solid rgba(255, 215, 0, 0.3);
-  backdrop-filter: blur(4px);
-  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
-  max-height: 80vh;
-  overflow-y: auto;
+	position: absolute;
+	top: 70px;
+	right: 20px;
+	width: 320px;
+	background: linear-gradient(
+		135deg,
+		#134739 0%,
+		#0e2b15 30%,
+		#072e23 60%,
+		#0a3e2f 100%
+	);
+	background-size: 100% 200%;
+	animation: moverFondo 5s linear infinite;
+	color: #fffbe6;
+	padding: 1.5rem;
+	border-radius: 14px;
+	z-index: 2000;
+	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5),
+		inset 0 0 8px rgba(255, 255, 255, 0.02);
+	font-family: "Segoe UI", sans-serif;
+	border: 1px solid rgba(255, 215, 0, 0.3);
+	backdrop-filter: blur(4px);
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+	max-height: 80vh;
+	overflow-y: auto;
 }
 
 .rules-modal h2 {
-  font-size: 1.6rem;
-  margin-bottom: 1rem;
-  background: linear-gradient(to right, #ffd700, #ffae00);
-  color: #ffd700;  
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: wheat;
-  font-weight: bold;
-  text-align: center;
-  text-shadow: 1px 1px 2px #000;
+	font-size: 1.6rem;
+	margin-bottom: 1rem;
+	background: linear-gradient(to right, #ffd700, #ffae00);
+	color: #ffd700;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: wheat;
+	font-weight: bold;
+	text-align: center;
+	text-shadow: 1px 1px 2px #000;
 }
 
 .rules-modal ul {
-  list-style: none;
-  padding-left: 0;
-  margin-top: 1rem;
+	list-style: none;
+	padding-left: 0;
+	margin-top: 1rem;
 }
 
 .rules-modal li {
-  margin-bottom: 0.7rem;
-  font-size: 1rem;
-  color: #e0e0e0;
-  text-shadow: 0 1px 1px rgba(0,0,0,0.6);
+	margin-bottom: 0.7rem;
+	font-size: 1rem;
+	color: #e0e0e0;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
 }
 
 .rules-modal h3 {
-  margin-top: 1.2em;
-  color: #ffd700;
-  font-size: 1.2em;
+	margin-top: 1.2em;
+	color: #ffd700;
+	font-size: 1.2em;
 }
 
 .rules-modal h6 {
-  margin-top: 1.5em;
-  color: #00ffaa;
-  font-size: 1em;
-  font-weight: 500;
+	margin-top: 1.5em;
+	color: #00ffaa;
+	font-size: 1em;
+	font-weight: 500;
 }
 
 .close-rules {
-  margin-top: 1.5rem;
-  background: linear-gradient(to right, #8b0000, #b22222);
-  color: white;
-  padding: 0.5rem 1rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: bold;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-  transition: all 0.3s ease;
-  float: right;
+	margin-top: 1.5rem;
+	background: linear-gradient(to right, #8b0000, #b22222);
+	color: white;
+	padding: 0.5rem 1rem;
+	border: none;
+	border-radius: 6px;
+	cursor: pointer;
+	font-weight: bold;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+	transition: all 0.3s ease;
+	float: right;
 }
 
 .rules-modal .close-rules:hover {
-  background: linear-gradient(to right, #b22222, #dc2626);
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
-  transform: scale(1.05);
+	background: linear-gradient(to right, #b22222, #dc2626);
+	box-shadow: 0 0 10px rgba(255, 0, 0, 0.6);
+	transform: scale(1.05);
+}
+
+.tutorial-video {
+	width: 340px;
+	max-width: 80vw;
+	height: auto;
+	border-radius: 12px;
+	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+	margin: 1rem auto;
+	display: block;
+	background: #000;
+	outline: 2px solid #ffd700;
+	transition: box-shadow 0.3s, transform 0.3s;
+}
+.tutorial-video:focus,
+.tutorial-video:hover {
+	box-shadow: 0 0 0 4px #ffd700, 0 4px 24px rgba(0, 0, 0, 0.7);
+	transform: scale(1.12);
+	z-index: 10;
+}
+@media (max-width: 600px) {
+	.tutorial-video {
+		width: 98vw;
+		max-width: 98vw;
+		border-radius: 8px;
+	}
 }

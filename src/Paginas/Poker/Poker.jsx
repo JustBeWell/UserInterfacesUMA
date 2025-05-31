@@ -31,6 +31,14 @@ export const IA = {
 	SUBIDA_MAX: 150,
 };
 
+import callVideo from "../../PokerTutorial/Call.mp4";
+
+import checkVideo from "../../PokerTutorial/Check.mp4";
+
+import foldVideo from "../../PokerTutorial/Fold2.mp4";
+
+import raiseVideo from "../../PokerTutorial/Raise.mp4";
+
 function Poker({
 	reproducirEfecto,
 	fichas,
@@ -78,18 +86,80 @@ function Poker({
 		setShowRules((prev) => !prev);
 	}
 
-	const [showTutorial, setShowTutorial] = useState(false);
+	const [showTutorial, setShowTutorial] = useState(true);
 	const [tutorialStep, setTutorialStep] = useState(0);
 
 	const tutorialDialogs = [
-		{ text: "Welcome to Poker! Let's learn how to play step by step." },
-		{ text: "We are going to see how the buttons work in a real game." },
-		{ text: "In the start of the game, raise the bet in 100" },
-		{ text: "Then use Check because the wanted bet is 0" },
-		{ text: "The opponent have placed bet, so call it" },
-		{ text: "You can also fold if you believe that you have a bad hand" },
-		{ text: "That's it! Good luck and have fun playing Poker!" },
+		{
+			text: "Welcome to Poker! Let's learn how to play step by step.",
+			style: { top: "80px", left: "0px" },
+		},
+		{
+			text: "We are going to see how the buttons work in a real game.",
+			style: { top: "80px", left: "0px" },
+		},
+		{
+			text: "In the start of the game, raise the bet in 100",
+			video: raiseVideo,
+			style: { top: "80px", left: "0px" },
+		},
+		{
+			text: "Then use Check because the wanted bet is 0",
+			video: checkVideo,
+			style: { top: "80px", left: "0px" },
+		},
+		{
+			text: "The opponent have placed bet, so call it",
+			video: callVideo,
+			style: { top: "80px", left: "0px" },
+		},
+		{
+			text: "You can also fold if you believe that you have a bad hand",
+			video: foldVideo,
+			style: { top: "80px", left: "0px" },
+		},
+		{
+			text: "That's it! Good luck and have fun playing Poker!",
+			style: { top: "80px", left: "0px" },
+		},
 	];
+	useEffect(() => {
+		// Enseñar el tutorial si no se ha mostrado antes
+		const usuario = localStorage.getItem("usuario");
+		if (
+			usuario &&
+			sessionStorage.getItem(`pokerTutorialShown_${usuario}`) == "true"
+		) {
+			setShowTutorial(false);
+		}
+	}, []);
+	useEffect(() => {
+		if (showTutorial) {
+			if (tutorialStep === 4 || tutorialStep === 5) {
+				speak(tutorialDialogs[tutorialStep].text);
+			} else if (tutorialStep === 7) {
+				speak(
+					tutorialDialogs[tutorialStep].text + " Pulsa Finish para continuar."
+				);
+			} else {
+				speak(
+					tutorialDialogs[tutorialStep].text + " Pulsa Next para continuar."
+				);
+			}
+		}
+	}, [tutorialStep, showTutorial]);
+
+	const handleNextTutorial = () => {
+		if (tutorialStep < tutorialDialogs.length - 1) {
+			setTutorialStep(tutorialStep + 1);
+		} else {
+			const usuario = localStorage.getItem("usuario");
+			setShowTutorial(false);
+			if (usuario) {
+				sessionStorage.setItem(`pokerTutorialShown_${usuario}`, "true");
+			}
+		}
+	};
 
 	useEffect(() => {
 		const overlay = document.querySelector(".rotate-overlay");
@@ -647,6 +717,20 @@ function Poker({
 		}, 3000);
 	}
 
+	// Permite poner el video en pantalla completa al hacer click
+	function handleVideoClick(e) {
+		const video = e.currentTarget;
+		if (video.requestFullscreen) {
+			video.requestFullscreen();
+		} else if (video.webkitRequestFullscreen) {
+			video.webkitRequestFullscreen();
+		} else if (video.mozRequestFullScreen) {
+			video.mozRequestFullScreen();
+		} else if (video.msRequestFullscreen) {
+			video.msRequestFullscreen();
+		}
+	}
+
 	return (
 		<div className="poker-pagina">
 			<div className="rotate-overlay">
@@ -808,6 +892,37 @@ function Poker({
 				)}
 			</div>
 			<div className="boton-ronda-container"></div>
+			{showTutorial && (
+				<div className="tutorial-modal">
+					<div
+						className="tutorial-dialog"
+						style={tutorialDialogs[tutorialStep].style}
+					>
+						<p>{tutorialDialogs[tutorialStep].text}</p>
+						{tutorialDialogs[tutorialStep].video && (
+							<video
+								src={tutorialDialogs[tutorialStep].video}
+								autoPlay
+								loop
+								muted
+								className="tutorial-video"
+								onClick={handleVideoClick}
+							/>
+						)}
+						<button
+							className="btn"
+							onClick={handleNextTutorial}
+							aria-label="Next tutorial step"
+							onMouseEnter={(e) =>
+								speak(e.currentTarget.getAttribute("aria-label"))
+							}
+							onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+						>
+							{tutorialStep === 7 ? "Finish" : "Next"}
+						</button>
+					</div>
+				</div>
+			)}
 		</div>
 	);
 }
