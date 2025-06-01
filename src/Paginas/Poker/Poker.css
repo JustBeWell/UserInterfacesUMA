@@ -540,4 +540,9 @@ button:disabled,
 		transform:scale(0.6) !important;
 		
 	}
+	.tutorial-video {
+		width: 60vw !important;
+		height: auto !important;
+		margin: 0 auto !important;
+	}
 }
