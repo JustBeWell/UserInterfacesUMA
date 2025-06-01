@@ -110,6 +110,8 @@ function Tienda({
 
 				<div className="mensaje-header">
 					<h1>Buy or Exchange Tokens</h1>
+					<h2>Current tokens: <strong> {fichas}</strong> 🪙</h2>
+					<h2>Current money: <strong>{dinero.toFixed(2)}</strong>€ 💸</h2>
 				</div>
 			</header>
 
@@ -118,9 +120,7 @@ function Tienda({
 					<h2>
 						<strong>Buy Tokens</strong>
 					</h2>
-					<p>
-						You have <strong>{dinero.toFixed(2)}</strong> €
-					</p>
+					
 
 					<div className="item-list">
 						<div className="item">
@@ -178,9 +178,7 @@ function Tienda({
 					<h2>
 						<strong>Exchange Tokens for Money</strong>
 					</h2>
-					<p>
-						You have <strong>{fichas}</strong> tokens
-					</p>
+				
 					<p>
 						Exchanging <strong>{intercambio}</strong> tokens ➜{" "}
 						<strong>{(intercambio * TOKEN_VALUE).toFixed(2)} €</strong>

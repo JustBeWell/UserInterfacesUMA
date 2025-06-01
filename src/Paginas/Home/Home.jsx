@@ -53,6 +53,7 @@ function Home({ speak, fichas }) {
 						Welcome to <strong>RoyalFlush</strong>
 					</h1>
 					<p className="home-subtitle">Where your dreams come true</p>
+					<h2 className="home-subtitle">Current tokens: <strong> {fichas}</strong> 🪙</h2>
 				</div>
 			</header>
 			<section className="games-section" aria-label="Available Games">
