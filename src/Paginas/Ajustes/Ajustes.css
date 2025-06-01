@@ -82,13 +82,23 @@
 
 
 .ajustes-texto {
-  font-size: 1.8rem;
+  font-size: 1.5rem ;
   font-weight: bold;
   color: #d6d6d6;
   text-align: left;        /* queda mejor al borde de la columna */
   white-space: nowrap;      /* evita saltos si llega a ser muy largo */
 }
+@media (max-width: 768px) {
+	 .ajustes-container .ajustes-texto {   /* +1 nivel → más específico */
+		font-size: 1.2rem !important;                 /* ≈ 17-18 px en desktop, pero aquí es correcto */
+		line-height: 1.2;                  /* para que no se coma verticalmente el slider */
+	}
 
+	.ajustes-container{
+		margin-top: 60px;
+	}
+
+}
 
 .ajustes-linea {
   width: 350px;
@@ -264,7 +274,7 @@
 
 
 
-/* Reutiliza tu clase .btn, sólo cambiamos los colores */
+
 .btn {
   margin-top: 1rem;
   padding: 0.6rem 1.2rem;

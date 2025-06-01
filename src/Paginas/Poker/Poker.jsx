@@ -48,6 +48,7 @@ function Poker({
 }) {
 	/* --- estado local (ejemplo simple) --- */
 	// fichas
+	
 	const INICIAL_JUG = fichas;
 	const INICIAL_RIV = 1500;
 	const [fichasRival, setFichasRival] = useState(1500);
@@ -86,7 +87,7 @@ function Poker({
 		setShowRules((prev) => !prev);
 	}
 
-	const [showTutorial, setShowTutorial] = useState(true);
+	const [showTutorial, setShowTutorial] = useState(false);
 	const [tutorialStep, setTutorialStep] = useState(0);
 
 	const tutorialDialogs = [
@@ -239,7 +240,8 @@ function Poker({
 		const delay = setTimeout(() => {
 			setFase("saliendo"); // primero marca salida
 			setTimeout(() => {
-				setFase("juego"); // luego realmente quita blur y muestra todo
+				setFase("juego");
+				setShowTutorial(true) // luego realmente quita blur y muestra todo
 			}, 600); // da tiempo a la animación
 		}, 2000);
 

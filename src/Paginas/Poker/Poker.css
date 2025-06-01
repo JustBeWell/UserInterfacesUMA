@@ -468,7 +468,9 @@ button:disabled,
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
     margin: 1rem auto;
     display: block;
-    background: #000;
+
+  background:#1a2a2a;   /* mismo tono que tu dialog */
+
     outline: 2px solid #ffd700;
     transition: box-shadow 0.3s, transform 0.3s;
 }
@@ -481,7 +483,6 @@ button:disabled,
 @media (max-width: 600px) {
 	
 }
-
 
 
 .tutorial-dialog {
