@@ -1,105 +1,124 @@
-@import '../../utils/media.css';
-@import '../../utils/core.css';
+@import "../../utils/media.css";
+@import "../../utils/core.css";
 
 .ajustes-container {
-    position: relative;
-    max-width: 100vw;
-    min-height: 100vh;
-    background: linear-gradient(135deg, 
-    	#103b2f 0%,
-		#0a3e2f 50%,
-		#032b1f 100%
-  	);     
-    background-size: 100% 200%;
-    animation: moverFondo 5s linear infinite;
-    background-position: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #f5f5f5;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	position: relative;
+	max-width: 100vw;
+	min-height: 100vh;
+	background: linear-gradient(135deg, #103b2f 0%, #0a3e2f 50%, #032b1f 100%);
+	background-size: 100% 200%;
+	animation: moverFondo 5s linear infinite;
+	background-position: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	color: #f5f5f5;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 @keyframes moverFondo {
-  0% {
-    background-position: 0 0; 
-  }
-  25% {
-    background-position: 100% 0; 
-  }
-  50% {
-    background-position: 100% 100%; 
-  }
-  75% {
-    background-position: 0 100%;
-  }
-  100% {
-    background-position: 0 0; 
-  }
+	0% {
+		background-position: 0 0;
+	}
+	25% {
+		background-position: 100% 0;
+	}
+	50% {
+		background-position: 100% 100%;
+	}
+	75% {
+		background-position: 0 100%;
+	}
+	100% {
+		background-position: 0 0;
+	}
 }
 
 .ajustes-header {
-    margin-bottom: 1rem;
+	margin-bottom: 1rem;
 }
 
 .ajustes-header h1 {
-    font-size: 4rem;
-    color: #e2c275; 
-    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
-    letter-spacing: 2px;
-    margin: 0;
+	font-size: 4rem;
+	color: #e2c275;
+	text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+	letter-spacing: 2px;
+	margin: 0;
 }
 
 .ajustes-mismaLinea {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    background: rgba(0, 0, 0, 0.5);
-    padding: 1.5rem 2.5rem;
-    border-radius: 16px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(255, 215, 0, 0.2);
-    height: 150px;
-    width: 600px;
-    
+	display: flex;
+	align-items: center;
+	gap: 1.5rem;
+	background: rgba(0, 0, 0, 0.5);
+	padding: 1.5rem 2.5rem;
+	border-radius: 16px;
+	backdrop-filter: blur(10px);
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+	border: 1px solid rgba(255, 215, 0, 0.2);
+	height: 150px;
+	width: 600px;
 }
 
 .ajustes-checkbox {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background: #00c97c;
-    border: 2px solid #fff;
-    cursor: pointer;
-    box-shadow: 0 0 5px rgba(0,0,0,0.4);
-} 
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+	background: #00c97c;
+	border: 2px solid #fff;
+	cursor: pointer;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+}
 
 .ajustes-texto {
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #d6d6d6;
-    min-width: 150px;
+	font-size: 1.8rem;
+	font-weight: bold;
+	color: #d6d6d6;
+	min-width: 150px;
 }
 
 .ajustes-linea {
-    width: 350px;
-    height: 8px;
-    appearance: none;
-    background: #333;
-    border-radius: 5px;
-    outline: none;
-    transition: background 0.3s;
+	width: 350px;
+	height: 8px;
+	appearance: none;
+	background: #333;
+	border-radius: 5px;
+	outline: none;
+	transition: background 0.3s;
 }
 
 .ajustes-linea::-webkit-slider-thumb {
-    appearance: none;
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background: #00c97c;
-    border: 2px solid #fff;
-    cursor: pointer;
-    box-shadow: 0 0 5px rgba(0,0,0,0.4);
+	appearance: none;
+	width: 35px;
+	height: 35px;
+	border-radius: 50%;
+	background: #00c97c;
+	border: 2px solid #fff;
+	cursor: pointer;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+}
+
+.ajustes-button {
+	padding: 8px 20px;
+	border: none;
+	border-radius: 8px;
+	background: linear-gradient(to bottom, #ffffff, #e0e0e0);
+	box-shadow: 0 4px 0 #999;
+	font-weight: bold;
+	font-size: 0.95rem;
+	color: #333;
+	cursor: pointer;
+	transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.ajustes-button:hover {
+	background: linear-gradient(to bottom, #f9f9f9, #d0d0d0);
+	transform: translateY(-2px);
+	box-shadow: 0 6px 8px rgba(0, 0, 0, 0.25);
+}
+
+.ajustes-button:active {
+	transform: translateY(1px);
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }

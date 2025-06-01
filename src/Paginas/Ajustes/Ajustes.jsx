@@ -110,6 +110,44 @@ function Ajustes({
 					onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
 				/>
 			</div>
+			<div className="ajustes-mismaLinea">
+				<p className="ajustes-texto">Reiniciar tutoriales:</p>
+				<button
+					className="ajustes-button"
+					type="button"
+					aria-label="Restart Tutorials"
+					onClick={() => {
+						const usuario = localStorage.getItem("usuario");
+						if (usuario) {
+							if (
+								sessionStorage.getItem(`pokerTutorialShown_${usuario}`) ==
+								"true"
+							) {
+								sessionStorage.removeItem(`pokerTutorialShown_${usuario}`);
+							}
+							if (
+								sessionStorage.getItem(`blackjackTutorialShown_${usuario}`) ==
+								"true"
+							) {
+								sessionStorage.removeItem(`blackjackTutorialShown_${usuario}`);
+							}
+							if (
+								sessionStorage.getItem(`slotsTutorialShown_${usuario}`) ==
+								"true"
+							) {
+								sessionStorage.removeItem(`slotsTutorialShown_${usuario}`);
+							}
+						}
+						speak("Tutorials restarted");
+					}}
+					onMouseEnter={(e) =>
+						speak(e.currentTarget.getAttribute("aria-label"))
+					}
+					onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+				>
+					Restart Tutorials
+				</button>
+			</div>
 			<Link to="/home" tabIndex={-1}>
 				<button
 					className="btn-top-left"
