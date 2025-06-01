@@ -195,6 +195,7 @@ function BlackJack({
 		if (nuevaPuntuacionJugador === 21 && nuevasCartasJugador.length === 2) {
 			setHasBlackJack(true);
 			finalizarJuego("BLACKJACK");
+			return;
 		}
 	}
 
