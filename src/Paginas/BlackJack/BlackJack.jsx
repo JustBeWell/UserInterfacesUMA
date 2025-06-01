@@ -191,12 +191,6 @@ function BlackJack({
 		setApuestaActual(betAmount);
 		setBetAmount(0);
 		setBetInput("");
-
-		if (nuevaPuntuacionJugador === 21 && nuevasCartasJugador.length === 2) {
-			setHasBlackJack(true);
-			finalizarJuego("BLACKJACK");
-			return;
-		}
 	}
 
 	function newCard() {
@@ -211,6 +205,7 @@ function BlackJack({
 	}
 
 	function plantarse() {
+
 		if (!isAlive || hasBlackJack) return;
 		let nuevasCartasCrupier = [...cartasCrupier];
 		const nuevaPuntuacionCrupier = calcularPuntuacion(nuevasCartasCrupier);
@@ -237,10 +232,7 @@ function BlackJack({
 	function finalizarJuego(resultado) {
 		let ganancia = 0;
 		let mensajePopup = "";
-		if (resultado === "BLACKJACK" && cards.length === 2) {
-			mensajePopup = "Blackjack! 3:2 payout!";
-			ganancia = apuestaActual * 2.5;
-		} else if (resultado === "BLACKJACK" && cards.length > 2) {
+		if (resultado === "BLACKJACK" && cards.length > 2) {
 			mensajePopup = "21 with more than two cards! 2:1 payout!";
 			ganancia = apuestaActual * 2;
 		} else if (resultado === "GANAR") {
