@@ -191,6 +191,11 @@ function BlackJack({
 		setApuestaActual(betAmount);
 		setBetAmount(0);
 		setBetInput("");
+
+		if (nuevaPuntuacionJugador === 21 && nuevasCartasJugador.length === 2) {
+			plantarse();
+			setHasBlackJack(true);
+		}
 	}
 
 	function newCard() {
