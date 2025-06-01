@@ -72,13 +72,12 @@ function App() {
 
 		localStorage.setItem("usuarios", JSON.stringify(nuevosUsuarios));
 	}, [fichas, dinero]);
-	const { reproducirMusica, reproducirEfecto, pararTodo, speak } = AudioManager(
-		{
+	const { reproducirMusica, reproducirEfecto, pararTodo, speak, speakPoker } =
+		AudioManager({
 			volumenMusica,
 			volumenEfectos,
 			lectorPantalla,
-		}
-	);
+		});
 
 	useEffect(() => {
 		if (!primerClick) return; // Esperar al primer click
@@ -148,7 +147,7 @@ function App() {
 						reproducirEfecto={reproducirEfecto}
 						fichas={fichas}
 						setFichas={setFichas}
-						speak={speak}
+						speak={speakPoker}
 						cartasAlternativas={cartasAlternativas}
 					/>
 				}

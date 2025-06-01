@@ -48,7 +48,7 @@ function Poker({
 }) {
 	/* --- estado local (ejemplo simple) --- */
 	// fichas
-	
+
 	const INICIAL_JUG = fichas;
 	const INICIAL_RIV = 1500;
 	const [fichasRival, setFichasRival] = useState(1500);
@@ -241,11 +241,7 @@ function Poker({
 			setFase("saliendo"); // primero marca salida
 			setTimeout(() => {
 				setFase("juego");
-				
-				const usuario = localStorage.getItem("usuario");
-   				const visto = usuario &&
-                sessionStorage.getItem(`pokerTutorialShown_${usuario}`) === "true";
-     		if (!visto) setShowTutorial(true);   // ← solo si es la 1.ª vez // luego realmente quita blur y muestra todo
+				setShowTutorial(true); // luego realmente quita blur y muestra todo
 			}, 600); // da tiempo a la animación
 		}, 2000);
 
@@ -501,9 +497,9 @@ function Poker({
 					`New card on the table: ${cardText}. Your current combination is ${evaluation.tipo}`
 				);
 				prevCartasMesaRef.current = cartasMesa.length;
-			}, 3000);
+			}, 1500);
 		}
-	}, [cartasMesa, ronda, cartasJugador]);
+	}, [cartasMesa, ronda, cartasJugador, prevCartasMesaRef]);
 
 	function reiniciarPartida() {
 		setFichas(INICIAL_JUG);
@@ -797,32 +793,30 @@ function Poker({
 				</div>
 			)}
 			{showTutorial && (
-				
-					<div className="tutorial-dialog">
-						<p>{tutorialDialogs[tutorialStep].text}</p>
-						{tutorialDialogs[tutorialStep].video && (
-							<video
-								src={tutorialDialogs[tutorialStep].video}
-								autoPlay
-								loop
-								muted
-								className="tutorial-video"
-								onClick={handleVideoClick}
-							/>
-						)}
-						<button
-							className="btn"
-							onClick={handleNextTutorial}
-							aria-label="Next tutorial step"
-							onMouseEnter={(e) =>
-								speak(e.currentTarget.getAttribute("aria-label"))
-							}
-							onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
-						>
-							{tutorialStep === 7 ? "Finish" : "Next"}
-						</button>
-					</div>
-				
+				<div className="tutorial-dialog">
+					<p>{tutorialDialogs[tutorialStep].text}</p>
+					{tutorialDialogs[tutorialStep].video && (
+						<video
+							src={tutorialDialogs[tutorialStep].video}
+							autoPlay
+							loop
+							muted
+							className="tutorial-video"
+							onClick={handleVideoClick}
+						/>
+					)}
+					<button
+						className="btn"
+						onClick={handleNextTutorial}
+						aria-label="Next tutorial step"
+						onMouseEnter={(e) =>
+							speak(e.currentTarget.getAttribute("aria-label"))
+						}
+						onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+					>
+						{tutorialStep === 7 ? "Finish" : "Next"}
+					</button>
+				</div>
 			)}
 			<div className={fase === "inicio" ? "poker-blur" : ""}>
 				<MesaPoker
@@ -925,7 +919,6 @@ function Poker({
 				)}
 			</div>
 			<div className="boton-ronda-container"></div>
-			
 		</div>
 	);
 }

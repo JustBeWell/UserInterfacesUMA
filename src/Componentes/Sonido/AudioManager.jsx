@@ -111,15 +111,18 @@ function AudioManager({ volumenEfectos = 1, volumenMusica, lectorPantalla }) {
 		});
 	};
 
-	function speak(text) {
+	function speak(text, poker = false) {
 		if (lectorPantalla && "speechSynthesis" in window) {
 			const utterance = new window.SpeechSynthesisUtterance(text);
-			window.speechSynthesis.cancel(); // Detiene cualquier lectura previa
+			if (!poker) window.speechSynthesis.cancel(); // Detiene cualquier lectura previa
 			window.speechSynthesis.speak(utterance);
 		}
 	}
+	function speakPoker(text) {
+		speak(text, true);
+	}
 
-	return { reproducirEfecto, reproducirMusica, pararTodo, speak };
+	return { reproducirEfecto, reproducirMusica, pararTodo, speak, speakPoker };
 }
 
 export default AudioManager;
