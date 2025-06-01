@@ -48,17 +48,19 @@
 }
 
 .ajustes-mismaLinea {
-	display: flex;
-	align-items: center;
-	gap: 1.5rem;
-	background: rgba(0, 0, 0, 0.5);
-	padding: 1.5rem 2.5rem;
-	border-radius: 16px;
-	backdrop-filter: blur(10px);
-	box-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
-	border: 1px solid rgba(255, 215, 0, 0.2);
-	height: 150px;
-	width: 600px;
+  display: grid;
+  grid-template-columns: 240px auto;   /* ← ancho fijo para la etiqueta  */
+  column-gap: 2rem;                    /* separación entre columnas      */
+
+  align-items: center;                 /* centra verticalmente            */
+  background: rgba(0,0,0,.5);
+  padding: 1.5rem 2.5rem;
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px rgba(0,0,0,.6);
+  border: 1px solid rgba(255,215,0,.2);
+  height: 150px;
+  width: 600px;
 }
 .ajustes-checkbox {
   width: 35px;
@@ -80,11 +82,13 @@
 
 
 .ajustes-texto {
-	font-size: 1.8rem;
-	font-weight: bold;
-	color: #d6d6d6;
-	min-width: 150px;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #d6d6d6;
+  text-align: left;        /* queda mejor al borde de la columna */
+  white-space: nowrap;      /* evita saltos si llega a ser muy largo */
 }
+
 
 .ajustes-linea {
   width: 350px;
@@ -131,6 +135,8 @@
 	color: #fff;
 	border: none;
 	cursor: pointer;
+	grid-column: 1 / -1;
+	justify-self: center;  
 	transition: all 0.3s ease-in-out;
 }
 .reiniciar-tutorial-button:hover{

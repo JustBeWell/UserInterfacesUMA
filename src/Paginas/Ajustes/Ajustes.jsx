@@ -118,7 +118,7 @@ function Ajustes({
 				/>
 			</div>
 			<div className="ajustes-mismaLinea">
-				<p className="ajustes-texto">Tutorials:</p>
+				
 				<button
 					className="reiniciar-tutorial-button"
 					type="button"
