@@ -53,7 +53,9 @@ function Home({ speak, fichas }) {
 						Welcome to <strong>RoyalFlush</strong>
 					</h1>
 					<p className="home-subtitle">Where your dreams come true</p>
-					<h2 className="home-subtitle">Current tokens: <strong> {fichas}</strong> 🪙</h2>
+					<h2 className="home-subtitle">
+						Current tokens: <strong> {fichas}</strong> 🪙
+					</h2>
 				</div>
 			</header>
 			<section className="games-section" aria-label="Available Games">
@@ -116,7 +118,7 @@ function Home({ speak, fichas }) {
 						}
 						onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
 					>
-						<img src={IconoAutorizado} />
+						<img src={IconoAutorizado} alt="Juego autorizado" />
 					</a>
 					<a
 						href="https://www.ordenacionjuego.es/participantes-juego/juego-seguro"
@@ -127,7 +129,7 @@ function Home({ speak, fichas }) {
 						}
 						onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
 					>
-						<img src={IconoSeguro} />
+						<img src={IconoSeguro} alt="Juego seguro" />
 					</a>
 					<Link
 						to="/mayoriaDeEdad"
@@ -138,7 +140,7 @@ function Home({ speak, fichas }) {
 						}
 						onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
 					>
-						<img src={Icono18Plus} />
+						<img src={Icono18Plus} alt="+18" />
 					</Link>
 				</div>
 				<p>© 2025 RoyalFlush Casino</p>
