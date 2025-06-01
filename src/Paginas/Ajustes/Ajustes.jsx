@@ -1,6 +1,6 @@
 import "./Ajustes.css";
 import { Link } from "react-router-dom";
-
+import {useState, useEffect} from "react"
 function Ajustes({
 	volumenEfectos,
 	volumenMusica,
@@ -13,9 +13,16 @@ function Ajustes({
 	cartasAlternativas,
 	setCartasAlternativas,
 }) {
+	const [modalVisible, setModalVisible] = useState(false);
+	const [mensajeModal, setMensajeModal] = useState("");
+
 	speak(
 		"Welcome to the settings page. You can adjust the volume of effects and music, and enable or disable the screen reader."
 	);
+	const cerrarModal = () => {
+    setModalVisible(false);
+    setTimeout(() => setMensajeModal(""), 400);
+  	};
 	return (
 		<div className="ajustes-container">
 			<div className="ajustes-header">
@@ -89,7 +96,7 @@ function Ajustes({
 				/>
 			</div>
 			<div className="ajustes-mismaLinea">
-				<p className="ajustes-texto">Cartas accesibles:</p>
+				<p className="ajustes-texto">Accesible Cards:</p>
 				<input
 					className="ajustes-checkbox"
 					type="checkbox"
@@ -111,9 +118,9 @@ function Ajustes({
 				/>
 			</div>
 			<div className="ajustes-mismaLinea">
-				<p className="ajustes-texto">Reiniciar tutoriales:</p>
+				<p className="ajustes-texto">Tutorials:</p>
 				<button
-					className="ajustes-button"
+					className="reiniciar-tutorial-button"
 					type="button"
 					aria-label="Restart Tutorials"
 					onClick={() => {
@@ -139,6 +146,9 @@ function Ajustes({
 							}
 						}
 						speak("Tutorials restarted");
+
+						setMensajeModal("¡Tutorials have been restarted!");
+            			setModalVisible(true);
 					}}
 					onMouseEnter={(e) =>
 						speak(e.currentTarget.getAttribute("aria-label"))
@@ -148,6 +158,25 @@ function Ajustes({
 					Restart Tutorials
 				</button>
 			</div>
+				
+			{mensajeModal && (
+				<div className={`modal-overlay ${!modalVisible ? "fade-out" : ""}`}>
+				<div className="modal-content modal-success">
+					<p>{mensajeModal}</p>
+					<button
+					className="btn"
+					onClick={cerrarModal}
+					aria-label="Close popup"
+					onMouseEnter={(e) =>
+						speak(e.currentTarget.getAttribute("aria-label"))
+					}
+					onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+					>
+					OK
+					</button>
+				</div>
+				</div>
+			)}	
 			<Link to="/home" tabIndex={-1}>
 				<button
 					className="btn-top-left"
@@ -161,6 +190,7 @@ function Ajustes({
 				</button>
 			</Link>
 		</div>
+		
 	);
 }
 

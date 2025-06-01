@@ -60,16 +60,24 @@
 	height: 150px;
 	width: 600px;
 }
-
 .ajustes-checkbox {
-	width: 35px;
-	height: 35px;
-	border-radius: 50%;
-	background: #00c97c;
-	border: 2px solid #fff;
-	cursor: pointer;
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+  width: 35px;
+  height: 35px;
+
+  accent-color: #0f766e;   /* tu mismo verde */
+  cursor: pointer;
 }
+/* Efecto “toggle” al hacer clic */
+.ajustes-checkbox:active {
+  transform: scale(0.92);
+}
+
+
+
+.ajustes-checkbox:checked::after {
+  opacity: 1;
+}
+
 
 .ajustes-texto {
 	font-size: 1.8rem;
@@ -79,24 +87,56 @@
 }
 
 .ajustes-linea {
-	width: 350px;
-	height: 8px;
-	appearance: none;
-	background: #333;
-	border-radius: 5px;
-	outline: none;
-	transition: background 0.3s;
+  width: 350px;
+  height: 10px;
+  appearance: none;
+  border-radius: 5px;
+  background: linear-gradient(135deg, #065f46, #0f766e);
+  outline: none;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.5);
 }
 
+/* Thumb – WebKit */
 .ajustes-linea::-webkit-slider-thumb {
-	appearance: none;
-	width: 35px;
-	height: 35px;
-	border-radius: 50%;
-	background: #00c97c;
-	border: 2px solid #fff;
+  appearance: none;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  background: linear-gradient(135deg, #065f46, #0f766e);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.ajustes-linea::-webkit-slider-thumb:hover { transform: scale(1.05); }
+
+/* Thumb – Firefox */
+.ajustes-linea::-moz-range-thumb {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  background: linear-gradient(135deg, #065f46, #0f766e);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
+.reiniciar-tutorial-button{
+	 padding: 12px 24px;
+	font-size: 1rem;
+	border-radius: 12px;
+	letter-spacing: 1px;
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+	background: linear-gradient(135deg, #065f46, #0f766e);
+	color: #fff;
+	border: none;
 	cursor: pointer;
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+	transition: all 0.3s ease-in-out;
+}
+.reiniciar-tutorial-button:hover{
+ 	transform: translateY(-2px) scale(1.03);
+	box-shadow: 0 0 20px #00ffaa;
+
 }
 
 .ajustes-button {
@@ -121,4 +161,116 @@
 .ajustes-button:active {
 	transform: translateY(1px);
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+@keyframes fadeInModal {
+	from {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
+}
+
+@keyframes fadeOutModal {
+	from {
+		opacity: 1;
+		transform: scale(1);
+	}
+	to {
+		opacity: 0;
+		transform: scale(0.95);
+	}
+}
+.modal-overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.6);
+	backdrop-filter: blur(2px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 999;
+	animation: fadeInModal 0.3s ease-out;
+}
+.modal-overlay.fade-out {
+	animation: fadeOutModal 0.4s ease-in forwards;
+}
+
+
+
+.modal-content p {
+	font-size: 1.05rem;
+	line-height: 1.6;
+	color: #e0e0e0;
+	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.6);
+}
+
+.modal-content .btn {
+	background: linear-gradient(to right, #065f46, #0f766e);
+	color: white;
+	border: none;
+	padding: 0.6rem 1.2rem;
+	margin-top: 1rem;
+	border-radius: 8px;
+	cursor: pointer;
+	font-weight: bold;
+	font-size: 1rem;
+	transition: all 0.3s ease;
+	box-shadow: 0 2px 10px rgba(0, 255, 150, 0.2);
+	margin-bottom: 2rem;
+}
+
+.modal-content .btn:hover {
+	background: linear-gradient(to right, #0f766e, #22c55e);
+	box-shadow: 0 0 12px rgba(0, 255, 150, 0.6), 0 0 4px rgba(255, 255, 255, 0.1);
+}
+
+.modal-overlay.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.modal-content {
+	background: linear-gradient(135deg, #1a2a2a 80%, #0a3e2f 100%);
+	color: #f1f1f1;
+	padding: 2rem;
+	border-radius: 16px;
+	text-align: center;
+	box-shadow: 0 0 30px rgba(0, 0, 0, 0.6),
+		inset 0 0 8px rgba(255, 255, 255, 0.03);
+	width: 90%;
+	max-width: 420px;
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	backdrop-filter: blur(4px);
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+	animation: fadeInModal 0.4s ease-out, scaleUp 0.4s ease-out;
+}
+
+
+.modal-content.modal-success {
+  border: 3px solid #00c97c;
+}
+
+
+
+/* Reutiliza tu clase .btn, sólo cambiamos los colores */
+.btn {
+  margin-top: 1rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  background: #00c97c;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.btn:hover {
+  transform: scale(1.05);
 }
