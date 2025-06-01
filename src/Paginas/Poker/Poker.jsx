@@ -918,9 +918,6 @@ function Poker({
 							<h6>
 								Tip: Try to read your opponent and manage your chips wisely!
 							</h6>
-							<button className="btn" onClick={rules}>
-								Close
-							</button>
 						</div>
 					</div>
 				)}
