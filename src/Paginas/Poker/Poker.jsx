@@ -241,7 +241,14 @@ function Poker({
 			setFase("saliendo"); // primero marca salida
 			setTimeout(() => {
 				setFase("juego");
-				setShowTutorial(true); // luego realmente quita blur y muestra todo
+
+				const usuario = localStorage.getItem("usuario");
+
+				const visto =
+					usuario &&
+					sessionStorage.getItem(`pokerTutorialShown_${usuario}`) === "true";
+
+				if (!visto) setShowTutorial(true); // ← solo si es la 1.ª vez // luego realmente quita blur y muestra todo
 			}, 600); // da tiempo a la animación
 		}, 2000);
 
