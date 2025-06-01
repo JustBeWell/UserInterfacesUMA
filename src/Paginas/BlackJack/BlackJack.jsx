@@ -254,7 +254,6 @@ function BlackJack({
 		setTimeout(() => {
 			speak(mensajePopup);
 		}, 6000);
-
 		setFichas((prev) => prev + ganancia);
 		speak("Your current balance is " + (fichas + ganancia));
 		setIsAlive(false);
