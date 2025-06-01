@@ -78,19 +78,19 @@ function BlackJack({
 		},
 		{
 			text: "This is the table area where you will see your cards and the dealer's cards.",
-			style: { top: "320px", left: "350px" },
+			style: { top: "20px", left: "0px" },
 		},
 		{
 			text: "Here you can enter your bet. Type the amount of chips you want to bet.",
-			style: { top: "570px", left: "430px" },
+			style: { top: "20px", left: "0px" },
 		},
 		{
 			text: "Now press the Start Game button to receive your cards.",
-			style: { top: "500px", left: "400px" },
+			style: { top: "20px", left: "0px" },
 		},
 		{
 			text: "Use the Hit button to draw a card, or Stand to hold your hand.",
-			style: { top: "500px", left: "400px" },
+			style: { top: "20px", left: "0px" },
 		},
 		{
 			text: "You can check the rules by pressing the information button.",
@@ -333,10 +333,21 @@ function BlackJack({
 				More Info ℹ️
 			</button>
 
+			
+
+			<header>
+				<HeaderBlackjack
+					chips={fichas}
+					betAmount={betAmount}
+					mensaje={mensaje}
+					speak={speak}
+				/>
+			</header>
+
 			{showTutorial && (
-				<div className="tutorial-modal">
+				
 					<div
-						className="tutorial-dialog"
+						className="tutorial-dialog-blackjack"
 						style={tutorialDialogs[tutorialStep].style}
 					>
 						<p>{tutorialDialogs[tutorialStep].text}</p>
@@ -352,17 +363,8 @@ function BlackJack({
 							{tutorialStep === 7 ? "Finish" : "Next"}
 						</button>
 					</div>
-				</div>
+				
 			)}
-
-			<header>
-				<HeaderBlackjack
-					chips={fichas}
-					betAmount={betAmount}
-					mensaje={mensaje}
-					speak={speak}
-				/>
-			</header>
 
 			<Link to="/home">
 				<button

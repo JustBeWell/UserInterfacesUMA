@@ -790,7 +790,34 @@ function Poker({
 					</Link>
 				</div>
 			)}
-
+			{showTutorial && (
+				
+					<div className="tutorial-dialog">
+						<p>{tutorialDialogs[tutorialStep].text}</p>
+						{tutorialDialogs[tutorialStep].video && (
+							<video
+								src={tutorialDialogs[tutorialStep].video}
+								autoPlay
+								loop
+								muted
+								className="tutorial-video"
+								onClick={handleVideoClick}
+							/>
+						)}
+						<button
+							className="btn"
+							onClick={handleNextTutorial}
+							aria-label="Next tutorial step"
+							onMouseEnter={(e) =>
+								speak(e.currentTarget.getAttribute("aria-label"))
+							}
+							onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
+						>
+							{tutorialStep === 7 ? "Finish" : "Next"}
+						</button>
+					</div>
+				
+			)}
 			<div className={fase === "inicio" ? "poker-blur" : ""}>
 				<MesaPoker
 					{...estado}
@@ -892,37 +919,7 @@ function Poker({
 				)}
 			</div>
 			<div className="boton-ronda-container"></div>
-			{showTutorial && (
-				<div className="tutorial-modal">
-					<div
-						className="tutorial-dialog"
-						style={tutorialDialogs[tutorialStep].style}
-					>
-						<p>{tutorialDialogs[tutorialStep].text}</p>
-						{tutorialDialogs[tutorialStep].video && (
-							<video
-								src={tutorialDialogs[tutorialStep].video}
-								autoPlay
-								loop
-								muted
-								className="tutorial-video"
-								onClick={handleVideoClick}
-							/>
-						)}
-						<button
-							className="btn"
-							onClick={handleNextTutorial}
-							aria-label="Next tutorial step"
-							onMouseEnter={(e) =>
-								speak(e.currentTarget.getAttribute("aria-label"))
-							}
-							onFocus={(e) => speak(e.currentTarget.getAttribute("aria-label"))}
-						>
-							{tutorialStep === 7 ? "Finish" : "Next"}
-						</button>
-					</div>
-				</div>
-			)}
+			
 		</div>
 	);
 }

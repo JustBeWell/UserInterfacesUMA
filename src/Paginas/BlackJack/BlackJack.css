@@ -254,21 +254,9 @@
 }
 
 /* Tutorial Blackjack */
-.tutorial-modal {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100vw;
-	height: 100vh;
-	background: rgba(0, 0, 0, 0.25);
-	z-index: 2000;
-	display: flex;
-	align-items: flex-start;
-	justify-content: flex-start;
-	pointer-events: none;
-}
-.tutorial-dialog {
-	position: absolute;
+
+.tutorial-dialog-blackjack {
+	position: relative;
 	min-width: 200px;
 	max-width: 400px;
 	background: linear-gradient(135deg, #1a2a2a 80%, #0a3e2f 100%);
@@ -282,14 +270,19 @@
 	border: 2px solid #00ffaa;
 	z-index: 2100;
 	animation: fadeInHeader 0.4s;
+	/*margin-top: 200px;*/    /* <-- Añade esto para separación arriba */
+    margin-left: 75px;
+	margin-right: 75px;
+	justify-content: center; 
+	
 }
-.tutorial-dialog p {
+.tutorial-dialog-blackjack p {
 	margin-bottom: 1.2rem;
 	font-size: 1.1rem;
 	color: #fff;
 	text-shadow: 0 1px 2px #000;
 }
-.tutorial-dialog .btn {
+.tutorial-dialog-blackjack .btn {
 	background: linear-gradient(90deg, #065f46, #0f766e);
 	color: #fff;
 	border: none;
@@ -301,40 +294,43 @@
 	box-shadow: 0 2px 10px rgba(0, 255, 150, 0.2);
 	transition: background 0.2s;
 }
-.tutorial-dialog .btn:hover {
+.tutorial-dialog-blackjack .btn:hover {
 	background: linear-gradient(90deg, #0f766e, #22c55e);
 }
 
 @media (max-width: 768px) {
-	.tutorial-dialog {
+	.tutorial-dialog-blackjack {
 		font-size: 0.95rem;
 		padding: 0.8rem 1rem;
 		min-width: 160px;
 		max-width: 90vw;
 	}
-	.tutorial-dialog .btn {
+	.tutorial-dialog-blackjack .btn {
 		font-size: 0.9rem;
 		padding: 0.4em 1em;
 	}
 }
 
 @media (max-width: 480px) {
-	.tutorial-dialog {
+	.tutorial-dialog-blackjack {
+		position: absolute;
 		font-size: 0.9rem;
 		padding: 0.7rem 0.8rem;
 		min-width: 120px;
 		max-width: 95vw;
+		/*margin-top: 100px !important;*/
+    	margin-left: 75px !important;
+		margin-right: 75px !important;
+		
 	}
-	.tutorial-dialog .btn {
+	.tutorial-dialog-blackjack .btn {
 		font-size: 0.85rem;
 		padding: 0.3em 0.8em;
 	}
 }
 
 @media (max-width: 1175px) {
-	.tutorial-dialog {
-		top: 20px !important;
-		left: 0px !important;
+	.tutorial-dialog-blackjack {
 		right: auto !important;
 		bottom: auto !important;
 		transform: none !important;

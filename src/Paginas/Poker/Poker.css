@@ -461,16 +461,16 @@ button:disabled,
 }
 
 .tutorial-video {
-	width: 340px;
-	max-width: 80vw;
-	height: auto;
-	border-radius: 12px;
-	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
-	margin: 1rem auto;
-	display: block;
-	background: #000;
-	outline: 2px solid #ffd700;
-	transition: box-shadow 0.3s, transform 0.3s;
+    width: 50vw;             /* Cambiado de 800px a 70% del ancho de pantalla */
+    max-width: 70vw;         /* Mantenido como ya era relativo */
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+    margin: 1rem auto;
+    display: block;
+    background: #000;
+    outline: 2px solid #ffd700;
+    transition: box-shadow 0.3s, transform 0.3s;
 }
 .tutorial-video:focus,
 .tutorial-video:hover {
@@ -479,9 +479,58 @@ button:disabled,
 	z-index: 10;
 }
 @media (max-width: 600px) {
-	.tutorial-video {
-		width: 98vw;
-		max-width: 98vw;
-		border-radius: 8px;
+	
+}
+
+
+
+.tutorial-dialog {
+    position: absolute;
+    min-width: 800px;        /* Aumentado de 600px */
+    max-width: 1200px;       /* Aumentado de 1000px */
+    background: linear-gradient(135deg, #1a2a2a 80%, #0a3e2f 100%);
+    color: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    padding: 2.5rem 3rem;    /* Aumentado el padding */
+    font-size: 1.3rem;       /* Aumentado de 1.2rem */
+    font-weight: 500;
+    pointer-events: auto;
+    border: 2px solid #00ffaa;
+    z-index: 2100;
+    animation: fadeInHeader 0.4s;
+    justify-content: center;
+}
+
+.tutorial-dialog p {
+    margin-bottom: 1.8rem;   /* Aumentado de 1.5rem */
+    font-size: 1.3rem;       /* Aumentado de 1.2rem */
+    color: #fff;
+    text-shadow: 0 1px 2px #000;
+}
+
+.tutorial-dialog .btn {
+    background: linear-gradient(90deg, #065f46, #0f766e);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem 2rem;    /* Aumentado el padding del botón */
+    font-size: 1.2rem;       /* Aumentado de 1.1rem */
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0, 255, 150, 0.2);
+    transition: background 0.2s;
+}
+.tutorial-dialog .btn:hover {
+	background: linear-gradient(90deg, #0f766e, #22c55e);
+}
+
+
+
+@media (max-width: 1175px) {
+	.tutorial-dialog {
+		bottom: auto !important;
+		transform:scale(0.6) !important;
+		
 	}
 }

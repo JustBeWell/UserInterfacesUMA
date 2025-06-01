@@ -70,7 +70,7 @@ function GameTable({
 
 	return (
 		<div className="game-table">
-			<div className="mesa-juego">
+			<div className={`mesa-juego${showTutorial && tutorialStep === 2 ? " highlight-border" : ""}`}>
 				<div className="score-bar">
 					<span className="score-label">Dealer</span>
 					<span className="score-value">
