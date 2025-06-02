@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import IconoAutorizado from "../../imagenes/iconos/juego-autorizado.png";
 import IconoSeguro from "../../imagenes/iconos/juego-seguro.png";
 import Icono18Plus from "../../imagenes/iconos/plus18.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Home({ speak, fichas }) {
 	const [modalVisible, setModalVisible] = useState(false);
@@ -19,6 +19,12 @@ function Home({ speak, fichas }) {
 			speak("You need chips to play. Go to the store to buy more.");
 		}
 	}
+	useEffect(() => {
+		speak(
+			"Welcome to RoyalFlush Casino. Where your dreams come true. Current tokens: " +
+				fichas
+		);
+	}, []);
 
 	return (
 		<main className="home-container">

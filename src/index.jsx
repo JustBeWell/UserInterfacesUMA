@@ -147,7 +147,7 @@ function App() {
 						reproducirEfecto={reproducirEfecto}
 						fichas={fichas}
 						setFichas={setFichas}
-						speak={speakPoker}
+						speak={speak}
 						cartasAlternativas={cartasAlternativas}
 					/>
 				}
