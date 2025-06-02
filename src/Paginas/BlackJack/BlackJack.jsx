@@ -192,6 +192,18 @@ function BlackJack({
 		setBetAmount(0);
 		setBetInput("");
  		setResultadoFinal("");
+
+		if (nuevaPuntuacionJugador === 21 && nuevasCartasJugador.length === 2) {
+			setHasBlackJack(true);
+			setResultadoFinal("BLACKJACK! You win 3:2 payout.");
+			setModalVisible(true);
+			setTimeout(() => {
+				speak("You got a Blackjack! You win 3:2 payout.");
+				setFichas((prev) => prev + (apuestaActual * 3) / 2);
+			}, 2000);
+			setIsAlive(false);
+			return;
+		}
 	}
 
 	function newCard() {
